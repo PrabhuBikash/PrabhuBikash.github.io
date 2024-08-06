@@ -1,0 +1,16 @@
+const pdfList = document.getElementById('pdf-list');
+const pdfContainer = document.getElementById('pdf-container');
+const headingSubject = document.getElementById('heading-subject');
+
+
+const baseUrl = 'Notes'; // Base URL for PDF files
+
+const pdfData = {
+    'Discrete Mathematics': ['01-08-2024'],
+    'Real Analysis': [],
+    'Linear Algebra': [],
+    'Mathematical methods I': [],
+    'Theory of computation': [],
+    'Introduction to psychology': [],
+    'Sociology of science and technology': []
+};
