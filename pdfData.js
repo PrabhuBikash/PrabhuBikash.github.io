@@ -6,7 +6,7 @@ const headingSubject = document.getElementById('heading-subject');
 const baseUrl = 'Notes'; // Base URL for PDF files
 
 const pdfData = {
-    'Discrete Mathematics': ['01-08-2024'],
+    'Discrete Mathematics': ['First Class (01-08-2024)'],
     'Real Analysis': [],
     'Linear Algebra': [],
     'Mathematical methods I': [],

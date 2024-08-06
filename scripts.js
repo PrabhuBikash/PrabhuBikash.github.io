@@ -4,12 +4,12 @@ function listpdfs(subject) {
     headingSubject.innerHTML = `<i>Prabhu</i>Bikash: ${subject}`; // Update header text
 
     if (pdfData[subject]) {
-        pdfData[subject].forEach(date => {
+        pdfData[subject].forEach(filename => {
             const link = document.createElement('a');
             link.href = '#';
-            link.textContent = date;
+            link.textContent = filename;
             link.onclick = function () {
-                showPdf(`${baseUrl}\\${subject}\\${date}.pdf`); // Show the selected PDF in the container
+                showPdf(`${baseUrl}\\${subject}\\${filename}.pdf`); // Show the selected PDF in the container
             }
             pdfList.appendChild(link);  //append the link to the pdflist
         });
