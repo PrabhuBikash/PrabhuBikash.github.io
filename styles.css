@@ -1,0 +1,54 @@
+body{
+    background-color: black;
+    color: white;
+}
+
+main{
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1{
+    font-size: 40px;
+    text-align: center;
+}
+
+p{
+    line-height: 1.5;
+}
+
+section{
+    margin-bottom: 20px;
+}
+
+#about, #projects, #contact{
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#projects{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+
+.project{
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.project h3{
+    margin-top: 0;
+}
+
+.project p{
+    margin-bottom: 10px;
+}
+
+.project a{
+    display: block;
+    margin-bottom: 10px;
+}
