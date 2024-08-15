@@ -3,7 +3,7 @@ const pdfContainer = document.getElementById('pdf-container');
 const headingSubject = document.getElementById('heading-subject');
 
 
-const baseUrl = 'NISERNotes_Notes'; // Base URL for PDF files
+const baseUrl = 'Notes'; // Base URL for PDF files
 
 const pdfData = {
     'Discrete Mathematics': ['DM First Class (01-08-2024)'],
