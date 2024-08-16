@@ -144,14 +144,32 @@ function verify() {
         return false;
     }
 
+
+    // Hashing the input 
+    async function hashData(data) {
+            // Convert the string to a Uint8Array
+            const encoder = new TextEncoder();
+            const dataBuffer = encoder.encode(data);
+
+            // Compute the SHA-256 hash
+            const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
+
+            // Convert the ArrayBuffer to a hexadecimal string
+            const hashHex = Array.from(new Uint8Array(hashBuffer))
+                .map(byte => byte.toString(16).padStart(2, '0'))
+                .join('');
+
+            return hashHex;
+        }
+
     var password = prompt("PASSWORD : ", "password");
 
-    if (password !== "AcAdEmIc CuMbAcK") {
+    if (hashHex(password) !== "689bfce5477871bd4e315cb8f865ba998fdda4d2026ec20aa9a9940e3a323bb3") {
         alert('Incorrect Password');
         return false;
     }
 
-    alert('YOU ARE JOINED. go to:https://prabhubikash.github.io/PrabhuBikash.gitub.io/departments.html');
+    alert('YOU ARE JOINED!');
     window.location.href = 'departments.html';
 }
 
