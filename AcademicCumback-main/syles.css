@@ -1,0 +1,64 @@
+body{
+    text-align:center;
+}
+
+header{
+    background-color:orange;
+    border:solid black 1px;
+}
+
+main{
+    border:dotted grey 3px;
+}
+
+.center_align{padding-left:20%;}
+    @media (min-width: 400px) {.center_align{padding-left: 25%;}}
+    @media (min-width: 500px) {.center_align{padding-left: 30%;}}
+    @media (min-width: 750px) {.center_align{padding-left: 35%;}}
+    @media (min-width: 1000px) {.center_align{padding-left: 40%;}}
+    @media (min-width: 1500px) {.center_align{padding-left: 43%;}}
+    @media (min-width: 2000px) {.center_align{padding-left: 45%;}}
+    @media (min-width: 2750px) {.center_align{padding-left: 47%;}}
+    @media (min-width: 4500px) {.center_align{padding-left: 48%;}}
+        
+.center_align li a{
+    color:black;
+    text-decoration: none;
+}
+
+.hidden_message{
+    opacity: 5%;
+}
+
+.Enter_button{
+    border: 0.125em solid black;
+    padding: 0.25em;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    font-family: sans-serif;
+    transition: background-color 0.3s ease, padding 0.3s ease;
+}
+.Enter_button:hover{
+    background-color: white;
+    color: black;
+    padding: 0.5em;
+}
+.Enter_button:active{
+    animation: clickAnimation 0.2s ease-in-out;
+}
+@keyframes clickAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+footer{
+    border:solid 1px;
+    background-color:black;
+    color:pink;
+}
+
+footer a{
+    color: cyan;
+}
