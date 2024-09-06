@@ -7,16 +7,54 @@
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
     <title>cumback Home</title>
     <link rel="icon" href="LOGO.jpg" type="image/jpeg">
-    <link rel="stylesheet" href="PrabhuBikash/PrabhuBikash.github.io/AcademicCumback-main/syles.css" class="css">
+    <style>
+        .center_align{padding-left:20%;}
+            @media (min-width: 400px) {.center_align{padding-left: 25%;}}
+            @media (min-width: 500px) {.center_align{padding-left: 30%;}}
+            @media (min-width: 750px) {.center_align{padding-left: 35%;}}
+            @media (min-width: 1000px) {.center_align{padding-left: 40%;}}
+            @media (min-width: 1500px) {.center_align{padding-left: 43%;}}
+            @media (min-width: 2000px) {.center_align{padding-left: 45%;}}
+            @media (min-width: 2750px) {.center_align{padding-left: 47%;}}
+            @media (min-width: 4500px) {.center_align{padding-left: 48%;}}
+                
+        .center_align li a{
+            color:black;
+            text-decoration: none;
+        }
+
+        .Enter_button{
+            border: 0.125em solid black;
+            padding: 0.25em;
+            background-color: black;
+            color: white;
+            text-decoration: none;
+            font-family: sans-serif;
+            transition: background-color 0.3s ease, padding 0.3s ease;
+        }
+        .Enter_button:hover{
+            background-color: white;
+            color: black;
+            padding: 0.5em;
+        }
+        .Enter_button:active{
+            animation: clickAnimation 0.2s ease-in-out;
+        }
+        @keyframes clickAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+    </style>
 </head>
 
-<body>
+<body style="text-align:center;">
 
-    <header>
+    <header style="background-color:orange; border:solid black 1px;">
         <h1><i>ACADEMIC CUMBACK</i></h1>
     </header>
 
-    <main>
+    <main style="border:dotted grey 3px;">
         <img src="LOGO.jpg" alt="Academic Cumback Logo" width="128" height="128">
         <p>Transforming Struggles into Strengths:<br>Welcome to <b>Academic Cumback</b></p>
 
@@ -68,7 +106,7 @@
 
 
         <!--Added this enter button And ...-->
-        <p class="hidden_message">OK, Enough Reading! Now click on Enter</p>
+        <p style="opacity: 5%">OK, Enough Reading! Now click on Enter</p>
         <button class="Enter_button" onclick="window.location.href='departments.html'">ENTER</button>
         <p></p>
 
@@ -122,9 +160,9 @@
 
 
     <!--FOOTER-->
-    <footer>
+    <footer style="border:solid 1px; background-color:black; color:pink;">
         <p>made with<3</p>
-                <a href="about us.html">Know more about us</a><br>
+                <a href="about us.html" style="color: cyan;">Know more about us</a><br>
                 <p></p>
     </footer>
 
