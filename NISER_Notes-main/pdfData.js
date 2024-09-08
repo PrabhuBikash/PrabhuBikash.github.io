@@ -8,7 +8,7 @@ const baseUrl = 'Notes'; // Base URL for PDF files
 const pdfData = {
     'Discrete Mathematics': ['DM First Class (01-08-2024)'],
     'Real Analysis': ['RA First Class (01-08-2024)','Real Analysis 05-08-2024'],
-    'Linear Algebra': ['Linear Algebra First Class'],
+    'Linear Algebra': ['Linear Algebra First Class','LA Exercises (upto 1st quiz)'],
     'Mathematical methods I': [],
     'Theory of computation': ['TOC Assignment 0'],
     'Introduction to psychology': [],
