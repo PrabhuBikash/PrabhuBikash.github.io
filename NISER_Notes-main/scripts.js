@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
       headingSubject.innerHTML = `<button id="home" onclick="goHome()">🏠</button>NISER<i>Notes</i>: ${subject}`;
   
       // Save the current subject in localStorage
+      localStorage.clear()
       localStorage.setItem("currentSubject", subject);
   
       Object.keys(pdfData[subject]).forEach((course) => {
@@ -50,6 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
       headingSubject.innerHTML = `<button id="home" onclick="goHome()">🏠</button>NISER<i>Notes</i>: ${course}`; // Update header text
   
       // Save the current course in localStorage
+      localStorage.clear()
+      localStorage.setItem("currentSubject", subject);
       localStorage.setItem("currentCourse", course);
   
       pdfData[subject][course].forEach((filename) => {
