@@ -1,33 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NISER Notes</title>
+    <title>NiserNotes</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script src="pdfData.js" defer></script>
     <script src="scripts.js" defer></script>
 </head>
+
 <body>
     <header>
-        <h1 id="heading-subject">NISER<i>Notes</i></h1>
-        <nav>
-            <button onclick="listpdfs('Real Analysis')">Real Analysis</button>
-            <button onclick="listpdfs('Discrete Mathematics')">Discrete Mathematics</button>
-            <button onclick="listpdfs('Linear Algebra')">Linear Algebra</button>
-            <button onclick="listpdfs('Mathematical methods I')">Mathematical methods I</button>
-            <button onclick="listpdfs('Theory of computation')">Theory of computation</button>
-            <button onclick="listpdfs('Introduction to psychology')">Introduction to psychology</button>
-            <button onclick="listpdfs('Sociology of science and technology')">Sociology of science and technology</button>
-        </nav>
+        <h1 id="heading-subject">NISER<i>Notes</h1>
+        <nav id="courses"></nav>
     </header>
     <main>
-        <div id="pdf-list"><h2><i>Prabhu</i><b>Bikash</b></h2></div>
-        <div id="pdf-container"><p>yeah,I developed this site!</p></div>
+        <section class="card-container">
+            <div class="card" onclick="loadPage('Physics')">
+                <img src="https://via.placeholder.com/300x200" alt="Physics Image">
+                <h2>Physics</h2>
+                <p class="desc">School of Physical Sciences</p>
+                <p class="abbreviation">SPS &rarr;</p>
+            </div>
+
+            <div class="card" onclick="loadPage('Chemistry')">
+                <img src="https://via.placeholder.com/300x200" alt="Chemistry Image">
+                <h2>Chemistry</h2>
+                <p class="desc">School of Chemical Sciences</p>
+                <p class="abbreviation">SCS &rarr;</p>
+            </div>
+
+            <div class="card" onclick="loadPage('Mathematics')">
+                <img src="https://via.placeholder.com/300x200" alt="Mathematics Image">
+                <h2>Mathematics</h2>
+                <p class="desc">School of mathematical Sciences</p>
+                <p class="abbreviation">SMS &rarr;</p>
+            </div>
+
+            <div class="card" onclick="loadPage('Biology')">
+                <img src="https://via.placeholder.com/300x200" alt="Biology Image">
+                <h2>Biology</h2>
+                <p class="desc">School of Biological Sciences</p>
+                <p class="abbreviation">SBS &rarr;</p>
+            </div>
+
+            <div class="card" onclick="loadPage('Humanities')">
+                <img src="https://via.placeholder.com/300x200" alt="Humanities Image">
+                <h2>Humanities</h2>
+                <p class="desc">School of Humanities and Social Sciences</p>
+                <p class="abbreviation">SHSS &rarr;</p>
+            </div>
+
+            <div class="card" onclick="loadPage('Computer')">
+                <img src="https://via.placeholder.com/300x200" alt="Computer Image">
+                <h2>Computer science</h2>
+                <p class="desc">School of Computer Sciences</p>
+                <p class="abbreviation">SCoS &rarr;</p>
+            </div>
+
+            <div class="card" onclick="loadPage('IstYear')">
+                <img src="https://via.placeholder.com/300x200" alt="1stYear Image">
+                <h2>1st Year</h2>
+                <p class="desc">Introductory and mandatory Courses</p>
+                <p class="abbreviation">Enter &rarr;</p>
+            </div>
+
+            <div class="card" onclick="loadPage('About')">
+                <img src="https://via.placeholder.com/300x200" alt="About Image">
+                <h2>About us</h2>
+                <p class="desc">About me and this website</p>
+                <p class="abbreviation">Know more &rarr;</p>
+            </div>
+        </section>
+        <div class="school">
+            <div id="pdf-list"></div>
+            <div id="pdf-container"></div>
+        </div>
     </main>
-    <footer>
+
+    <footer id="foot-note">
         <p>There can be misteakes. Cross check by yourself.</p>
     </footer>
 </body>
+
 </html>
