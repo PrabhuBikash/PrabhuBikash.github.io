@@ -51,4 +51,9 @@ section{
 .project a{
     display: block;
     margin-bottom: 10px;
+    color: chartreuse;
 }
+
+ .project a:active{
+    color: red;
+ }

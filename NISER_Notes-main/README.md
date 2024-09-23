@@ -1,9 +1,8 @@
 # NISER_Notes
-it is experimental and basically a pdf viewer but can be helpful and it contains my class notes
+it contains pdf notes
 
 ## How to access
-It basically has my class notes:
-- choose subject
-- choose course
-- select the pdf
+- choose subject [ex: Mathematics]
+- choose course [ex: Real Analysis]
+- select the pdf [ex: DM Notes upto 1st quiz (~Himanshu Sharma)]
 - see the pdf else download
