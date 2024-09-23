@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
       courses.innerHTML = "";
       school.style.display = "block";
       footnote.style.display = "block";
-      pdfList.innerHTML = "<h2><i>Prabhu</i><b>Bikash</b></h2>";
-      pdfContainer.innerHTML = "<p>yeah, I developed this site!</p>";
+      pdfList.innerHTML = "<h2><b>Batch</b>-<i>23</i></h2>";
+      pdfContainer.innerHTML = "<p>yeah, we run this site!</p>";
       headingSubject.innerHTML = `<button id="home" onclick="goHome()">🏠</button>NISER<i>Notes</i>: ${subject}`;
   
       // Save the current subject in localStorage
