@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="functions.js" defer></script>
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <h1>Pattern Finder</h1>
+        <p>Enter a partial pattern (e.g., <strong>1_4_67_</strong>) and let the system find possible matches:</p>
+        
+        <input type="text" id="partialPattern" placeholder="Enter partial pattern (e.g., 1_4_67_)">
+        <button onclick="loadAllPossiblePatterns()">Find Possible Patterns</button>
+        
+        <!-- Checkbox to toggle between patterns and subpatterns
+        <label>
+            <input type="checkbox" id="patternToggle" checked>
+            Allow jumps over midpoints
+        </label> -->
+        
+        <div id="loadingMessage" class="loading"></div>
+    </header>
+    <main class="main" id="patternGrid"></main>
+    
+    <div id="patternModal" class="modal">
+        <canvas id="modalCanvas" height="500" width="500"></canvas>
+    </div>
+
+</body>
+</html>
