@@ -54,6 +54,6 @@ section{
     color: chartreuse;
 }
 
- .project a:active{
+.project a:active{
     color: red;
- }
+}
