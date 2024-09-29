@@ -24,10 +24,10 @@ const pdfData = {
     //Biology : {
         
     //},
-    //Humanities : {
-    //    'Introduction to psychology': [],
-    //    'Sociology of science and technology': []
-    //},
+    Humanities : {
+        'Introduction to psychology': ['Introduction to psychology (Upto midsem)'],
+        'Sociology of science and technology': ['Sociology of science and technology (upto midsem)']
+    },
     Computer : {
         'Theory of computation': ['TOC Assignment 0'],
     },
