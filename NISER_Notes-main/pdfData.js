@@ -19,7 +19,7 @@ const pdfData = {
     Mathematics : {
         'Discrete Mathematics': ['DM First Class (01-08-2024)','DM Notes upto 1st quiz (~Himanshu and Karan)'],
         'Real Analysis': ['RA First Class (01-08-2024)','Real Analysis 05-08-2024'],
-        'Linear Algebra': ['Linear Algebra First Class','LA Exercises (upto 1st quiz)','LA Notes upto 1st quiz (~Rudra)','LA Notes from quiz to midsem (~Rudra)'],
+        'Linear Algebra': ['Linear Algebra First Class','LA Exercises (upto 1st quiz)','LA Notes upto 1st quiz (~Rudra)','LA Notes from quiz upto midsem (~Rudra)'],
     },
     //Biology : {
         
