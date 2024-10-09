@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iterator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="cubeFunctions.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Cube Iterator</h1>
+        <div class="input-section">
+            <label for="moveInput">Enter Moves:</label>
+            <input type="text" id="moveInput" placeholder="e.g. U R' F2 D'">
+            <button id="submitButton">Find number of Iteration Required</button>
+        </div>
+        <div class="output-section">
+            <h2>Result</h2>
+            <p id="resultText">Enter a move sequence </p>
+        </div>
+        <div id="cube">
+            <!-- U face (White) -->
+            <div class="face" id="U">
+                <div class="square" id="0"></div><div class="square" id="1"></div><div class="square" id="2"></div>
+                <div class="square" id="3"></div><div class="square" id="4"></div><div class="square" id="5"></div>
+                <div class="square" id="6"></div><div class="square" id="7"></div><div class="square" id="8"></div>
+            </div>
+            <!-- F face (Green) -->
+            <div class="face" id="F">
+                <div class="square" id="9"></div> <div class="square" id="10"></div><div class="square" id="11"></div>
+                <div class="square" id="12"></div><div class="square" id="13"></div><div class="square" id="14"></div>
+                <div class="square" id="15"></div><div class="square" id="16"></div><div class="square" id="17"></div>
+            </div>
+            <!-- R face (Red) -->
+            <div class="face" id="R">
+                <div class="square" id="18"></div><div class="square" id="19"></div><div class="square" id="20"></div>
+                <div class="square" id="21"></div><div class="square" id="22"></div><div class="square" id="23"></div>
+                <div class="square" id="24"></div><div class="square" id="25"></div><div class="square" id="26"></div>
+            </div>
+            <!-- B face (Blue) -->
+            <div class="face" id="B">
+                <div class="square" id="27"></div><div class="square" id="28"></div><div class="square" id="29"></div>
+                <div class="square" id="30"></div><div class="square" id="31"></div><div class="square" id="32"></div>
+                <div class="square" id="33"></div><div class="square" id="34"></div><div class="square" id="35"></div>
+            </div>
+            <!-- L face (Orange) -->
+            <div class="face" id="L">
+                <div class="square" id="36"></div><div class="square" id="37"></div><div class="square" id="38"></div>
+                <div class="square" id="39"></div><div class="square" id="40"></div><div class="square" id="41"></div>
+                <div class="square" id="42"></div><div class="square" id="43"></div><div class="square" id="44"></div>
+            </div>
+            <!-- D face (Yellow) -->
+            <div class="face" id="D">
+                <div class="square" id="45"></div><div class="square" id="46"></div><div class="square" id="47"></div>
+                <div class="square" id="48"></div><div class="square" id="49"></div><div class="square" id="50"></div>
+                <div class="square" id="51"></div><div class="square" id="52"></div><div class="square" id="53"></div>
+            </div>
+        </div>
+        <button class="axis" onclick="rotatedirection('X')">X</button><br>
+        <button class="axis" onclick="rotatedirection('Y')">Y</button>
+        <button class="axis" onclick="rotatedirection('Z')">Z</button>
+    </div>
+</body>
+</html>
