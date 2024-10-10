@@ -20,6 +20,14 @@
             <h2>Result</h2>
             <p id="resultText">Enter a move sequence </p>
         </div>
+        <div class="iteration">
+            Iterate upto <input type="number" name="numberofiteration" id="numberofiteration" placeholder="1"> Iterations
+            <button id="iterate">GO</button><br>
+            <label for="showsteps">show Animation <input type="checkbox" name="showsteps" id="showsteps" checked></label>
+            <label for="slowmo">Rotate Slowly <input type="checkbox" name="slowmo" id="slowmo" checked></label>
+            <p id="counter">1st iteration</p>
+            <p id="moveText"></p>
+        </div>
         <div id="cube">
             <!-- U face (White) -->
             <div class="face" id="U">
@@ -58,9 +66,9 @@
                 <div class="square" id="51"></div><div class="square" id="52"></div><div class="square" id="53"></div>
             </div>
         </div>
-        <button class="axis" onclick="rotatedirection('X')">X</button><br>
-        <button class="axis" onclick="rotatedirection('Y')">Y</button>
-        <button class="axis" onclick="rotatedirection('Z')">Z</button>
+        <button class="axis" onclick="rotatedirection('Y')">Y↑</button><button class="axis" onclick="rotatedirection('reset')">reset</button><br>
+        <button class="axis" onclick="rotatedirection('Z')">Z◉</button><button class="axis" onclick="rotatedirection('X')">X → </button>
+        
     </div>
 </body>
 </html>

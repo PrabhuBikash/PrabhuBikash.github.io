@@ -67,6 +67,37 @@ button:hover {
     overflow-x: scroll;
 }
 
+.iteration {
+    text-align: center;
+    font-size: larger;
+}
+
+.iteration input[type = number] {
+    width: 10vh;
+}
+
+.iteration button {
+    margin: 1vh;
+}
+
+.iteration label {
+    margin: 5vh;
+}
+
+.iteration #counter {
+    margin: 1vh;
+}
+
+#moveText {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: larger;
+}
+
+#moveText b {
+    color: chartreuse;
+    font-size: xx-large;
+}
+
 /* Style for the cube */
 #cube {
     width: 30vmin;

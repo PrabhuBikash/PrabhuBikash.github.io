@@ -119,3 +119,60 @@ function parseMoves(movesString) {
     }
     return normalizedMoves
 }
+
+// Sleep function that supports aborting
+function sleep(ms, signal) {
+    return new Promise((resolve, reject) => {
+        const timeoutId = setTimeout(() => {resolve();}, ms);
+        if (signal) {// If the abort signal is triggered, reject the promise
+            signal.addEventListener('abort', () => {
+                clearTimeout(timeoutId); // Clear the timeout
+                reject(); // Reject the promise
+            });
+        }
+    });
+}
+
+
+const colorMap = {U: 'white', F: 'green', R: 'red', B: 'blue', L: 'orange', D: 'yellow'};
+
+function updateCubeVisual(cube) {
+    for (let i = 0; i < 54; i++) {
+        const squareposition = document.getElementById(i);
+        const squareRealId = cube[i];
+        let faceColor;
+        if (squareRealId >= 0 && squareRealId <= 8) faceColor = colorMap.U;
+        else if (squareRealId >= 9 && squareRealId <= 17) faceColor = colorMap.F;
+        else if (squareRealId >= 18 && squareRealId <= 26) faceColor = colorMap.R;
+        else if (squareRealId >= 27 && squareRealId <= 35) faceColor = colorMap.B;
+        else if (squareRealId >= 36 && squareRealId <= 44) faceColor = colorMap.L;
+        else if (squareRealId >= 45 && squareRealId <= 53) faceColor = colorMap.D;
+        squareposition.style.backgroundColor = faceColor;
+    }
+}
+
+async function slowscramble(cube, movesequence, signal){
+    const moveText = document.getElementById('moveText');
+    for (const [i, move] of movesequence.entries()) {//movesequence.entries() to get both index and move
+        await sleep(500, signal); // This will pause before applying each move
+        moveText.innerHTML = movesequence.slice(0, i).join(' ') + ' <b>' + move + '</b> ' + movesequence.slice(i + 1).join(' '); // Bold current move, others are normal
+        parseMoves(move).forEach(move => {cube = moveCube(cube, move);});
+        updateCubeVisual(cube);
+    }
+    return cube
+}
+
+function rotatedirection(direction) {
+    const cube = document.getElementById('cube');
+    let currentTransform = window.getComputedStyle(cube).getPropertyValue('transform');
+    if (currentTransform === 'none') {currentTransform = '';}
+    cube.style.transform = direction==="reset" ? `rotateX(-20deg) rotateY(-30deg)` : currentTransform + `rotate${direction}(90deg)`;
+}
+
+// Function to cancel any ongoing task
+function cancelOngoingTask() {
+    if (abortController) {
+        abortController.abort(); // Cancel the previous operation
+    }
+    abortController = new AbortController(); // Create a new abort controller
+}
