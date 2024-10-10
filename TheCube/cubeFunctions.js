@@ -151,14 +151,14 @@ function updateCubeVisual(cube) {
     }
 }
 
-async function slowscramble(cube, movesequence, signal){
-    const moveText = document.getElementById('moveText');
+async function slowscramble(cube, movesequence, signal, moveText){
     for (const [i, move] of movesequence.entries()) {//movesequence.entries() to get both index and move
         await sleep(500, signal); // This will pause before applying each move
         moveText.innerHTML = movesequence.slice(0, i).join(' ') + ' <b>' + move + '</b> ' + movesequence.slice(i + 1).join(' '); // Bold current move, others are normal
         parseMoves(move).forEach(move => {cube = moveCube(cube, move);});
         updateCubeVisual(cube);
     }
+    moveText.innerHTML = movesequence.join(' ');
     return cube
 }
 
