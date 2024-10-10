@@ -12,7 +12,8 @@ body {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    min-height: 100vh; /* Full height of the viewport */
+    min-height: 100vh; /* min height of the viewport */
+    min-width: 100vh;
 }
 
 .container {
@@ -27,6 +28,16 @@ body {
 h1 {
     text-align: center;
     margin-bottom: 20px;
+}
+
+.instructions {
+    border: 2px solid black;
+    margin: 1vh;
+    padding: 1vh;
+}
+
+#trialinput{
+    font-size: 0.79rem;
 }
 
 .input-section {
