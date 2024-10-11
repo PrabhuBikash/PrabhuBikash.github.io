@@ -115,8 +115,8 @@ button:hover {
 
 /* Style for the cube */
 #cube {
-    width: 30vmin;
-    height: 30vmin;
+    width: 30vh;
+    height: 30vh;
     margin: 10vh 20vh;
     transform-style: preserve-3d;
     transform: rotateX(0deg) rotateY(0deg);
@@ -134,12 +134,12 @@ button:hover {
 }
 
 /* position of each face */
-#U { transform: rotateX(90deg) translateZ(calc(15vmin)); }
-#F { transform: translateZ(calc(15vmin)); }
-#R { transform: rotateY(90deg) translateZ(calc(15vmin)); }
-#B { transform: rotateY(180deg) translateZ(calc(15vmin)); }
-#L { transform: rotateY(-90deg) translateZ(calc(15vmin)); }
-#D { transform: rotateX(-90deg) translateZ(calc(15vmin)); }
+#U { transform: rotateX(90deg) translateZ(calc(15vh)); }
+#F { transform: translateZ(calc(15vh)); }
+#R { transform: rotateY(90deg) translateZ(calc(15vh)); }
+#B { transform: rotateY(180deg) translateZ(calc(15vh)); }
+#L { transform: rotateY(-90deg) translateZ(calc(15vh)); }
+#D { transform: rotateX(-90deg) translateZ(calc(15vh)); }
 
 /* Flattened Cube: Faces Layout */
 .flat #F { transform: translateX(0vh) translateY(0vh); }
