@@ -119,7 +119,7 @@ button:hover {
     height: 30vmin;
     margin: 10vh 20vh;
     transform-style: preserve-3d;
-    transform: rotateX(-20deg) rotateY(-30deg); /* Initial rotation for better view */
+    transform: rotateX(0deg) rotateY(0deg);
     transition: transform 0.5s;
 }
 
@@ -140,6 +140,14 @@ button:hover {
 #B { transform: rotateY(180deg) translateZ(calc(15vmin)); }
 #L { transform: rotateY(-90deg) translateZ(calc(15vmin)); }
 #D { transform: rotateX(-90deg) translateZ(calc(15vmin)); }
+
+/* Flattened Cube: Faces Layout */
+.flat #F { transform: translateX(0vh) translateY(0vh); }
+.flat #B { transform: translateX(20vh) translateY(0vh); }
+.flat #L { transform: translateX(-10vh) translateY(0vh); }
+.flat #R { transform: translateX(+10vh) translateY(0vh); }
+.flat #U { transform: translateX(0vh) translateY(-10vh); }
+.flat #D { transform: translateX(0vh) translateY(+10vh); }
 
 /* Style for each square within the faces */
 .square {

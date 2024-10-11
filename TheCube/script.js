@@ -75,9 +75,82 @@ function generateRandomMoveSequence() {
     document.getElementById('moveInput').value = randomMoves.join(' ');
 }
 
+//Viewswitch 2D <-> 3D
+const cube = document.getElementById('cube');
+const switchViewButton = document.getElementById('switchViewButton');
+const axisbuttons = document.getElementById('axisbuttons');
+let isFlat = false;
+
+function switchView() {
+    if (isFlat) {
+        // Switch back to 3D cube view
+        cube.style.width = "30vh";
+        cube.style.height = "30vh";
+        axisbuttons.style.display = "block";
+        cube.style.transform = `rotateX(-20deg) rotateY(-30deg)`;
+        cube.classList.remove('flat');
+        switchViewButton.textContent = 'Switch to 2D Net View';
+    } else {
+        // Flatten the cube into 2D net view
+        cube.style.width = "10vh";
+        cube.style.height = "10vh";
+        axisbuttons.style.display = "none";
+        cube.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        cube.classList.add('flat');
+        switchViewButton.textContent = 'Switch to 3D Cube View';
+    }
+    isFlat = !isFlat;
+}
+
+// rotate with mouse
+let isDragging = false;
+let startX, startY;
+let rotationX = 0, rotationY = 0;
+
+function handleDragStart(e) {
+    isDragging = true;
+    startX = e.clientX || e.touches[0].clientX;
+    startY = e.clientY || e.touches[0].clientY;
+}
+
+function handleDragMove(e) {
+    if (isDragging && !isFlat) {
+        const currentX = e.clientX || e.touches[0].clientX;
+        const currentY = e.clientY || e.touches[0].clientY;
+
+        const deltaX = currentX - startX;
+        const deltaY = currentY - startY;
+
+        rotationY += deltaX * 0.5;
+        rotationX -= deltaY * 0.5;
+
+        cube.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+        startX = currentX;
+        startY = currentY;
+    }
+}
+
+function handleDragEnd() {
+    isDragging = false;
+    rotatedirection('reset');
+}
+
+// Event listeners for pc
+document.addEventListener('mousedown', handleDragStart);
+document.addEventListener('mousemove', handleDragMove);
+document.addEventListener('mouseup', handleDragEnd);
+// Event listeners for Android
+document.addEventListener('touchstart', handleDragStart);
+document.addEventListener('touchmove', handleDragMove);
+document.addEventListener('touchend', handleDragEnd);
+
+
+
+// windows on start/refresh
 window.onload = () => {
     updateCubeVisual(Array.from(Array(54).keys()));
+    rotatedirection('reset');
     document.getElementById('submitButton').addEventListener('click', handleSubmit);
     document.getElementById('iterate').addEventListener('click', handleIteration);
     document.getElementById('generateRandomMoveButton').addEventListener('click', generateRandomMoveSequence);
-} 
+}
