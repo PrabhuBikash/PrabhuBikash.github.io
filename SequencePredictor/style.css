@@ -1,0 +1,52 @@
+body {
+    font-family: 'Roboto', sans-serif; /* Change to a math-friendly font */
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 40px; /* Increased padding for better spacing */
+    text-align: center; /* Center text */
+}
+
+input[type="text"], input[type="number"] {
+    width: calc(100% - 20px); /* Adjust width to accommodate padding */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px; /* Space above button */
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+button:active {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Add shadow when pressed */
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333; /* Darker color for results */
+    background: #e9ecef; /* Light gray background */
+    padding: 10px;
+    border-radius: 5px;
+}
