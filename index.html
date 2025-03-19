@@ -3,108 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Circle Sampling Visualization</title>
+    <title>PrabhuBikash-Home</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="controls">
-        <label for="sampleSize">Sample Size:(max=100000)</label>
-        <input type="number" id="sampleSize" value="1000" min="0" max="100000">
-        <button onclick="drawSamples()">Generate Samples</button>
-    </div>
-    
-    <div class="container">
-        <!-- Theta and R Sampling -->
-        <div class="canvas-container">
-            <h3>Theta and R Sampling</h3>
-            <canvas id="canvas1" width="220" height="220"></canvas>
-            <p>Ratio Inside Small Circle: <span id="ratio1">0</span></p>
-            <div class="code-display">
-                <h4>Algorithm:</h4>
-                <pre id="thetaRCode">/**
-* Theta and R Sampling
-* - Chooses a random angle θ (0 to 2π) [chooses the radius]
-* - Chooses a random distance r (0 to 90) [chooses a random point on the radius]
-* - Converts (r, θ) to (x, y) using polar-to-Cartesian transformation
-*/
-function sampleThetaR(ctx) {
-    let theta = Math.random() * 2 * Math.PI; // Random angle from 0 to 2π
-    let r = Math.random() * 90; // Random distance (0 to 90 = radius of the circle)
-
-    // Convert polar coordinates to Cartesian
-    let x = r * Math.cos(theta); // x = r cos(θ)
-    let y = r * Math.sin(theta); // y = r sin(θ)
-
-    // Offset (110,110) to center points inside the circle
-    ctx.fillRect(110 + x, 110 + y, 2, 2);
-}</pre>
+    <header>
+        <!--Will do it Later-->
+    </header>
+    <main>
+        <h1><em>Prabhu</em><strong>Bikash</strong></h1>
+        <section id="about">
+            <h2>About Me</h2>
+            <p>I am a Curious Learner and that's it.</p>
+        </section>
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="project">
+                <h3>Academic Cumback</h3>
+                <p>
+                    It was my first project and I had dedicated it for my friends group.
+                    It was obviously fun and it taught me a lot.
+                    You can know more about it from here.
+                </p>
+                <a href="/AcademicCumback-main/">Website</a>
+                <a href="https://github.com/PrabhuBikash/PrabhuBikash.github.io/tree/main/AcademicCumback-main">Source Code</a>
             </div>
-        </div>
-
-        <!-- Theta theta Sampling -->
-        <div class="container">
-            <!-- Theta and R Sampling -->
-            <div class="canvas-container">
-                <h3>Theta and Theta Sampling</h3>
-                <canvas id="canvas2" width="220" height="220"></canvas>
-                <p>Ratio Inside Small Circle: <span id="ratio2">0</span></p>
-                <div class="code-display">
-                    <h4>Algorithm:</h4>
-                    <pre id="thetaRCode">/**
-* Theta and theta Sampling
-* - Chooses two random angles θ1, θ2 (0 to 2π) [chooses the points on the circle]
-* - Converts (r, θ1), (r, θ2) to (x1, y1), (x2,y2) using polar-to-Cartesian transformation
-* - take their middle point
-*/
-function sampleMidpoint(ctx) {
-    let theta1 = Math.random() * 2 * Math.PI; // Random angle from 0 to 2π
-    let theta2 = Math.random() * 2 * Math.PI; // Random angle from 0 to 2π
-
-    
-    // Convert polar coordinates to Cartesian (r = 90)
-    let x1 = 90 * Math.cos(theta1);
-    let y1 = 90 * Math.sin(theta1);
-    let x2 = 90 * Math.cos(theta2);
-    let y2 = 90 * Math.sin(theta2);
-
-    // Midpoint of the two points
-    let xMid = (x1 + x2) / 2;
-    let yMid = (y1 + y2) / 2;
-
-    // Offset (110,110) to center points inside the circle
-    ctx.fillRect(110 + xMid, 110 + yMid, 2, 2);
-}</pre>
-                </div>
+            <div class="project">
+                <h3>NISER Notes</h3>
+                <p>
+                    Yup, I am from NISER.
+                    I started it thinking that I can kind of show off my Notes and help my fellow friends.
+                    I had also thought to unite peope to share their Notes.
+                    I realized it's better to focus on class than to focus on Notes.
+                    And I dropped it.
+                    but now because of my friends and their Notes, it is again continued...
+                </p>
+                <a href="/NISER_Notes-main/">Website</a>
+                <a href="https://github.com/PrabhuBikash/PrabhuBikash.github.io/tree/main/NISER_Notes-main">Source Code</a>
             </div>
-
-
-        <!-- X, Y in Square Sampling -->
-        <div class="canvas-container">
-            <h3>X, Y in Square Sampling</h3>
-            <canvas id="canvas3" width="220" height="220"></canvas>
-            <p>Ratio Inside Small Circle: <span id="ratio3">0</span></p>
-            <div class="code-display">
-                <h4>Algorithm:</h4>
-                <pre id="xyCode">
-/**
-* X, Y Sampling with Circle Check
-* - Chooses random (x, y) in a square [-90, 90] × [-90, 90]
-* - Checks if the point lies inside the circle using x² + y² ≤ r²
-*/
-function sampleXY(ctx) {
-    let x, y;
-    do {
-        x = Math.random() * 180 - 90; // Random x in range [-90, 90]
-        y = Math.random() * 180 - 90; // Random y in range [-90, 90]
-    } while (x * x + y * y > 8100); // Only accept points where x² + y² ≤ 90² (8100)
-
-    // Offset (110,110) to center points inside the circle
-    ctx.fillRect(110 + x, 110 + y, 2, 2);
-}
-                   </pre>
+            <div class="project">
+                <h3>My portfolio</h3>
+                <p>
+                    ya ya ya, this site that you are currently on is my 3rd project in chronological order.
+                    It was obviously to show my work and my skills.
+                    but It was also to combine all my projects into one.
+                    cause I have only one free domain name (by github).
+                    and also because the domain name has my name in it not the names of my projects.
+                    So, I thought it is a good idea and here it is!
+                </p>
+                <a href="#">Website</a>
+                <a href="https://github.com/PrabhuBikash/PrabhuBikash.github.io">Source Code</a>
             </div>
-        </div>
-    </div>
+            <div class="project">
+                <h3>pattern Finder</h3>
+                <p>
+                    The story is like this, One of my close friends forgot their pattern lock.
+                    I tried to open it but failed badly.
+                    I thought to make a website that will help remember what the password was.
+                    and here It is.
+                </p>
+                <a href="/patternFinder/">Website</a>
+                <a href="https://github.com/PrabhuBikash/PrabhuBikash.github.io/tree/main/patternFinder">Source Code</a>
+            </div>
+            <div class="project">
+                <h3>The Cube</h3>
+                <p>
+                    I am a Cube enthusiast.
+                    I knew that every sequence of moves repeates after some repeatation but for some error each time I could not reach till the sequence of moves "RULD" repeats
+                    but I finally could determine that aftersome year with some very easy mathmatical logic.
+                    and I just decided to use that to create this site where I can check the number of steps after which the given input repeats.
+                </p>
+                <a href="/TheCube/">Website</a>
+                <a href="https://github.com/PrabhuBikash/PrabhuBikash.github.io/tree/main/TheCube">Source Code</a>
+            </div>
+            <div class="project">
+                <h3>Sequence Predictor</h3>
+                <p>
+                    I was working on colatz conjecture and I needed to see the pattern so i thought to make something that will do this.
+                    I tried to do it like take any finite sequence take its difference sequence (sequence of defferences)
+                    then the difference sequence of the difference sequence and so on...eventually we will reach a constant or single term sequence
+                    and just say that the next term of that sequence to be the same constant sequence we will get a polynomial for our original sequence using that and done we can predict and create a polynomial.
+                    i realized that it is not that useful as it takes a lot of assumption
+                    but it sometime works like it predicts 31 after 1,2,4,8,16
+                    ya its fun! so let it be.
+                </p>
+                <a href="/SequencePredictor/">Website</a>
+                <a href="https://github.com/PrabhuBikash/PrabhuBikash.github.io/tree/main/SequencePredictor">Source Code</a>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
