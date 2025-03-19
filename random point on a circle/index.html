@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Sampling Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="controls">
+        <label for="sampleSize">Sample Size:(max=100000)</label>
+        <input type="number" id="sampleSize" value="1000" min="0" max="100000">
+        <button onclick="drawSamples()">Generate Samples</button>
+    </div>
+    
+    <div class="container">
+        <!-- Theta and R Sampling -->
+        <div class="canvas-container">
+            <h3>Theta and R Sampling</h3>
+            <canvas id="canvas1" width="220" height="220"></canvas>
+            <p>Ratio Inside Small Circle: <span id="ratio1">0</span></p>
+            <div class="code-display">
+                <h4>Algorithm:</h4>
+                <pre id="thetaRCode">/**
+* Theta and R Sampling
+* - Chooses a random angle θ (0 to 2π) [chooses the radius]
+* - Chooses a random distance r (0 to 90) [chooses a random point on the radius]
+* - Converts (r, θ) to (x, y) using polar-to-Cartesian transformation
+*/
+function sampleThetaR(ctx) {
+    let theta = Math.random() * 2 * Math.PI; // Random angle from 0 to 2π
+    let r = Math.random() * 90; // Random distance (0 to 90 = radius of the circle)
+
+    // Convert polar coordinates to Cartesian
+    let x = r * Math.cos(theta); // x = r cos(θ)
+    let y = r * Math.sin(theta); // y = r sin(θ)
+
+    // Offset (110,110) to center points inside the circle
+    ctx.fillRect(110 + x, 110 + y, 2, 2);
+}</pre>
+            </div>
+        </div>
+
+        <!-- Theta theta Sampling -->
+        <div class="container">
+            <!-- Theta and R Sampling -->
+            <div class="canvas-container">
+                <h3>Theta and Theta Sampling</h3>
+                <canvas id="canvas2" width="220" height="220"></canvas>
+                <p>Ratio Inside Small Circle: <span id="ratio2">0</span></p>
+                <div class="code-display">
+                    <h4>Algorithm:</h4>
+                    <pre id="thetaRCode">/**
+* Theta and theta Sampling
+* - Chooses two random angles θ1, θ2 (0 to 2π) [chooses the points on the circle]
+* - Converts (r, θ1), (r, θ2) to (x1, y1), (x2,y2) using polar-to-Cartesian transformation
+* - take their middle point
+*/
+function sampleMidpoint(ctx) {
+    let theta1 = Math.random() * 2 * Math.PI; // Random angle from 0 to 2π
+    let theta2 = Math.random() * 2 * Math.PI; // Random angle from 0 to 2π
+
+    
+    // Convert polar coordinates to Cartesian (r = 90)
+    let x1 = 90 * Math.cos(theta1);
+    let y1 = 90 * Math.sin(theta1);
+    let x2 = 90 * Math.cos(theta2);
+    let y2 = 90 * Math.sin(theta2);
+
+    // Midpoint of the two points
+    let xMid = (x1 + x2) / 2;
+    let yMid = (y1 + y2) / 2;
+
+    // Offset (110,110) to center points inside the circle
+    ctx.fillRect(110 + xMid, 110 + yMid, 2, 2);
+}</pre>
+                </div>
+            </div>
+
+
+        <!-- X, Y in Square Sampling -->
+        <div class="canvas-container">
+            <h3>X, Y in Square Sampling</h3>
+            <canvas id="canvas3" width="220" height="220"></canvas>
+            <p>Ratio Inside Small Circle: <span id="ratio3">0</span></p>
+            <div class="code-display">
+                <h4>Algorithm:</h4>
+                <pre id="xyCode">
+/**
+* X, Y Sampling with Circle Check
+* - Chooses random (x, y) in a square [-90, 90] × [-90, 90]
+* - Checks if the point lies inside the circle using x² + y² ≤ r²
+*/
+function sampleXY(ctx) {
+    let x, y;
+    do {
+        x = Math.random() * 180 - 90; // Random x in range [-90, 90]
+        y = Math.random() * 180 - 90; // Random y in range [-90, 90]
+    } while (x * x + y * y > 8100); // Only accept points where x² + y² ≤ 90² (8100)
+
+    // Offset (110,110) to center points inside the circle
+    ctx.fillRect(110 + x, 110 + y, 2, 2);
+}
+                   </pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
