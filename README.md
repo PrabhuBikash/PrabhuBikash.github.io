@@ -1,7 +1,7 @@
 ## 📝 License
 
 This project is licensed under the MIT License.  
-Created with ❤️ by **PrabhuBikash** (2025). If you use or remix this, a little credit would be lovely!
+Created with ❤️ by **PrabhuBikash**. If you use or remix this, a little credit would be lovely!
 
 ---
 
