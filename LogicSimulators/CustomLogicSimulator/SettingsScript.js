@@ -74,7 +74,7 @@ const gateDefinitions = {
     simulate: ([a, b]) => {
       const n = symbols.length;
       if (a === b) return [(a + 1) % n];
-      if (a < b && a < n - 1) return [1];
+      if (a > b && a < n - 1) return [1];
       return [0];
     }
   },
