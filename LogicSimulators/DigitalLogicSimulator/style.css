@@ -1,0 +1,931 @@
+/* style.css */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f2f5;
+  color: #333;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  height: 100vh;
+}
+
+.sidebar {
+  background: #ffffff;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px 16px 100px 16px; /* Generous padding including bottom */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  max-height: 100vh;         /* Full viewport height */
+  position: relative;
+  max-height: calc(100vh - 20px); /* Give some room at bottom */
+  padding-bottom: 100px; /* Add bottom space for safety */
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.component {
+  background-color: #f48fb1;
+  color: #fff;
+  padding: 8px 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  text-align: center;
+  cursor: grab;
+  user-select: none;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.component:hover {
+  background: #d0d0d0;
+  transform: translateY(-2px);
+}
+
+.canvas-wrapper {
+  display: flex;
+  background: #ffffff;
+  height: 100%;
+  position: relative;
+  padding: 20px;
+  overflow: hidden; /* ✅ Prevents scroll */
+}
+
+.input-zone, .output-zone {
+  width: 60px;
+  position: relative;
+}
+
+.output-zone {
+  border-left: 2px dashed #a5d6a7;
+}
+
+.input-zone {
+  border-right: 2px dashed #90caf9;
+}
+
+.canvas {
+  position: relative;
+  height: 90%;
+  width: 100%;
+  border: 4px solid #ccc;
+  border-left: 10px solid #90caf9; /* Left side for inputs */
+  border-right: 10px solid #a5d6a7; /* Right side for outputs */
+  background-color: #ffffff;
+}
+
+.canvas-placeholder {
+  color: #aaa;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1.2rem;
+}
+
+.input-node {
+  background-color: #90caf9;
+  color: #fff;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  user-select: none;
+}
+
+.output-node {
+  background-color: #b0bec5;
+  color: #fff;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  user-select: none;
+  z-index: 10;
+}
+
+.logic-gate {
+  background-color: #ce93d8;
+  color: #fff;
+  font-weight: bold;
+  width: 60px;
+  height: 40px;
+  line-height: 40px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  user-select: none;
+  display: grid;
+  place-items: center;
+}
+
+.gate-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+  font-family: monospace;
+  text-overflow: ellipsis;
+  max-width: 100%; /* relies on container's width */
+  font-family: monospace;
+  text-align: center;
+  pointer-events: none;
+}
+
+.logic-gate:active {
+  cursor: grabbing;
+  opacity: 0.9;
+}
+
+.port {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #37474f;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transform: translateY(-50%);
+}
+
+.input-port {
+  left: -6px;
+  top: 50%;
+  z-index: 10;
+}
+
+.output-port {
+  right: -6px;
+  top: 50%;
+  z-index: 10;
+}
+
+#wire-layer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 0; /* Make sure it's underneath the gates */
+}
+
+#wire-layer line {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+  transition: all 0.15s ease;
+  z-index: 10;
+}
+
+.input-node, .output-node {
+  position: absolute;
+}
+
+.input-node::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: #37474f;
+  border-radius: 50%;
+}
+
+.output-node::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: #37474f;
+  border-radius: 50%;
+}
+
+body.dragging-wire .input-port:hover {
+  box-shadow: 0 0 6px #4caf50;
+}
+
+/* Header Style */
+#top-bar {
+  background-color: #2c3e50; /* Dark background for the top bar */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#top-bar h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Delete Mode Button */
+#delete-mode-toggle {
+  background: #f44336; /* Red background */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#delete-mode-toggle:hover {
+  background: #d32f2f; /* Slightly darker red when hovered */
+  transform: scale(1.05); /* Slightly enlarge the button when hovered */
+}
+
+#delete-mode-toggle.active {
+  background: #b71c1c; /* Darker red when active */
+}
+
+#delete-mode-toggle:active {
+  transform: scale(0.98); /* Slightly shrink when pressed */
+}
+
+/* Save Gate Button */
+#save-gate-btn {
+  background: #4caf50; /* Green background */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#save-gate-btn:hover {
+  background: #388e3c; /* Slightly darker green when hovered */
+  transform: scale(1.05); /* Slightly enlarge the button when hovered */
+}
+
+#save-gate-btn:active {
+  transform: scale(0.98); /* Slightly shrink when pressed */
+}
+
+#save-gate-btn[disabled] {
+  background: #9e9e9e; /* Disabled button background */
+  cursor: not-allowed;
+}
+
+/* Optional: Add a background hover effect for the whole top bar */
+#top-bar:hover {
+  background-color: #34495e; /* Slightly lighter shade when hovering over the header */
+}
+
+/* Responsiveness for smaller screens */
+@media (max-width: 600px) {
+  #top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #top-bar h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+#download-config-btn {
+  background: #8e24aa; /* Purple */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#download-config-btn:hover {
+  background-color: #7b1fa2; /* Slightly darker purple on hover */
+  transform: scale(1.05);
+}
+
+#download-config-btn:active {
+  transform: scale(0.98);
+}
+
+#import-btn {
+  background: #2196f3;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#import-btn:hover {
+  background: #1976d2;
+  transform: scale(1.05);
+}
+
+#import-file-input {
+  display: none; /* still hides the input but it's accessible via the label */
+}
+
+#hard-reset-btn {
+  background: #ff9800; /* Orange tone */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#hard-reset-btn:hover {
+  background: #fb8c00;
+  transform: scale(1.05);
+}
+
+#hard-reset-btn:active {
+  transform: scale(0.98);
+}
+
+
+/* Modal Styling */
+#download-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  z-index: 1000;
+  display: none;
+  font-family: Arial, sans-serif;
+}
+
+#download-modal h2 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+  color: #333;
+}
+
+#download-modal p {
+  margin: 15px 0;
+  font-size: 16px;
+  color: #666;
+}
+
+#download-modal pre {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-family: monospace;
+  color: #333;
+  margin: 15px 0;
+}
+
+#download-modal input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+#download-modal button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#confirm-download {
+  background-color: #28a745;
+  color: white;
+}
+
+#confirm-download:hover {
+  background-color: #218838;
+}
+
+#cancel-download {
+  background-color: #dc3545;
+  color: white;
+}
+
+#cancel-download:hover {
+  background-color: #c82333;
+}
+
+/* Close button (optional) */
+#download-modal .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Allow dragging or custom gestures on touch devices */
+.canvas,.sidebar, .component, body, .port {
+  touch-action: none;
+  -ms-touch-action: none; /* For older IE */
+}
+
+.gate-context-menu {
+  position: absolute;
+  background: #333;
+  color: white;
+  border: 1px solid #666;
+  border-radius: 6px;
+  padding: 6px 0;
+  min-width: 160px;
+  z-index: 9999;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-family: sans-serif;
+}
+
+.gate-context-menu .menu-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.gate-context-menu .menu-item:hover {
+  background-color: #555;
+}
+
+#import-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f3f4f6; /* soft light gray */
+  border: 2px solid #444;
+  border-radius: 8px;
+  padding: 1.5em;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  z-index: 1000;
+  max-width: 90%;
+  width: 400px;
+  display: none;
+}
+
+.import-modal-button {
+  background-color: white;
+  color: black;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  padding: 8px 16px;
+  margin: 4px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#import-modal button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.import-modal-button:active {
+  transform: scale(0.98);
+}
+
+.import-modal-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Style for the preset list and container */
+.preset-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Style for the preset list and container */
+.preset-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.preset-list button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  position: relative;
+}
+
+.preset-list button:hover {
+  background-color: #666;
+}
+
+/* Dropdown for gates (this will now be visible in document flow) */
+.preset-gates-list {
+  display: none; /* Hidden by default */
+  background-color: #333;
+  padding: 5px;
+  border-radius: 6px;
+  margin-top: 5px;
+}
+
+.preset-gates-list button {
+  background-color: #555;
+  color: white;
+  padding: 8px;
+  margin: 2px 0;
+  border: none;
+  cursor: pointer;
+}
+
+.preset-gates-list button:hover {
+  background-color: #777;
+}
+
+.gate-name {
+  font-size: 1em;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 2px 5px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin: 3px;
+}
+
+#import-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 1.2em;
+  background: none;
+  color: #ddd;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s ease;
+}
+
+#import-modal-close:hover {
+  color: #ff5555;
+}
+
+#back-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.2em;
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+#back-btn:hover {
+  color: #ffbe55;
+}
+
+#breadcrumb {
+  font-size: 1.5em;
+  padding: 12px 20px;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+#breadcrumb a {
+  color: #6d28d9; /* Vibrant purple for idle state */
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  transition: color 0.3s ease, opacity 0.3s ease;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+#breadcrumb a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -3px;
+  left: 0;
+  background-color: #a78bfa; /* Softer lilac underline */
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+#breadcrumb a:hover {
+  color: #a855f7; /* Brighten on hover */
+  opacity: 1;
+}
+
+#breadcrumb a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+#breadcrumb span {
+  color: #999;
+  user-select: none;
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------------------Dark Theme Overrides--------------------------------------------------------------------- */
+
+.dark-theme body {
+  background: #1e1e2f;
+  color: #e0e0e0;
+}
+
+.dark-theme .sidebar {
+  background: #2a2a3b;
+  border-right: 1px solid #444;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .component {
+  background-color: #ab47bc;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .component:hover {
+  background: #8e24aa;
+}
+
+.dark-theme .canvas-wrapper {
+  background: #2b2b3c;
+}
+
+.dark-theme .canvas {
+  border: 4px solid #555;
+  border-left: 10px solid #42a5f5;
+  border-right: 10px solid #66bb6a;
+  background-color: #1e1e2f;
+}
+
+.dark-theme .canvas-placeholder {
+  color: #888;
+}
+
+.dark-theme .input-node {
+  background-color: #42a5f5;
+  color: #fff;
+}
+
+.dark-theme .output-node {
+  background-color: #78909c;
+  color: #fff;
+}
+
+.dark-theme .logic-gate {
+  background-color: #ba68c8;
+  color: #fff;
+}
+
+.dark-theme #wire-layer line {
+  stroke: #90caf9;
+}
+
+.dark-theme #top-bar {
+  background-color: #121212;
+  color: #eee;
+}
+
+.dark-theme #top-bar:hover {
+  background-color: #1f1f1f;
+}
+
+.dark-theme #delete-mode-toggle {
+  background: #e53935;
+}
+
+.dark-theme #delete-mode-toggle:hover {
+  background: #c62828;
+}
+
+.dark-theme #delete-mode-toggle.active {
+  background: #b71c1c;
+}
+
+.dark-theme #save-gate-btn {
+  background: #66bb6a;
+}
+
+.dark-theme #save-gate-btn:hover {
+  background: #388e3c;
+}
+
+.dark-theme #save-gate-btn[disabled] {
+  background: #777;
+}
+
+.dark-theme #download-config-btn {
+  background: #ab47bc;
+}
+
+.dark-theme #download-config-btn:hover {
+  background-color: #8e24aa;
+}
+
+.dark-theme #import-btn {
+  background: #42a5f5;
+}
+
+.dark-theme #import-btn:hover {
+  background: #1e88e5;
+}
+
+.dark-theme #hard-reset-btn {
+  background: #ffb74d;
+}
+
+.dark-theme #hard-reset-btn:hover {
+  background: #ffa726;
+}
+
+.dark-theme #download-modal {
+  background-color: #2c2c3c;
+  color: #eee;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+.dark-theme #download-modal pre {
+  background-color: #1a1a2a;
+  color: #ccc;
+}
+
+.dark-theme #download-modal input {
+  background: #2a2a3b;
+  color: #fff;
+  border-color: #555;
+}
+
+.dark-theme #confirm-download {
+  background-color: #43a047;
+}
+
+.dark-theme #cancel-download {
+  background-color: #e53935;
+}
+
+.dark-theme .gate-context-menu {
+  background: #2a2a3b;
+  color: white;
+  border: 1px solid #555;
+}
+
+.dark-theme .gate-context-menu .menu-item:hover {
+  background-color: #444;
+}
+
+.dark-theme #import-modal {
+  background-color: #2e2e3e;
+  border: 2px solid #555;
+  color: #fff;
+}
+
+.dark-theme .import-modal-button {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #666;
+}
+
+.dark-theme .import-modal-button:disabled {
+  background-color: #555;
+}
+
+.dark-theme .preset-list button {
+  background-color: #333;
+}
+
+.dark-theme .preset-list button:hover {
+  background-color: #444;
+}
+
+.dark-theme .preset-gates-list {
+  background-color: #2a2a2a;
+}
+
+.dark-theme body.delete-mode .wire {
+  stroke: #f44336;
+}
+
+.dark-theme body.dragging-wire .input-port:hover {
+  box-shadow: 0 0 6px #81c784;
+}
+
+.dark-theme h2{
+  color: white;
+}
+
+/* Base button style */
+#theme-toggle {
+  cursor: pointer;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #f0f0f0;
+  color: #222;
+}
+
+/* Hover effect */
+#theme-toggle:hover {
+  background-color: #e0e0e0;
+}
+
+/* Dark mode styles */
+.dark-theme #theme-toggle{
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+.dark-theme #theme-toggle:hover {
+  background-color: #444;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button {
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}

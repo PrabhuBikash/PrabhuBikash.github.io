@@ -1,0 +1,28 @@
+<!-- gate-internals/gate-internals.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gate Internals Viewer</title>
+  <link rel="stylesheet" href="../style.css">
+  <script src="../models.js" defer></script>
+  <script src="../functions.js" defer></script>
+  <script src="gate-internals.js" defer></script>
+</head>
+<body>
+  <header id="top-bar">
+    <h1>Gate Internals Viewer</h1>
+    <nav id="breadcrumb"> </nav>
+  <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-right: 1rem;">
+    <label for="delay-input" style="font-weight: bold;">Signal Delay (ms):</label>
+    <input id="delay-input" type="number" value="0" min="0" step="10"/>
+  </div>
+  </header>
+  
+    <div class="canvas" id="canvas">
+    <svg id="wire-layer" style="position: absolute; top: 0; left: 0; pointer-events: none;"></svg>
+  </div>
+
+</body>
+</html>

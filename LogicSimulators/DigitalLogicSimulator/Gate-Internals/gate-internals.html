@@ -1,0 +1,29 @@
+<!-- gate-internals/gate-internals.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gate Internals Viewer</title>
+  <link rel="stylesheet" href="../style.css">
+  <script src="../models.js" defer></script>
+  <script src="../functions.js" defer></script>
+  <script src="gate-internals.js" defer></script>
+</head>
+<body>
+  <header id="top-bar">
+    <h1>Gate Internals Viewer</h1>
+    <nav id="breadcrumb"> </nav>
+  </header>
+  
+  <div class="canvas-wrapper">
+    <div class="input-zone" id="input-zone"></div>
+    <div class="canvas" id="canvas">
+      <p class="canvas-placeholder">Click left/right edge to add Input/Output</p>
+    </div>
+    <div class="output-zone" id="output-zone"></div>
+    <svg id="wire-layer" style="position: absolute; top: 0; left: 0; pointer-events: none;"></svg>
+  </div>
+
+</body>
+</html>

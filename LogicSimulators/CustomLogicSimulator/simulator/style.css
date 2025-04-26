@@ -1,0 +1,768 @@
+/* style.css */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #1e1e2f;
+  color: #e0e0e0;
+  height: 100vh;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  height: 100vh;
+}
+
+.sidebar {
+  background: #2a2a3b;
+  border-right: 1px solid #444;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px 16px 100px 16px; /* Generous padding including bottom */
+  max-height: 100vh;         /* Full viewport height */
+  position: relative;
+  max-height: calc(100vh - 20px); /* Give some room at bottom */
+  padding-bottom: 100px; /* Add bottom space for safety */
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.component {
+  background-color: #f48fb1;
+  color: #fff;
+  padding: 8px 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  text-align: center;
+  cursor: grab;
+  user-select: none;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.component:hover {
+  background: #d0d0d0;
+  transform: translateY(-2px);
+}
+
+.canvas {
+  position: relative;
+  height: 90%;
+  width: 100%;
+  border: 4px solid #555;
+  border-left: 10px solid #42a5f5;
+  border-right: 10px solid #66bb6a;
+  background-color: #1e1e2f;
+}
+
+.canvas-placeholder {
+  color: #888;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1.2rem;
+}
+
+#wire-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* below gates if needed */
+  pointer-events: none;
+}
+
+#wire-layer polyline {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+  transition: all 0.15s ease;
+  z-index: 100;
+  pointer-events: all; /* clickable only on the stroke area */
+  cursor: crosshair;
+}
+
+svg polyline:hover {
+  stroke-width: 4;  /* Increase width on hover */
+}
+
+/* Header Style */
+#top-bar:hover {
+  background-color: #1f1f1f;
+}
+
+/* Main Header and Buttons */
+#top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background-color: #222; /* dark top bar */
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#top-bar h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  font-family: monospace;
+  color: #fff;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  background-color: #333;
+  color: #eee;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: monospace;
+  font-size: large;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+/* Hover and Active States */
+.controls button:hover {
+  background-color: #555;
+}
+
+.controls button:active {
+  transform: scale(0.97);
+  background-color: #666;
+}
+
+#delay-input{
+  width: 70px;
+  padding: 4px 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-align: center;
+  background: #1e1e1e;
+  color: #f0f0f0;
+}
+
+#delete-mode-toggle:hover {background: #c62828;}
+#delete-mode-toggle.active {background: #b71c1c;}
+body.delete-mode *{ cursor: crosshair;}
+body.delete-mode #delete-mode-toggle {background: #b71c1c;}
+
+#save-gate-btn:hover {background: #388e3c;}
+
+#download-config-btn:hover {background-color: #8e24aa;}
+
+#import-btn:hover {background: #1e88e5;}
+
+#reset-btn:hover {background: #ffa726;}
+
+/* Responsiveness for smaller screens */
+@media (max-width: 600px) {
+  #top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #top-bar h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Allow dragging or custom gestures on touch devices */
+.canvas,.sidebar, .component, body, .port {
+  touch-action: none;
+  -ms-touch-action: none; /* For older IE */
+}
+
+button {
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+.ghost-gate {
+  opacity: 0.5;
+}
+
+.logic-gate {
+  background-color: #f3e5f5; /* soft lavender */
+  color: #333;
+  font-weight: bold;
+  min-width: 70px;
+  max-width: 120px;
+  height: 48px;
+  padding: 4px 6px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  user-select: none;
+  display: block;
+  position: relative;
+}
+
+.gate-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: monospace;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* Gate when dragging */
+.logic-gate:active {
+  cursor: grabbing;
+  opacity: 0.5;
+}
+
+/* Universal port style */
+.port {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 2px solid #555;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.port:hover{
+  cursor: crosshair;
+}
+
+/* Input port on the left */
+.input-port {
+  left: -7px;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+/* Output port on the right */
+.output-port {
+  right: -7px;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.node {
+  padding: 6px;
+  border-radius: 6px;
+  font-weight: bold;
+  user-select: none;
+}
+
+/* === Input Node === */
+.input-node {
+  min-width: 80px;
+  min-height: 80px;
+  padding: 4px;
+  border: 2px solid #555;
+}
+
+/* === Input Scrollable Wrapper === */
+.input-scroll-wrapper {
+  max-height: 55px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* === Button Grid === */
+.input-button-grid {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+}
+
+/* === Input Buttons === */
+.input-button {
+  color: #fff;
+  border: .5px solid #555;
+  padding: 2px 6px;
+  margin: 2px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.1s ease;
+}
+
+.input-button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.output-node {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background: #222;
+  color: #fff;
+  border: 2px solid #555;
+  border-radius: 12px;
+}
+
+.gate-context-menu {
+  background: #2a2a3b;
+  color: white;
+  border: 1px solid #555;
+}
+
+
+/* Modal Styling */
+#download-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  z-index: 1000;
+  display: none;
+  font-family: Arial, sans-serif;
+}
+
+#download-modal h2 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+  color: #333;
+}
+
+#download-modal p {
+  margin: 15px 0;
+  font-size: 16px;
+  color: #666;
+}
+
+#download-modal pre {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-family: monospace;
+  color: #333;
+  margin: 15px 0;
+}
+
+#download-modal input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+#download-modal button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#confirm-download {
+  background-color: #28a745;
+  color: white;
+}
+
+#confirm-download:hover {
+  background-color: #218838;
+}
+
+#cancel-download {
+  background-color: #dc3545;
+  color: white;
+}
+
+#cancel-download:hover {
+  background-color: #c82333;
+}
+
+#import-btn:hover {
+  background: #1976d2;
+  transform: scale(1.05);
+}
+
+#import-file-input {
+  display: none; /* still hides the input but it's accessible via the label */
+}
+
+
+/* Modal Container */
+#import-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1e1e2f; /* Deep Dark Blue */
+  border: 1px solid #3b3b57;
+  border-radius: 16px;
+  padding: 2.5em;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  max-width: 450px;
+  width: 100%;
+  display: none;
+  animation: fadeInOpacity 0.3s ease-in-out;
+  color: #f5f5f5; /* Light Text */
+}
+
+/* Smooth Fade-In */
+@keyframes fadeInOpacity {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal Buttons (Preset and Upload) */
+#import-modal .modal-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.import-modal-button {
+  background-color: #2b2b3b; /* Darker Grey-Blue */
+  color: #fff;
+  border: 1px solid #444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.15s ease-in-out;
+  width: 48%;
+}
+
+.import-modal-button:hover {
+  background-color: #575d72; /* Lighter Blue-Gray */
+  transform: translateY(-2px);
+}
+
+.import-modal-button:active {
+  transform: scale(0.98);
+}
+
+.import-modal-button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+  color: #bbb;
+}
+
+/* Preset List & Buttons */
+.preset-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.preset-list button {
+  width: 100%;
+  padding: 15px;
+  background-color: #353545; /* Dark Grey */
+  color: #f5f5f5;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 15px;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.preset-list button:hover {
+  background-color: #484851; /* Slightly lighter */
+  transform: translateX(5px);
+}
+
+/* Preset Gates List (Dropdown) */
+.preset-gates-list {
+  display: none;
+  background-color: #262635;
+  padding: 10px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.preset-gates-list button {
+  background-color: #3d3d47;
+  color: #f5f5f5;
+  padding: 12px;
+  border: none;
+  margin: 5px 0;
+  width: 100%;
+  text-align: left;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+.preset-gates-list button:hover {
+  background-color: #4a4a5a; /* Darker Grey for Hover */
+}
+
+/* Gate Name Styling */
+.gate-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #f5f5f5;
+  background-color: #3b3b47;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  margin: 5px;
+}
+
+/* Close Button */
+#import-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 20px;
+  background: none;
+  color: #d1d1d1;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  transition: color 0.3s ease;
+}
+
+#import-modal-close:hover {
+  color: #ff6b6b; /* Soft Red on hover */
+}
+
+/* Back Button */
+#back-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 20px;
+  background: none;
+  color: #d1d1d1;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  transition: color 0.3s ease;
+}
+
+#back-btn:hover {
+  color: #f39c12; /* Yellowish on hover */
+}
+
+/* Custom Scrollbar for Modal */
+#import-modal::-webkit-scrollbar {
+  width: 10px;
+}
+
+#import-modal::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 10px;
+}
+
+#import-modal::-webkit-scrollbar-track {
+  background: #2c2c37;
+}
+
+
+
+
+#breadcrumb {
+  font-size: 1.5em;
+  padding: 12px 20px;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+#breadcrumb a {
+  color: #6d28d9; /* Vibrant purple for idle state */
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  transition: color 0.3s ease, opacity 0.3s ease;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+#breadcrumb a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -3px;
+  left: 0;
+  background-color: #a78bfa; /* Softer lilac underline */
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+#breadcrumb a:hover {
+  color: #a855f7; /* Brighten on hover */
+  opacity: 1;
+}
+
+#breadcrumb a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+#breadcrumb span {
+  color: #999;
+  user-select: none;
+  font-weight: 500;
+}
+
+.gate-context-menu {
+  position: absolute;
+  background-color: #1e1e2f;
+  color: #f0f0f0;
+  border-radius: 8px;
+  padding: 0.5em 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  min-width: 180px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+  z-index: 100; /* High enough to float above everything else */
+  animation: fadeIn 0.2s ease-out;
+}
+
+.menu-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease-in-out;
+}
+
+.menu-item:hover {
+  background-color: #2d2d40;
+}
+
+
+.port:hover::after {
+  content: attr(data-symbol); /* Use the data-symbol attribute for display */
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  visibility: visible;
+}
+
+.port::after {
+  content: "";
+  visibility: hidden;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+
+/* Basic modal styling */
+#reset-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.modal-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #333; /* Dark background */
+  color: #fff; /* White text */
+  border: 2px solid #444; /* Subtle dark border */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.modal-content button:hover {
+  /* General hover effect */
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
+
+/* Different hover colors based on action */
+#soft-reset-btn:hover {
+  background-color: #ff9800; /* Orange for reset */
+  border-color: #ff5722;
+}
+
+#hard-reset-btn:hover {
+  background-color: #e91e63; /* Pink for hard reset */
+  border-color: #c2185b;
+}
+
+#cancel-reset-btn:hover {
+  background-color: #4caf50; /* Green for cancel */
+  border-color: #388e3c;
+}
+
+/* Focus effect for accessibility */
+.modal-content button:focus {
+  outline: none;
+  border-color: #ff4081; /* Highlight border color when focused */
+  box-shadow: 0 0 10px rgba(255, 64, 129, 0.5); /* Soft glow effect on focus */
+}
+
+/* Active state when the button is pressed */
+.modal-content button:active {
+  background-color: #444; /* Darker background when clicked */
+  border-color: #666; /* Slightly lighter border */
+  transform: translateY(2px); /* Push the button down when clicked */
+}
+

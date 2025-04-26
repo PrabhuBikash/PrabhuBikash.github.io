@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NAND Gate Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Scripts in dependency order -->
+  <script src="presets.js" defer></script>
+  <script src="models.js" defer></script>
+  <script src="functions.js" defer></script>
+  <script src="presethandler.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <header id="top-bar">
+    <h1>Logic Circuit Designer</h1>
+    <div class="controls">
+      <button id="theme-toggle">🌙 Dark Mode</button>
+
+      <!-- Import button (triggers modal) -->
+      <button id="import-btn">📂 Import</button>
+
+      <!-- Download config -->
+      <button id="download-config-btn" title="Download gate definitions and sizes">📥 Download Config</button>
+
+      <!-- Save current gate -->
+      <button id="save-gate-btn" title="Save current circuit as a custom gate">💾 Save Gate</button>
+
+      <!-- Edit mode toggle -->
+      <button id="delete-mode-toggle" title="Toggle delete mode">🗑️ Delete Mode</button>
+
+      <!-- Final reset -->
+      <button id="hard-reset-btn" title="Clear everything and reset">🧹 Hard Reset</button>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <!-- Sidebar with draggable gates -->
+    <div class="sidebar">
+      <h2>Components</h2>
+      <!-- Gates will be added dynamically here -->
+    </div>
+
+    <!-- Main canvas area -->
+    <div class="canvas-wrapper">
+      <div class="input-zone" id="input-zone"></div>
+      <div class="canvas" id="canvas">
+        <p class="canvas-placeholder">Click left/right edge to add Input/Output</p>
+      </div>
+      <div class="output-zone" id="output-zone"></div>
+      <svg id="wire-layer" style="position: absolute; top: 0; left: 0; pointer-events: none;"></svg>
+    </div>
+  </div>
+
+  <!-- ================== Import Modal ================== -->
+  <div id="import-modal" class="modal" style="display: none;">
+    <button id="import-modal-close" class="close-btn">&times;</button>
+    <button id="back-btn" style="display: none;"><</button>
+    <h2>Import Gate Definitions</h2>
+    <input type="file" id="import-file-input" accept=".txt" style="display:none;">
+    <button class="import-modal-button" id="upload-file-btn">📂 Upload from File</button>    
+    <button class="import-modal-button" id="load-preset-btn">📚 Load from Preset</button>
+
+    <!-- Preset List -->
+    <div id="preset-selector" style="display:none; margin-top: 1em;">
+      <p>Choose a preset:</p>
+      <div id="preset-list" class="preset-list"></div>
+    </div>
+
+    <!-- Gate Selection -->
+    <div id="gate-selection" style="display:none; margin-top: 1em;">
+      <p>Select gates to import:</p>
+      <div id="gate-checkboxes"></div>
+      <button id="apply-selected-gates-btn">✅ Import Selected Gates</button>
+    </div>
+  </div>
+
+  <!-- ================== Download Confirmation Modal ================== -->
+  <div id="download-modal" class="modal" style="display: none;">
+    <h2>Confirm Download</h2>
+    <p>Would you like to download the following file content?</p>
+    <pre id="download-file-content"></pre>
+    <input type="text" id="filename-input" placeholder="Enter a filename..." />
+    <button id="confirm-download">Confirm</button>
+    <button id="cancel-download">Cancel</button>
+  </div>
+
+</body>
+</html>
