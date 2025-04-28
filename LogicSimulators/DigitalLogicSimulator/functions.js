@@ -198,7 +198,7 @@ function openGateInternals(gateInstance) {
   sessionStorage.setItem('selectedGate', JSON.stringify([gateInstance.type]));
 
   // Open gate-internals.html page
-  window.open('/gateInternals/', '_blank');
+  window.open('gateInternals/', '_blank');
 }
 
 //--------------------------Local Storage helper functions---------------------------------//
