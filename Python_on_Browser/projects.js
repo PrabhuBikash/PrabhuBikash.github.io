@@ -2,97 +2,97 @@
 const projectListData = [
   {
     name: "✨ magic start (Default)",
-    path: "Projects/default_magic.py",
+    path: "projects/default_magic.py",
     requirements: [],
     assets: []
   },
   {
     name: "🎲 Guess The Number",
-    path: "Projects/GuessTheNumber.py",
+    path: "projects/GuessTheNumber.py",
     requirements: [],
     assets: []
   },
   {
     name: "🫂 Relation",
-    path: "Projects/relation.py",
+    path: "projects/relation.py",
     requirements: [],
     assets: []
   },
   {
     name: "🔤 Subwords finder",
-    path: "Projects/subword_finder.py",
+    path: "projects/subword_finder.py",
     requirements: [],
     assets: ["projects/words_alpha.txt"]  // Example asset file
   },
   {
     name: "(-.<) text Animation",
-    path: "Projects/animation.py",
+    path: "projects/animation.py",
     requirements: [],
     assets: []
   },
   {
     name: "🥸 small challenge",
-    path: "Projects/small_challenge.py",
+    path: "projects/small_challenge.py",
     requirements: [],
     assets: []
   },
   {
     name: "🧩 simple maze",
-    path: "Projects/Maze.py",
+    path: "projects/Maze.py",
     requirements: [],
     assets: []
   },
   {
     name: "❌⭕ Tic-Tac-Toe",
-    path: "Projects/TIC-TAC-TOE v3.py",
+    path: "projects/TIC-TAC-TOE v3.py",
     requirements: [],
     assets: []
   },
   {
     name: "🅆🄾🅁🄳🄻🄴 Wordle-lite",
-    path: "Projects/WORDIE_by_PRABHUBIKASH.py",
+    path: "projects/WORDIE_by_PRABHUBIKASH.py",
     requirements: [],
     assets: []
   },
   {
     name: "🌀 meaningless-wordle",
-    path: "Projects/WORDLE by me!.py",
+    path: "projects/WORDLE by me!.py",
     requirements: [],
     assets: []
   },
   {
     name: "🔢 matrix multiplication (3×3)",
-    path: "Projects/3×3 Matrix Multiplication.py",
+    path: "projects/3×3 Matrix Multiplication.py",
     requirements: [],
     assets: []
   },
   {
     name: "½ decimal to fraction",
-    path: "Projects/decimal to fraction.py",
+    path: "projects/decimal to fraction.py",
     requirements: [],
     assets: []
   },
   {
     name: "🧾 Field checker",
-    path: "Projects/Field.py",
+    path: "projects/Field.py",
     requirements: [],
     assets: []
   },
   {
     name: "📐 Pₙ=Xⁿ+Yⁿ+Zⁿ calculator",
-    path: "Projects/Pn=Xⁿ+Yⁿ+Zⁿ calculator.py",
+    path: "projects/Pn=Xⁿ+Yⁿ+Zⁿ calculator.py",
     requirements: [],
     assets: []
   },
   {
     name: "📊 Sequence Generator",
-    path: "Projects/Sequence.py",
+    path: "projects/Sequence.py",
     requirements: [],
     assets: []
   },
   {
     name: "{} Numbers are Sets",
-    path: "Projects/WhatIsANumber.py",
+    path: "projects/WhatIsANumber.py",
     requirements: [],
     assets: []
   },
@@ -104,13 +104,13 @@ const projectListData = [
   },
   {
     name: "🗣️ word and idioms",
-    path: "Projects/Telecommunications II (words and idioms).py",
+    path: "projects/Telecommunications II (words and idioms).py",
     requirements: [],
     assets: []
   },
   {
     name: "🤳 QR Code",
-    path: "Projects/generate_qr_code.py",
+    path: "projects/generate_qr_code.py",
     requirements: ["qrcode","pillow"],
     assets: []
   },
