@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python projects - PrabhuBikash</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/theme/material-darker.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@4.10.0/css/xterm.css" />
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
+      <h1></h1>
+      <div class="info-button" onclick="toggleInfoModal()">ℹ️</div>
+    </div>
+
+    <div id="info-modal" class="info-modal">
+      <div class="info-content">
+        <span class="close-button" onclick="toggleInfoModal()">×</span>
+          <h2>⚙️ How This Python Runner Works</h2>
+          <p>This tool lets you run Python code in your browser using Pyodide, with extra handling for Python's <code>print</code>, <code>input()</code> and <code>time.sleep()</code> using JavaScript equivalents.
+          In error messages you may see one line numbering excceds by one because behind the scene it adds one line <code>import js, asyncio</code>
+          You can see the parsed code in console if you want!</p>
+
+          <h3>🧠 Behind the Scenes</h3>
+          <ul>
+            <li>Automatically replaces:
+              <ul>
+                <li><code>print</code> → <code>js.print</code></li>
+                <li><code>input</code> → <code>await js.input</code></li>
+                <li><code>time.sleep</code> → <code>await asyncio.sleep</code></li>
+              </ul>
+            </li>
+            <li>Adds <code>async</code> to <code>def</code> if the function calls an awaitable <code>input()</code> or <code>time.sleep()</code> </li>
+            <li>Wraps matching function calls with <code>await</code>.</li>
+            <li>Functions must be defined above where they are used.</li>
+          </ul>
+
+          <h3>⚠️ Limitations</h3>
+          <ul>
+            <li>Recursive functions using <code>await</code> may not be detected properly.</li>
+            <li>Functions must be declared above where they are called.</li>
+            <li>Parser does not fully handle nested scopes or multiline strings yet.</li>
+            <li>All parsing is done with regex and string manipulation — not a full AST.</li>
+            <li>Code must follow basic indentation rules to avoid false matches.</li>
+            <li>There is no way to differentiate between strings like <code>"\'"</code> and <code>"'"</code> because both are stored as <code>"'"</code></li>
+            <li>you can't apply anything like <code>upper()</code> on <code>input()</code> which is a PyodideFuture object so it might show errors like <code>AttributeError: 'PyodideFuture' object has no attribute 'upper'</code></li>
+            <li>Don't define in the same line as <code>def</code> i.e., don't do this: <code>def f(a,b):return a+b</code></li>
+            <li>By default all functions are async except for dunders</li>
+          </ul>
+
+          <h3>📌 Tips for Writing Compatible Code</h3>
+          <ul>
+            <li>If you use quotes inside strings it is better if you use <code>`"back"'ticks'`</code> or use <code>"different 'quotes'"</code> for <code>'string and "inside quotes"'</code></li>
+            <li>Write <code>input</code> like normal — async is added automatically.</li>
+            <li>Use <code>time.sleep()</code> instead of <code>sleep()</code> to ensure correct replacement.</li>
+            <li>Avoid defining functions after usage if they call async behavior.</li>
+            <li>If you are using <code>input()</code> to do something like  <code>input().upper()</code> do this instead  <code>(input()).upper()</code> this will let <code>input()</code> resolve 1st then will apply your functions to the value </li>
+            <li>If you want to define a synchronous function then add an underscore <code>_</code> at the end for example:<code>transmitError_</code></li>
+          </ul>
+
+          <p class="footer-note">
+            It's aim is to show case my python programs specifially so your codes may not run properly
+            not necessarily because your code has some error but because this site is not advance enough!
+          </p>
+        </div>
+    </div>    
+  
+    <div class="buttons">
+      <button class="edit-btn" onclick="toggleEdit()">✏️ Edit</button>
+      <button class="reset-btn" onclick="resetCode()">♻️ Reset Code</button>
+      <button class="clear-btn" onclick="term.reset()">🧹 Clear Output</button>
+      <button class="run-btn" onclick="runPython()">▶ Run</button>
+    </div>
+  </header>
+  
+  <!-- Side Menu -->
+  <div id="side-menu" class="side-menu"><ul id="project-list"><!--List will Appear Dynamically--></ul></div>
+  
+
+  <main>
+    <div class="container">
+      <textarea id="python-code" rows="10" cols="60" disabled></textarea>
+      <div id="output"></div>
+    </div>
+  </main>
+  <!-- Persistent Image Modal -->
+<div id="image-modal">
+  <div class="modal-content">
+    <button class="close-button" onclick="document.getElementById('image-modal').style.display='none'">✖ Close</button>
+    <img id="modal-image" alt="Preview" />
+    <!-- Download Link inside Modal -->
+    <a id="download-link" href="#" download="image.png">
+      <button class="download-button">Download Image</button>
+    </a>
+  </div>
+</div>
+
+<!-- Open Modal Button -->
+<button id="open-image-modal-button" onclick="document.getElementById('image-modal').style.display='flex'">
+  Open Image
+</button>
+
+
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xterm@4.10.0/lib/xterm.js"></script>
+  <script src="https://unpkg.com/xterm-addon-fit/lib/xterm-addon-fit.js"></script>
+  <script src="projects.js"></script>
+  <script src="parser.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

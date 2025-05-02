@@ -1,0 +1,427 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Header */
+header {
+  background-color: #2d3a3f;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Top bar inside header */
+.top-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.top-bar h1 {
+  font-size: 24px;
+}
+
+.hamburger-menu {
+  position: fixed;
+  top: 15px;
+  left: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 2000; /* HIGHER than side-menu */
+}
+
+/* Buttons styling */
+.buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Specific Button Colors */
+.edit-btn {
+  background-color: #3498db; /* Blue */
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #2980b9;
+}
+
+.reset-btn {
+  background-color: #e67e22; /* Orange */
+  color: white;
+}
+
+.reset-btn:hover {
+  background-color: #d35400;
+}
+
+.clear-btn {
+  background-color: #9b59b6; /* Purple */
+  color: white;
+}
+
+.clear-btn:hover {
+  background-color: #8e44ad;
+}
+
+.run-btn {
+  background-color: #2ecc71; /* Green */
+  color: white;
+}
+
+.run-btn:hover {
+  background-color: #27ae60;
+}
+
+/* Side Menu */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #1e272e;
+  color: white;
+  overflow: auto;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+  transform: translateX(-100%); /* hidden */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  overflow: auto;
+  padding-top: 80px;
+}
+
+.side-menu.active {
+  transform: translateX(0); /* slide in */
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.side-menu ul {
+  list-style: none;
+}
+
+.side-menu ul li {
+  padding: 15px 20px;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.side-menu ul li:hover {
+  background-color: #34495e;
+}
+
+.highlight {
+  background-color: #ffd54f !important;
+  transition: background-color 0.5s;
+}
+
+/* Main content layout */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  width: 100%;
+  height: calc(100vh - 80px);
+  box-sizing: border-box;
+}
+
+/* Container for textarea and output */
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+
+/* Python code area */
+textarea {
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 16px;
+  background-color: #f1f1f1;
+  color: #333;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  resize: none;
+}
+
+textarea:disabled {
+  background-color: #ddd;  /* Disabled textarea color */
+}
+
+/* Output area */
+#output {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 16px;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  overflow-x: auto;
+  white-space: pre;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 0;
+  }
+
+  .buttons button {
+    padding: 8px 12px;
+    font-size: 14px;
+    flex: 1 1 auto;
+  }
+
+  .hamburger-menu {
+    align-self: flex-end;
+    font-size: 24px;
+    cursor: pointer;
+    margin-top: -5px;
+  }
+
+  .main {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+  }
+
+  #python-code, #output {
+    width: 100%;
+    height: 45vh;
+    box-sizing: border-box;
+  }
+
+  #python-code {
+    order: 1;
+  }
+
+  #output {
+    order: 2;
+    overflow-y: auto;
+  }
+
+  .side-menu {
+    width: 75%;
+    left: -100%;
+    transition: left 0.3s ease;
+    z-index: 999;
+  }
+
+  .side-menu.active {
+    left: 0;
+  }
+
+  .side-menu ul {
+    padding: 10px;
+  }
+
+  .side-menu li {
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+}
+
+
+/* Modal Background */
+.info-modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Modal Content */
+.info-content {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  max-width: 800px;
+  width: 100%;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #aaa;
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: #fff;
+}
+
+/* Headings */
+.info-content h2,
+.info-content h3 {
+  margin-top: 10px;
+  color: #90caf9;
+}
+
+/* Lists */
+.info-content ul {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.info-content ul li {
+  margin-bottom: 5px;
+}
+
+/* Code styling */
+.info-content code {
+  background-color: #2e2e2e;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: #ffcc80;
+}
+
+/* Footer Note */
+.footer-note {
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #bbb;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .info-content {
+    padding: 20px;
+    font-size: 0.95em;
+  }
+
+  .close-button {
+    font-size: 20px;
+    top: 10px;
+    right: 12px;
+  }
+}
+
+/* Modal backdrop */
+#image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+/* Image inside the modal */
+#image-modal img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* Close button */
+#image-modal .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+#image-modal .close-button:hover {
+  background-color: red;
+}
+
+/* Open button */
+#open-image-modal-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: none;
+}
+
+/* Button hover effect (opens modal) */
+#open-image-modal-button:hover {
+  background-color: #f0f0f0;  /* Lighter background */
+  transform: scale(0.95);  /* Slight grow effect to mimic "being clicked" */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);  /* Soft shadow for emphasis */
+}
+
