@@ -3,12 +3,12 @@ const mainCanvas = document.getElementById('canvas'); // Get reference to the ma
 const EDGE_MARGIN = 20; // Margin in pixels to consider as the "edge zone"
 //------------------------- while reloding -------------------------//
 window.onload = function () {
-    if (localStorage.getItem("theme") === "dark") {
+    if (localStorage.getItem("BinaryLogic_theme") === "dark") {
     body.classList.add("dark-theme");
     toggleButton.textContent = "☀️ Light Mode";
   }
-  const storedGateDefinitions = localStorage.getItem('gateDefinitions');
-  const storedGateRelations = localStorage.getItem('gateRelations');
+  const storedGateDefinitions = localStorage.getItem('BinaryLogic_gateDefinitions');
+  const storedGateRelations = localStorage.getItem('BinaryLogic_gateRelations');
 
   if (storedGateDefinitions) {
     gateDefinitions = makeUsableGateDefinitions(storedGateDefinitions)
@@ -22,8 +22,8 @@ window.onload = function () {
   } else {
     console.log('No gate Relations found in localStorage.');
   }
-  localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-  localStorage.setItem('gateRelations', makeStorableGateDefinitions(gateRelations));
+  localStorage.setItem('BinaryLogic_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
+  localStorage.setItem('BinaryLogic_gateRelations', makeStorableGateDefinitions(gateRelations));
   refreshSidebar();
 };
 
@@ -133,8 +133,8 @@ document.getElementById('save-gate-btn').addEventListener('click', () => {
       gateRelations[gate.type].add(name)
     });
     refreshSidebar();
-    localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-    localStorage.setItem('gateRelations', makeStorableGateDefinitions(gateRelations));
+    localStorage.setItem('BinaryLogic_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
+    localStorage.setItem('BinaryLogic_gateRelations', makeStorableGateDefinitions(gateRelations));
     // Optional: log generated function code
     console.log(name, ':' ,gateDefinitions[name]);
     alert(`Gate "${name}" saved successfully!`);
@@ -220,7 +220,7 @@ document.getElementById('load-preset-btn').addEventListener('click', showPresetD
 //-------------------------Hard Reset-------------------------//
 document.getElementById('hard-reset-btn').addEventListener('click', () => {
   if (confirm('Are you sure you want to reset everything? This cannot be undone.')) {
-    localStorage.clear();
+    Object.keys(localStorage).forEach(key => {if (key.startsWith("BinaryLogic_")) localStorage.removeItem(key);});
     location.reload();
   }
 });
