@@ -8,11 +8,11 @@ let mainGate;
 let Breadcrumb;
 
 window.onload = () => {
-  if (localStorage.getItem("theme") === "dark") {
+  if (localStorage.getItem("BinaryLogic_theme") === "dark") {
     document.body.classList.add("dark-theme");
   }
-  const storedGateDefinitions = localStorage.getItem('gateDefinitions');
-  Breadcrumb = JSON.parse(sessionStorage.getItem('selectedGate')) || [];
+  const storedGateDefinitions = localStorage.getItem('BinaryLogic_gateDefinitions');
+  Breadcrumb = JSON.parse(sessionStorage.getItem('BinaryLogic_selectedGate')) || [];
   const gateName = Breadcrumb[Breadcrumb.length-1]
   if (storedGateDefinitions) {
     gateDefinitions = makeUsableGateDefinitions(storedGateDefinitions)
@@ -268,7 +268,7 @@ function getElementCenterRelativeToWrapper_(el) {
 //--------------------------View gate logic---------------------------------//
 function openGateInternals_(gateInstance) {
   Breadcrumb.push(gateInstance.type);
-  sessionStorage.setItem('selectedGate', JSON.stringify(Breadcrumb));
+  sessionStorage.setItem('BinaryLogic_selectedGate', JSON.stringify(Breadcrumb));
   location.replace(location.href);  // Replace the current page with the updated state
 }
 
@@ -285,7 +285,7 @@ function updateBreadcrumb() {
 
     link.addEventListener('click', () => {
       Breadcrumb = Breadcrumb.slice(0, index + 1);  // Trim the breadcrumb
-      sessionStorage.setItem('selectedGate', JSON.stringify(Breadcrumb));
+      sessionStorage.setItem('BinaryLogic_selectedGate', JSON.stringify(Breadcrumb));
       location.reload();  // Go back to that gate level
     });
 
