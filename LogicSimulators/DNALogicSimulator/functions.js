@@ -117,8 +117,8 @@ function showGateMenu(x, y, gate, comp = false) {
       const confirmDelete = window.confirm(`Are you sure you want to delete ${gateName}?${gatesToDelete ? `\n these gates and gates depndent on them will also be deleted:\n${[...gatesToDelete].join(', ')}\nand if any on the canvas they may malfunction!` : ""}`);
       if (!confirmDelete) return;
       gatesToDelete.forEach(g => {delete gateDefinitions[g]; delete gateRelations[g];});
-      localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-      localStorage.setItem('gateRelations', makeStorableGateDefinitions(gateRelations));
+      localStorage.setItem('DNA_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
+      localStorage.setItem('DNA_gateRelations', makeStorableGateDefinitions(gateRelations));
       menu.remove();
       refreshSidebar()
     } else { gate.remove(); menu.remove();}
@@ -148,7 +148,7 @@ function getAllDependentGates(gateName, visited = new Set()) {
 
 //--------------------------View gate logic---------------------------------//
 function openGateInternals(gateInstance) {
-  sessionStorage.setItem('selectedGate', JSON.stringify([gateInstance.dataset.type]));
+  sessionStorage.setItem('DNA_selectedGate', JSON.stringify([gateInstance.dataset.type]));
 
   // Open gate-internals.html page
   window.open('gateInternals/', '_blank');
