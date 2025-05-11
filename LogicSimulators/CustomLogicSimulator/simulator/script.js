@@ -2,10 +2,10 @@ const mainCanvas = document.getElementById('canvas'); // Get reference to the ma
 const svg = document.getElementById('wire-layer');
 //------------------------- while reloding -------------------------//
 window.onload = function () {
-  const storedGateDefinitions = localStorage.getItem('gateDefinitions');
-  const storedGateRelations = localStorage.getItem('gateRelations');
-  const storedSymbols = localStorage.getItem('symbols');
-  const storedColors = localStorage.getItem('colors');
+  const storedGateDefinitions = localStorage.getItem(`${metadata}_gateDefinitions`);
+  const storedGateRelations = localStorage.getItem(`${metadata}_gateRelations`);
+  const storedSymbols = localStorage.getItem(`symbols`);
+  const storedColors = localStorage.getItem(`${metadata}_colors`);
   
   // Initialize gate definitions if found
   if (storedGateDefinitions) {
@@ -26,6 +26,7 @@ window.onload = function () {
   // Initialize symbols and colors if found
   if (storedSymbols) {
     symbols = JSON.parse(storedSymbols);
+    metadata = symbols;
     console.log('Symbols loaded:', symbols);
   } else {
     console.log('No symbols found in localStorage.');
@@ -39,10 +40,10 @@ window.onload = function () {
   }
 
   // Ensure gate definitions and relations are saved in localStorage
-  localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-  localStorage.setItem('gateRelations', makeStorableGateDefinitions(gateRelations));
-  localStorage.setItem('symbols', JSON.stringify(symbols));
-  localStorage.setItem('colors', JSON.stringify(colors));
+  localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(gateDefinitions));
+  localStorage.setItem(`${metadata}_gateRelations`, makeStorableGateDefinitions(gateRelations));
+  localStorage.setItem(`symbols`, JSON.stringify(symbols));
+  localStorage.setItem(`${metadata}_colors`, JSON.stringify(colors));
   
   document.getElementById('title').textContent = `Base ${symbols.length} Logic`;
   refreshSidebar();
@@ -69,8 +70,8 @@ document.getElementById('save-gate-btn').addEventListener('click', () => {
       gateRelations[gate.dataset.type].push(name)
     });
     refreshSidebar();
-    localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-    localStorage.setItem('gateRelations', makeStorableGateDefinitions(gateRelations));
+    localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(gateDefinitions));
+    localStorage.setItem(`${metadata}_gateRelations`, makeStorableGateDefinitions(gateRelations));
     // Optional: log generated function code
     console.log(name, ':' ,gateDefinitions[name]);
     alert(`Gate "${name}" saved successfully!`);
@@ -92,8 +93,8 @@ document.getElementById('reset-btn').addEventListener('click', () => document.ge
 document.getElementById('cancel-reset-btn').addEventListener('click', () => document.getElementById('reset-modal').style.display = 'none');
 document.getElementById('soft-reset-btn').addEventListener('click', () => {
   if (confirm('Are you sure you want to reset the world? Your custom gates and settings will be lost, but the preset world will remain intact.')) {
-    localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(presetLibrary["Basis Pack (Accidentally deleted? no worries!)"])); // we will have to fetch the basis pack preset and load that!
-    localStorage.setItem('gateRelations', makeStorableGateDefinitions({})); // Clear relations
+    localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(presetLibrary["Basis Pack (Accidentally deleted? no worries!)"])); // we will have to fetch the basis pack preset and load that!
+    localStorage.setItem(`${metadata}_gateRelations`, makeStorableGateDefinitions({})); // Clear relations
     location.reload(); // Reload to reflect changes
   }
 });
@@ -101,7 +102,7 @@ document.getElementById('soft-reset-btn').addEventListener('click', () => {
 // Handle the hard reset (clear everything)
 document.getElementById('hard-reset-btn').addEventListener('click', () => {
   if (confirm('Are you sure you want to reset everything? This cannot be undone!')) {
-    localStorage.clear(); // Clear everything from localStorage
+    Object.keys(localStorage).forEach(key => {if (key.startsWith(`${metadata}_`)) localStorage.removeItem(key);});
     window.location.href = "../"; // Reload to reflect changes
   }
 });
