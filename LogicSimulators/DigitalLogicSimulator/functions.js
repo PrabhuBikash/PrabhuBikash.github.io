@@ -14,7 +14,7 @@ function makeSignalProperty(element, initialValue = 0) {
     enumerable: true,
   });
 
-  element.signal = initialValue; // set the initial value
+  element.signal = initialValue;
 }
 
 //--------------------------Enable Drag---------------------------------//
@@ -89,7 +89,7 @@ function addLogic(gate, type) {
   const inputPortEls = [...gate.querySelectorAll('.input-port')].sort((a, b) => a.index - b.index);
   const outputPortEls = [...gate.querySelectorAll('.output-port')].sort((a, b) => a.index - b.index);
 
-  if (def.simulate) {// Pure function logic (NAND, etc.)
+  if (def.simulate) {
     const handleUpdate = () => {
       const signals = def.simulate(inputPortEls.map(el => Number(el.signal ?? 0)),gate);
       outputPortEls.forEach((output_el, i) => output_el.signal = signals[i]);
@@ -116,9 +116,9 @@ function getElementCenterRelativeToWrapper(el,parentEl = mainCanvaswrapper) {
   const y = elRect.top - wrapperRect.top + elRect.height / 2;
   let x;
 
-  if (el.classList.contains('output-node')) { x = elRect.left - wrapperRect.left; // Port is on the LEFT side
-  } else if (el.classList.contains('input-node')) { x = elRect.right - wrapperRect.left; // Port is on the RIGHT side
-  } else { x = elRect.left - wrapperRect.left + elRect.width / 2; // Default: center
+  if (el.classList.contains('output-node')) { x = elRect.left - wrapperRect.left;
+  } else if (el.classList.contains('input-node')) { x = elRect.right - wrapperRect.left;
+  } else { x = elRect.left - wrapperRect.left + elRect.width / 2;
   }
 
   return { x, y };
@@ -127,7 +127,7 @@ function getElementCenterRelativeToWrapper(el,parentEl = mainCanvaswrapper) {
 //--------------------------Populate Side Bar---------------------------------//
 function refreshSidebar() {
   const sidebar = document.querySelector('.sidebar');
-  sidebar.innerHTML = '<h2>Components</h2>'; // Clear the sidebar and re-populate, Keep the header
+  sidebar.innerHTML = '<h2>Components</h2>';
 
   for (const name in gateDefinitions) {
     const comp = document.createElement('div');
@@ -146,7 +146,7 @@ function refreshSidebar() {
 //--------------------------View gate Menu---------------------------------//
 function showGateMenu(x, y, gate, comp = false) {
   const gateName = gate.type
-  document.querySelector('.gate-context-menu')?.remove(); // Remove existing menu if any
+  document.querySelector('.gate-context-menu')?.remove();
 
   const menu = document.createElement('div');
   menu.classList.add('gate-context-menu');
@@ -176,8 +176,6 @@ function showGateMenu(x, y, gate, comp = false) {
 
   menu.append(deleteOption, peekOption);
   document.body.appendChild(menu);
-
-  // Auto remove on click outside
   document.addEventListener('click', function onClickOutside() { menu.remove(); document.removeEventListener('click', onClickOutside); }, { once: true });
 }
 
@@ -196,8 +194,6 @@ function getAllDependentGates(gateName, visited = new Set()) {
 
 function openGateInternals(gateInstance) {
   sessionStorage.setItem('BinaryLogic_selectedGate', JSON.stringify([gateInstance.type]));
-
-  // Open gate-internals.html page
   window.open('gateInternals/', '_blank');
 }
 

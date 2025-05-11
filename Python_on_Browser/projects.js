@@ -1,4 +1,3 @@
-// projects.js
 const projectListData = [
   {
     name: "✨ magic start (Default)",
@@ -22,7 +21,7 @@ const projectListData = [
     name: "🔤 Subwords finder",
     path: "projects/subword_finder.py",
     requirements: [],
-    assets: ["projects/words_alpha.txt"]  // Example asset file
+    assets: ["projects/words_alpha.txt"]
   },
   {
     name: "(-.<) text Animation",

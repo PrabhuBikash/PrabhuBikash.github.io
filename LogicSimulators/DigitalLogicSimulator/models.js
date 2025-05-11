@@ -17,7 +17,8 @@ let gateDefinitions = {
           x: 683,
           y: 217
         } ]
-      }
+      },
+      simulate : ([a]) => [gateDefinitions[NAND].simulate([a,a])]
   }*/
 };
 let gateRelations = {};
@@ -95,7 +96,7 @@ function createOutput(y) {
   output.gate = output;
 
   const portEl = document.createElement('div');
-  portEl.classList.add('input-port'); // it's receiving
+  portEl.classList.add('input-port');
   output.appendChild(portEl);
 
   output.style.position = 'absolute';
@@ -214,7 +215,7 @@ function createInstanceFromCircuit(inputNodes,outputNodes,gateEl) {
     } else return;
     connectPorts(sourcePort,outputNodes[i]);
   });
-  wrapper.style.pointerEvents = 'none';   // ← Prevent it from blocking clicks
+  wrapper.style.pointerEvents = 'none';
   wrapper.style.display = 'none';
   gateEl.appendChild(wrapper);
   return { Circuit: wrapper,internalGates: logicGates};
@@ -238,7 +239,7 @@ function createGhostGate(type, startX, startY) {
   gate.style.top = `${startY}px`;
   gate.style.height = `${gateHeight}px`;
   gate.style.opacity = '0.5';
-  gate.style.pointerEvents = 'none'; // so it doesn't interfere during dragging
+  gate.style.pointerEvents = 'none';
   gate.appendChild(label);
 
   // Create input ports
@@ -265,7 +266,7 @@ function createGhostGate(type, startX, startY) {
     makeSignalProperty(output);
     gate.appendChild(output);
   }
-  document.body.appendChild(gate); // Now the gate is rendered
+  document.body.appendChild(gate);
   addLogic(gate, type);
 
   // Handle dragging with pointer events

@@ -1,4 +1,3 @@
-// gate-internals/gate-internals.js
 const wrapper = document.querySelector('.canvas-wrapper')
 const canvas = document.getElementById('canvas');
 const InputZone = document.getElementById('input-zone')
@@ -133,7 +132,7 @@ function createOutput_(y) {
   output.gate = output;
 
   const portEl = document.createElement('div');
-  portEl.classList.add('input-port'); // it's receiving
+  portEl.classList.add('input-port');
   output.appendChild(portEl);
 
   output.style.position = 'absolute';
@@ -229,7 +228,7 @@ function createWire_(fromPort, toPort) {
 
 //--------------------------Menu---------------------------------//
 function showGateMenu_(x, y, gate) {
-  document.querySelector('.gate-context-menu')?.remove(); // Remove existing menu if any
+  document.querySelector('.gate-context-menu')?.remove();
 
   const menu = document.createElement('div');
   menu.classList.add('gate-context-menu');
@@ -257,9 +256,9 @@ function getElementCenterRelativeToWrapper_(el) {
   const y = elRect.top - wrapperRect.top + elRect.height / 2;
   let x;
 
-  if (el.classList.contains('output-node')) { x = elRect.left - wrapperRect.left; // Port is on the LEFT side
-  } else if (el.classList.contains('input-node')) { x = elRect.right - wrapperRect.left; // Port is on the RIGHT side
-  } else { x = elRect.left - wrapperRect.left + elRect.width / 2; // Default: center
+  if (el.classList.contains('output-node')) { x = elRect.left - wrapperRect.left;
+  } else if (el.classList.contains('input-node')) { x = elRect.right - wrapperRect.left;
+  } else { x = elRect.left - wrapperRect.left + elRect.width / 2;
   }
 
   return { x, y };
@@ -269,7 +268,7 @@ function getElementCenterRelativeToWrapper_(el) {
 function openGateInternals_(gateInstance) {
   Breadcrumb.push(gateInstance.type);
   sessionStorage.setItem('BinaryLogic_selectedGate', JSON.stringify(Breadcrumb));
-  location.replace(location.href);  // Replace the current page with the updated state
+  location.replace(location.href);
 }
 
 
@@ -284,9 +283,9 @@ function updateBreadcrumb() {
     link.style.cursor = 'pointer';
 
     link.addEventListener('click', () => {
-      Breadcrumb = Breadcrumb.slice(0, index + 1);  // Trim the breadcrumb
+      Breadcrumb = Breadcrumb.slice(0, index + 1);
       sessionStorage.setItem('BinaryLogic_selectedGate', JSON.stringify(Breadcrumb));
-      location.reload();  // Go back to that gate level
+      location.reload();
     });
 
     breadcrumbContainer.appendChild(link);

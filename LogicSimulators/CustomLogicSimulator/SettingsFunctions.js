@@ -14,7 +14,7 @@ function toHex(color) {
 
 // -------------------------------- ColorPicker Handler -----------------------------------//
 function updateColorPickers() {
-  colorPreview.innerHTML = ''; // Clear old pickers
+  colorPreview.innerHTML = '';
   
   // Extend or preserve existing colors array
   colors = colors.slice(0, symbols.length);

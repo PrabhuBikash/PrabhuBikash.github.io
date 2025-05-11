@@ -74,7 +74,7 @@ let Wires = []
 let uniqueIDCounter = 0;
 
 //--------------------------The original gate creating function---------------------------------//
-function createGhostGate(type, startX, startY) { // We will treat Input and Output node as Gates as well
+function createGhostGate(type, startX, startY) {
   const {numberOfInputs, numberOfOutputs} = gateDefinitions[type];
   const gateHeight = Math.max(40, ((Math.max(numberOfInputs, numberOfOutputs) + 1) * 15)-5);
   
@@ -89,7 +89,7 @@ function createGhostGate(type, startX, startY) { // We will treat Input and Outp
   gate.style.left = `${startX}px`;
   gate.style.top = `${startY}px`;
   gate.style.height = `${gateHeight}px`;
-  gate.style.pointerEvents = 'none'; // so it doesn't interfere during dragging
+  gate.style.pointerEvents = 'none';
   gate.appendChild(label);
 
   // Create input ports
@@ -117,7 +117,7 @@ function createGhostGate(type, startX, startY) { // We will treat Input and Outp
     output.addEventListener("pointerdown", () => createWire(output));
     gate.appendChild(output);
   }
-  document.body.appendChild(gate); // Now the gate is rendered
+  document.body.appendChild(gate);
   addLogic(gate);
 
   // Handle dragging with pointer events
@@ -158,7 +158,7 @@ function createGhostGate(type, startX, startY) { // We will treat Input and Outp
     gate.addEventListener('contextmenu', (e) => { e.preventDefault(); showGateMenu(e.pageX, e.pageY, gate); });
     gate.style.left = `${Math.max(0, Math.min(e.clientX - canvasRect.left - offsetX, canvas.clientWidth - gate.offsetWidth))}px`;
     gate.style.top = `${Math.max(0, Math.min(e.clientY - canvasRect.top - offsetY, canvas.clientHeight - gate.offsetHeight))}px`;
-    updateAllWires(); // 🔁 Update wires during drag
+    updateAllWires();
   }
 }
 //--------------------------------Wire Creation-----------------------------//
@@ -288,7 +288,7 @@ function createInstanceFromCircuit(inputNodes,outputNodes,gateEl) {
   }
 
   gates.forEach(({id, position}) => internalGates.set(id,createLogicalGate(id)));
-  wires.forEach(({from,to,bends}) => { // 3. Wire Internal Gates
+  wires.forEach(({from,to,bends}) => {
     const [fromGateId, fromPortindex] = from.split('@');
     const [toGateId, toPortindex] = to.split('@');
     const fromPort = fromGateId.split('-')[0] == 'INPUT' ? internalGates.get(fromGateId) : internalGates.get(fromGateId).querySelectorAll('.output-port')[fromPortindex];
@@ -296,7 +296,7 @@ function createInstanceFromCircuit(inputNodes,outputNodes,gateEl) {
     fromPort.addEventListener('signalchange', () => toPort.signal = fromPort.signal);
     toPort.signal = fromPort.signal
   });
-  innerCanvas.style.pointerEvents = 'none';   // ← Prevent it from blocking clicks
+  innerCanvas.style.pointerEvents = 'none';
   innerCanvas.style.display = 'none';
   gateEl.appendChild(innerCanvas);
 }
@@ -313,7 +313,7 @@ function generateFunctionDefinition() {
     return aRect.left - bRect.left;
   };
   [...document.querySelectorAll('.input-node')].sort(byYX).forEach((inputNode, i) => {inputVarMap.set(inputNode.querySelector('.output-port'), alphabet(i));});
-  const memo = new Map();         // Memoizes expressions for ports
+  const memo = new Map();
   const visited = new Map();
 
   function expressionFor(inputPort) {

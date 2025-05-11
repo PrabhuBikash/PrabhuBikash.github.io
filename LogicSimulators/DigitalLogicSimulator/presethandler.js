@@ -33,11 +33,7 @@ function handleGateFileUpload(file, onSuccess = () => {}, onError = () => {}) {
   
         // 🧠 Extract gate dependencies from incoming gates
         const incomingDefs = makeUsableGateDefinitions(raw);
-        const allKnownGates = new Set([
-          ...Object.keys(gateDefinitions), // existing
-          ...Object.keys(incomingDefs)     // incoming
-        ]);
-
+        const allKnownGates = new Set([...Object.keys(gateDefinitions), ...Object.keys(incomingDefs)]);
         const incomingDeps = extractGateRelations(incomingDefs);
 
         const missingDeps = [];
@@ -82,7 +78,7 @@ function showPresetDropdown() {
 
   // Show the preset section
   const presetSelector = document.getElementById('preset-selector');presetSelector.style.display = 'block';
-  const presetListDiv = document.getElementById('preset-list');presetListDiv.innerHTML = ''; // Clear any previous list
+  const presetListDiv = document.getElementById('preset-list');presetListDiv.innerHTML = '';
   
   Object.keys(presetLibrary).forEach(presetName => {
     const presetButton = document.createElement('button');
@@ -91,8 +87,8 @@ function showPresetDropdown() {
     // Create a dropdown for gates under this preset
     const gateListDiv = document.createElement('div');
     presetButton.addEventListener('click', () => {
-      if (gateListDiv.style.display === "none") gateListDiv.style.display = "block";  // Show the element
-      else gateListDiv.style.display = "none";   // Hide the element
+      if (gateListDiv.style.display === "none") gateListDiv.style.display = "block";
+      else gateListDiv.style.display = "none";
     });
     gateListDiv.classList.add('preset-gates-list');
 
@@ -109,38 +105,38 @@ function showPresetDropdown() {
     Object.keys(presetLibrary[presetName]).forEach(gateName => {
         const gateItem = document.createElement('div');
         gateItem.style.display = 'flex';
-        gateItem.style.alignItems = 'center'; // Align items vertically centered
-        gateItem.style.justifyContent = 'space-between'; // Space between the gate name and add button
+        gateItem.style.alignItems = 'center';
+        gateItem.style.justifyContent = 'space-between';
         gateItem.style.marginBottom = '4px';
-        gateItem.style.padding = '6px'; // Add padding to increase clickable area
-        gateItem.style.border = '1px solid #ddd'; // Optional: Add a border between each gate item
-        gateItem.style.borderRadius = '5px'; // Round the corners for a more polished look
+        gateItem.style.padding = '6px';
+        gateItem.style.border = '1px solid #ddd';
+        gateItem.style.borderRadius = '5px';
         const gateDefinition = presetLibrary[presetName][gateName];
-        gateItem.title = gateDefinition.simulate ? gateDefinition.simulate.toString() : JSON.stringify(gateDefinition, null, 2); // Show object as tooltip on hover
+        gateItem.title = gateDefinition.simulate ? gateDefinition.simulate.toString() : JSON.stringify(gateDefinition, null, 2);
         gateItem.addEventListener('click', (e) => {if (e.target !== addBtn) {e.stopPropagation();showGateDetails(presetName, gateName);};});
         
         // Add a class for gate name styling (optional to use external CSS)
         const gateLabel = document.createElement('span');
         gateLabel.textContent = gateName;
-        gateLabel.style.fontSize = '1em';  // Keep the gate name size the same as previous styling
-        gateLabel.style.color = 'white'; // Add color to gate name (you can tweak this)
+        gateLabel.style.fontSize = '1em';
+        gateLabel.style.color = 'white';
       
         // Create the add button
         const addBtn = document.createElement('button');
         addBtn.textContent = '➕';
         addBtn.title = `Add ${gateName}`;
         addBtn.style.cssText = 'font-size: 1em; padding: 4px 8px; width: auto; height: auto; min-width: 32px; min-height: 32px; cursor: pointer; flex-shrink: 0; white-space: nowrap;';
-        addBtn.addEventListener('click', (e) => {e.stopPropagation();handleGateSelect(presetName, gateName);}); // Handle the button click event
+        addBtn.addEventListener('click', (e) => {e.stopPropagation();handleGateSelect(presetName, gateName);});
       
         // Append the label and add button to gate item
         gateItem.appendChild(gateLabel);
         gateItem.appendChild(addBtn);
         gateListDiv.appendChild(gateItem);
     });
-    presetButton.appendChild(gateListDiv); // Append gate list to preset button
-    presetListDiv.appendChild(presetButton); // Append preset button to the list
+    presetButton.appendChild(gateListDiv);
+    presetListDiv.appendChild(presetButton);
   });
-  document.getElementById('import-modal').style.minHeight = '350px'; // Expand the modal visually
+  document.getElementById('import-modal').style.minHeight = '350px';
 }
 
 
@@ -171,11 +167,11 @@ function showGateDetails(presetName, gateName) {
   // 3. Open the internals viewer
   window.open('/gate-internals/gate-internals.html', '_blank');
 
-  // 4. Remove it after a delay (if needed)
+  // 4. Remove it after a delay
   setTimeout(() => {
     delete gateDefinitions[gateName];
     localStorage.setItem('BinaryLogic_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-  }, 1000); // Give it 1 second before cleanup
+  }, 1000);
 };
 
 
@@ -196,9 +192,9 @@ function extractGateRelations(gateDefs) {
 
     def.Circuit.gates.forEach(gate => {
       const gateType = gate.id.split('-')[0];
-      if (gateType == "INPUT" || gateType == "OUTPUT") return;// Skip INPUT/OUTPUT pseudo-gates entirely
-      if (!relations[gateType]) relations[gateType] = new Set();// Initialize relation map if needed
-      relations[gateType].add(gateName);// Add dependent if not already present
+      if (gateType == "INPUT" || gateType == "OUTPUT") return;
+      if (!relations[gateType]) relations[gateType] = new Set();
+      relations[gateType].add(gateName);
     });
   }
   return relations;

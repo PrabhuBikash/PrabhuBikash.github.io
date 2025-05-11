@@ -11,16 +11,16 @@ const editor = CodeMirror.fromTextArea(codeEditor, {
   theme: "material-darker",
   indentUnit: 2,
   tabSize: 2,
-  readOnly: true, // Initially, the editor will be read-only
+  readOnly: true,
 });
 editor.setSize('100%', '100%');
 
 //----------------------------------- Configure Terminal -----------------------------------//
 const term = new Terminal({
-  cols: 80,  // Set the width of the terminal
-  rows: 30,  // Set the height of the terminal
-  cursorBlink: true,  // Enable cursor blink
-  fontFamily: "monospace",  // Set terminal font to monospace
+  cols: 80,
+  rows: 30,
+  cursorBlink: true,
+  fontFamily: "monospace",
   theme: {
     background: '#333',
   }
@@ -31,9 +31,9 @@ term.open(output);
 function toggleMenu(state = null) {
   const menu = document.getElementById('side-menu');
   if (state === null) state = !menu.classList.contains('active');// If state is not provided (null), toggle based on the current state
-  if (state) menu.classList.add('active'); // Open the menu
-  else menu.classList.remove('active'); // Close the menu
-  document.querySelector('.hamburger-menu').innerHTML = state ? '✖️' : '&#9776;';// Update the hamburger icon based on the state
+  if (state) menu.classList.add('active');
+  else menu.classList.remove('active');
+  document.querySelector('.hamburger-menu').innerHTML = state ? '✖️' : '&#9776;';
 }
 
 //----------------------------------- Edit/Lock -----------------------------------//
@@ -46,7 +46,7 @@ function toggleEdit() {
   } else {
     editor.setOption("readOnly", true);
     editButton.textContent = "✏️ Edit";
-    editButton.style.backgroundColor = "#3498db"; // back to blue
+    editButton.style.backgroundColor = "#3498db";
   }
 }
 
@@ -85,12 +85,12 @@ function toggleInfoModal() {
 //----------------------------------- Project Loader -----------------------------------//
 function loadProjects() {
   const projectList = document.getElementById('project-list');
-  projectList.innerHTML = ""; // Clear old entries
+  projectList.innerHTML = "";
 
   projectListData.forEach(project => {
     const li = document.createElement('li');
     li.textContent = project.name;
-    li.setAttribute("data-project-id", project.id); // <- this important
+    li.setAttribute("data-project-id", project.id);
     li.onclick = () => loadProject(project);
     projectList.appendChild(li);
   });

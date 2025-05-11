@@ -8,7 +8,7 @@ let colors = []
 let metadata = JSON.stringify(symbols);
 
 //--------------------------The original gate creating function---------------------------------//
-function createGhostGate(type, startX, startY) { // We will treat Input and Output node as Gates as well
+function createGhostGate(type, startX, startY) {
   const {numberOfInputs, numberOfOutputs} = gateDefinitions[type];
   const gateHeight = Math.max(40, ((Math.max(numberOfInputs, numberOfOutputs) + 1) * 15)-5);
   
@@ -23,7 +23,7 @@ function createGhostGate(type, startX, startY) { // We will treat Input and Outp
   gate.style.left = `${startX}px`;
   gate.style.top = `${startY}px`;
   gate.style.height = `${gateHeight}px`;
-  gate.style.pointerEvents = 'none'; // so it doesn't interfere during dragging
+  gate.style.pointerEvents = 'none';
   gate.appendChild(label);
 
   // Create input ports
@@ -51,7 +51,7 @@ function createGhostGate(type, startX, startY) { // We will treat Input and Outp
     output.addEventListener("pointerdown", () => createWire(output));
     gate.appendChild(output);
   }
-  document.body.appendChild(gate); // Now the gate is rendered
+  document.body.appendChild(gate);
   addLogic(gate);
 
   // Handle dragging with pointer events
@@ -92,7 +92,7 @@ function createGhostGate(type, startX, startY) { // We will treat Input and Outp
     gate.addEventListener('contextmenu', (e) => { e.preventDefault(); showGateMenu(e.pageX, e.pageY, gate); });
     gate.style.left = `${Math.max(0, Math.min(e.clientX - canvasRect.left - offsetX, canvas.clientWidth - gate.offsetWidth))}px`;
     gate.style.top = `${Math.max(0, Math.min(e.clientY - canvasRect.top - offsetY, canvas.clientHeight - gate.offsetHeight))}px`;
-    updateAllWires(Wires); // 🔁 Update wires during drag
+    updateAllWires(Wires);
   }
 }
 //--------------------------------Wire Creation-----------------------------//
@@ -166,7 +166,7 @@ function circuitToGate() {
     return aRect.left - bRect.left;
   };
   
-  const gateCounters = {}; // Assign IDs to gates (based on their type)
+  const gateCounters = {};
   const gates = [...mainCanvas.querySelectorAll(':scope > .input-node, :scope > .logic-gate, :scope > .output-node')].sort(byYX).map((node) => {
     const type = node.dataset.type;
     gateCounters[type] = (gateCounters[type] || 0);
@@ -222,7 +222,7 @@ function createInstanceFromCircuit(inputNodes,outputNodes,gateEl) {
   }
 
   gates.forEach(({id, position}) => internalGates.set(id,createLogicalGate(id)));
-  wires.forEach(({from,to,bends}) => { // 3. Wire Internal Gates
+  wires.forEach(({from,to,bends}) => {
     const [fromGateId, fromPortindex] = from.split('@');
     const [toGateId, toPortindex] = to.split('@');
     const fromPort = fromGateId.split('-')[0] == 'INPUT' ? internalGates.get(fromGateId) : internalGates.get(fromGateId).querySelectorAll('.output-port')[fromPortindex];
@@ -230,7 +230,7 @@ function createInstanceFromCircuit(inputNodes,outputNodes,gateEl) {
     fromPort.addEventListener('signalchange', () => toPort.signal = fromPort.signal);
     toPort.signal = fromPort.signal
   });
-  innerCanvas.style.pointerEvents = 'none';   // ← Prevent it from blocking clicks
+  innerCanvas.style.pointerEvents = 'none';
   innerCanvas.style.display = 'none';
   gateEl.appendChild(innerCanvas);
 }

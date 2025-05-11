@@ -99,7 +99,7 @@ const editor = CodeMirror.fromTextArea(gateLogic, {
   theme: "material-darker",
   indentUnit: 2,
   tabSize: 2,
-  readOnly: "true",     // disables editing *and* hides the cursor
+  readOnly: "true",
 });
 
 nextBtn.onclick = () => confirmModal.style.display = 'flex';
@@ -118,7 +118,7 @@ confirmBtn.onclick = () => {
 };
 
 //--------------------------delay Input handler---------------------------------//
-let userDelay = 0; // default value
+let userDelay = 0;
 document.getElementById("delay-input").addEventListener("input", e => userDelay = parseInt(e.target.value) || 0);
 
 

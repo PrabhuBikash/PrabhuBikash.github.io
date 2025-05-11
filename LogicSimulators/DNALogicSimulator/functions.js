@@ -15,7 +15,7 @@ function makeSignalProperty(element, initialValue = 0) {
     configurable: true,
     enumerable: true,
   });
-  element.signal = initialValue; // set the initial value
+  element.signal = initialValue;
 }
 
 //--------------------------Enable Drag---------------------------------//
@@ -39,7 +39,7 @@ function makeElementDraggable(el,WireList = Wires) {
     const canvasRect = canvas.getBoundingClientRect();
     el.style.left = `${Math.max(0, Math.min(e.clientX - canvasRect.left - offsetX, canvas.clientWidth - el.offsetWidth))}px`;
     el.style.top = `${Math.max(0, Math.min(e.clientY - canvasRect.top - offsetY, canvas.clientHeight - el.offsetHeight))}px`;
-    updateAllWires(WireList); // 🔁 Update wires during drag
+    updateAllWires(WireList);
   });
 
   document.addEventListener('pointerup', () => {
@@ -77,13 +77,13 @@ function addLogic(gate) {
     };
     inputPortEls.forEach(input => input.addEventListener('signalchange', handleUpdate));
     handleUpdate();
-  } else createInstanceFromCircuit(inputPortEls,outputPortEls,gate); // Circuit logic
+  } else createInstanceFromCircuit(inputPortEls,outputPortEls,gate);
 }
 
 //--------------------------Populate Side Bar---------------------------------//
 function refreshSidebar() {
   const sidebar = document.querySelector('.sidebar');
-  sidebar.innerHTML = '<h2>Components</h2>'; // Clear the sidebar and re-populate, Keep the header
+  sidebar.innerHTML = '<h2>Components</h2>';
 
   for (const name in gateDefinitions) {
     const comp = document.createElement('div');
@@ -101,7 +101,7 @@ function refreshSidebar() {
 //--------------------------View gate Menu---------------------------------//
 function showGateMenu(x, y, gate, comp = false) {
   const gateName = gate.dataset.type;
-  document.querySelector('.gate-context-menu')?.remove(); // Remove existing menu if any
+  document.querySelector('.gate-context-menu')?.remove();
 
   const menu = document.createElement('div');
   menu.classList.add('gate-context-menu');
@@ -131,8 +131,6 @@ function showGateMenu(x, y, gate, comp = false) {
 
   menu.append(deleteOption, peekOption);
   document.body.appendChild(menu);
-
-  // Auto remove on click outside
   document.addEventListener('click', function onClickOutside() { menu.remove()}, { once: true });
 }
 
@@ -149,8 +147,6 @@ function getAllDependentGates(gateName, visited = new Set()) {
 //--------------------------View gate logic---------------------------------//
 function openGateInternals(gateInstance) {
   sessionStorage.setItem('DNA_selectedGate', JSON.stringify([gateInstance.dataset.type]));
-
-  // Open gate-internals.html page
   window.open('gateInternals/', '_blank');
 }
 

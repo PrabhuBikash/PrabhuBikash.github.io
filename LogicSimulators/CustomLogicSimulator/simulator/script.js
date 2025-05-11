@@ -1,4 +1,4 @@
-const mainCanvas = document.getElementById('canvas'); // Get reference to the mainCanvas
+const mainCanvas = document.getElementById('canvas');
 const svg = document.getElementById('wire-layer');
 //------------------------- while reloding -------------------------//
 window.onload = function () {

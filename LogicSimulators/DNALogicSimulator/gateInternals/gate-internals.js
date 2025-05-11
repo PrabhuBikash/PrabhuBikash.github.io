@@ -1,4 +1,3 @@
-// gate-internals/gate-internals.js
 const canvas = document.getElementById('canvas');
 const svg_ = document.getElementById('wire-layer');
 let mainGate;
@@ -53,7 +52,7 @@ window.onload = () => {
 };
 
 //--------------------------delay Input handler---------------------------------//
-let userDelay = 0; // default value
+let userDelay = 0;
 document.getElementById("delay-input").addEventListener("input", e => userDelay = parseInt(e.target.value) || 0);
 
 //--------------------------Main Reconstruction function---------------------------------//
@@ -73,7 +72,7 @@ function reconstructGateFromDefinition(Circuit) {
   });
 }
 //--------------------------Gates---------------------------------//
-function createShowGate(type, {x, y}) { // We will treat Input and Output node as Gates as well
+function createShowGate(type, {x, y}) {
   const {numberOfInputs, numberOfOutputs} = gateDefinitions[type];
   const gateHeight = Math.max(40, ((Math.max(numberOfInputs, numberOfOutputs) + 1) * 15)-5);
   
@@ -112,7 +111,7 @@ function createShowGate(type, {x, y}) { // We will treat Input and Output node a
     makeSignalProperty(output);
     gate.appendChild(output);
   }
-  document.body.appendChild(gate); // Now the gate is rendered
+  document.body.appendChild(gate);
   addLogic(gate);
   canvas.appendChild(gate);
   makeElementDraggable(gate,Wires_);
@@ -160,7 +159,7 @@ document.addEventListener('pointermove', () => {
 });
 //--------------------------Menu---------------------------------//
 function showGateMenu_(x, y, gate) {
-  document.querySelector('.gate-context-menu')?.remove(); // Remove existing menu if any
+  document.querySelector('.gate-context-menu')?.remove();
 
   const menu = document.createElement('div');
   menu.classList.add('gate-context-menu');
@@ -174,8 +173,6 @@ function showGateMenu_(x, y, gate) {
 
   menu.append(peekOption);
   document.body.appendChild(menu);
-
-  // Auto remove on click outside
   document.addEventListener('click', function onClickOutside() { menu.remove(); document.removeEventListener('click', onClickOutside); }, { once: true });
 }
 
@@ -183,7 +180,7 @@ function showGateMenu_(x, y, gate) {
 function openGateInternals_(gateInstance) {
   Breadcrumb.push(gateInstance.dataset.type);
   sessionStorage.setItem('DNA_selectedGate', JSON.stringify(Breadcrumb));
-  location.replace(location.href);  // Replace the current page with the updated state
+  location.replace(location.href);
 }
 
 
@@ -198,9 +195,9 @@ function updateBreadcrumb() {
     link.style.cursor = 'pointer';
 
     link.addEventListener('click', () => {
-      Breadcrumb = Breadcrumb.slice(0, index + 1);  // Trim the breadcrumb
+      Breadcrumb = Breadcrumb.slice(0, index + 1);
       sessionStorage.setItem('DNA_selectedGate', JSON.stringify(Breadcrumb));
-      location.reload();  // Go back to that gate level
+      location.reload();
     });
 
     breadcrumbContainer.appendChild(link);

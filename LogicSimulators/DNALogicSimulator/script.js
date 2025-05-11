@@ -1,4 +1,4 @@
-const mainCanvas = document.getElementById('canvas'); // Get reference to the mainCanvas
+const mainCanvas = document.getElementById('canvas');
 const svg = document.getElementById('wire-layer');
 //------------------------- while reloding -------------------------//
 window.onload = function () {
@@ -23,7 +23,7 @@ window.onload = function () {
 };
 
 //--------------------------delay Input handler---------------------------------//
-let userDelay = 0; // default value
+let userDelay = 0;
 document.getElementById("delay-input").addEventListener("input", e => userDelay = parseInt(e.target.value) || 0);
 
 //------------------------- Save gate button -------------------------//
@@ -44,7 +44,6 @@ document.getElementById('save-gate-btn').addEventListener('click', () => {
     refreshSidebar();
     localStorage.setItem('DNA_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
     localStorage.setItem('DNA_gateRelations', makeStorableGateDefinitions(gateRelations));
-    // Optional: log generated function code
     console.log(name, ':' ,gateDefinitions[name]);
     alert(`Gate "${name}" saved successfully!`);
   } catch (e) {
@@ -54,7 +53,7 @@ document.getElementById('save-gate-btn').addEventListener('click', () => {
 });
 
 //--------------------------delete mode handler---------------------------------//
-let deleteMode = false; // You can toggle this with a button
+let deleteMode = false;
 document.getElementById('delete-mode-toggle').addEventListener('click', () => {
   deleteMode = !deleteMode;
   document.body.classList.toggle('delete-mode', deleteMode);
@@ -85,7 +84,7 @@ document.getElementById('download-config-btn').addEventListener('click', () => {
     const url = URL.createObjectURL(new Blob([configString], { type: 'application/json' }));
     const a = document.createElement('a');
     a.href = url;
-    a.download = filename; // Use the filename specified by the user
+    a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
     document.getElementById('download-modal').style.display = 'none';
@@ -96,7 +95,7 @@ document.getElementById('download-config-btn').addEventListener('click', () => {
 
 //-------------------------Import Logic.txt-------------------------//
 const modal = document.getElementById('import-modal');
-document.getElementById('import-btn').addEventListener('click', () => modal.style.display = 'block');  // Display the modal
+document.getElementById('import-btn').addEventListener('click', () => modal.style.display = 'block');
 document.getElementById('import-modal-close').addEventListener('click', () => {
   document.getElementById('import-modal').style.display = 'none';
   back()
@@ -119,7 +118,7 @@ document.getElementById('load-preset-btn').addEventListener('click', showPresetD
 
 
 document.addEventListener('contextmenu', (e) => {
-  e.stopPropagation(); // optional: prevents other listeners if you're debugging
+  e.stopPropagation();
   console.log('Context menu triggered on:', e.target);
   console.log('Element stack under cursor:', document.elementsFromPoint(e.clientX, e.clientY));
 });

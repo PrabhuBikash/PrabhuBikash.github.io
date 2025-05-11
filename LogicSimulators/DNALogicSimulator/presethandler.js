@@ -25,11 +25,7 @@ function handleGateFileUpload(file, onSuccess = () => {}, onError = () => {}) {
 
       // 🧠 Extract gate dependencies from incoming gates
       const incomingDefs = makeUsableGateDefinitions(raw);
-      const allKnownGates = new Set([
-        ...Object.keys(gateDefinitions), // existing
-        ...Object.keys(incomingDefs)     // incoming
-      ]);
-
+      const allKnownGates = new Set([...Object.keys(gateDefinitions),...Object.keys(incomingDefs)]);
       const incomingDeps = extractGateRelations(incomingDefs);
 
       const missingDeps = [];
@@ -74,31 +70,31 @@ function showPresetDropdown() {
   document.getElementById('load-preset-btn').style.display = 'none';
   document.getElementById('back-btn').style.display = 'inline-block';
   document.getElementById('preset-selector').style.display = 'block';
-  const presetListDiv = document.getElementById('preset-list');// Show the preset section
-  presetListDiv.innerHTML = ''; // Clear any previous list
+  const presetListDiv = document.getElementById('preset-list');
+  presetListDiv.innerHTML = '';
   
   Object.keys(presetLibrary).forEach(presetName => {
     const presetButton = Object.assign(document.createElement('button'),{textContent: `📚 ${presetName}`});
-    const gateListDiv = document.createElement('div');gateListDiv.classList.add('preset-gates-list');// Create a dropdown for gates under this preset
-    presetButton.addEventListener('click', () => {// Close all other presets & Toggle the current gate list
-      document.querySelectorAll('.preset-gates-list').forEach(gateList => {if (gateList !== gateListDiv) gateList.style.display = 'none';}); // Close all other dropdowns
-      if (gateListDiv.style.display === "block") gateListDiv.style.display = "none";   // Hide the element
-      else gateListDiv.style.display = "block"; // Show the element
+    const gateListDiv = document.createElement('div');gateListDiv.classList.add('preset-gates-list');
+    presetButton.addEventListener('click', () => {
+      document.querySelectorAll('.preset-gates-list').forEach(gateList => {if (gateList !== gateListDiv) gateList.style.display = 'none';});
+      if (gateListDiv.style.display === "block") gateListDiv.style.display = "none";
+      else gateListDiv.style.display = "block";
     });
 
     // Create the add button for the entire preset (Install all gates in this preset)
     const installAllBtn = Object.assign(document.createElement('button'),{textContent: '➕ Add All',title: `Add ${presetName}`,onclick:() => installAllGates(presetName)});
     installAllBtn.style.cssText = 'font-size: 1em; padding: 4px 8px; width: auto; height: auto; min-width: 32px; min-height: 32px; cursor: pointer;';
-    gateListDiv.appendChild(installAllBtn);// Append the Install All button to the preset list
+    gateListDiv.appendChild(installAllBtn);
 
     Object.keys(presetLibrary[presetName]).forEach(gateName => {
       const gateItem = document.createElement('div');
       gateItem.style.display = 'flex';
-      gateItem.style.alignItems = 'center'; // Align items vertically centered
-      gateItem.style.justifyContent = 'space-between'; // Space between the gate name and add button
+      gateItem.style.alignItems = 'center';
+      gateItem.style.justifyContent = 'space-between';
       gateItem.style.marginBottom = '4px';
       gateItem.style.padding = '6px';
-      gateItem.style.border = '1px solid #ddd'; // Optional: Add a border between each gate item
+      gateItem.style.border = '1px solid #ddd';
       gateItem.style.borderRadius = '5px';
       const gateDefinition = presetLibrary[presetName][gateName];
       gateItem.title = gateDefinition.simulate ? gateDefinition.simulate.toString() : JSON.stringify(gateDefinition, null, 2);
@@ -115,15 +111,13 @@ function showPresetDropdown() {
       addBtn.title = `Add ${gateName}`;
       addBtn.style.cssText = 'font-size: 1em; padding: 4px 8px; width: auto; height: auto; min-width: 32px; min-height: 32px; cursor: pointer;';
       addBtn.addEventListener('click', (e) => { e.stopPropagation(); handleGateSelect(presetName, gateName); });
-        // Append gate label and add button
       gateItem.append(gateLabel,addBtn);
       gateListDiv.appendChild(gateItem);
     });
-    // Append the gate list to the preset button
     presetButton.appendChild(gateListDiv);
     presetListDiv.appendChild(presetButton);
   });
-  document.getElementById('import-modal').style.minHeight = '350px';// Adjust the modal size dynamically
+  document.getElementById('import-modal').style.minHeight = '350px';
 }
 
 
@@ -134,14 +128,14 @@ function handleGateSelect(presetName, gateName) {
   gateDefinitions[gateName] = selectedGate;
   localStorage.setItem('DNA_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
   refreshSidebar();
-  alert(`"${gateName}" have been added!`);// Optionally, update UI to reflect the added gates
+  alert(`"${gateName}" have been added!`);
 }
 
 function installAllGates(presetName) {
   gateDefinitions = { ...gateDefinitions, ...presetLibrary[presetName] };
   localStorage.setItem('DNA_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
   refreshSidebar()
-  alert(`All gates from preset "${presetName}" have been added!`);// Optionally, update UI to reflect the added gates
+  alert(`All gates from preset "${presetName}" have been added!`);
 }
 
 function showGateDetails(presetName, gateName) {
@@ -155,16 +149,16 @@ function showGateDetails(presetName, gateName) {
   // 3. Open the internals viewer
   window.open('/gate-internals/gate-internals.html', '_blank');
 
-  // 4. Remove it after a delay (if needed)
+  // 4. Remove it after a delay
   setTimeout(() => {
     delete gateDefinitions[gateName];
     localStorage.setItem('DNA_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-  }, 1000); // Give it 1 second before cleanup
+  }, 1000);
 };
 
 
 function back(){
-  document.getElementById('import-modal').style.minHeight = 'auto';  // Revert to original height
+  document.getElementById('import-modal').style.minHeight = 'auto';
   document.getElementById('upload-file-btn').style.display = 'inline-block';
   document.getElementById('load-preset-btn').style.display = 'inline-block';
   document.getElementById('preset-selector').style.display = 'none';
@@ -182,9 +176,9 @@ function extractGateRelations(gateDefs) {
 
     def.Circuit.gates.forEach(gate => {
       const gateType = gate.id.split('-')[0];
-      if (gateType == "INPUT" || gateType == "OUTPUT") return;// Skip INPUT/OUTPUT pseudo-gates entirely
-      if (!relations[gateType]) relations[gateType] = [];// Initialize relation map if needed
-      relations[gateType].push(gateName);// Add dependent if not already present
+      if (gateType == "INPUT" || gateType == "OUTPUT") return;
+      if (!relations[gateType]) relations[gateType] = [];
+      relations[gateType].push(gateName);
     });
   }
   return relations;

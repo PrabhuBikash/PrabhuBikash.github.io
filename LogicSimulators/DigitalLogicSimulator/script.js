@@ -1,6 +1,6 @@
 const mainCanvaswrapper = document.querySelector('.canvas-wrapper')
-const mainCanvas = document.getElementById('canvas'); // Get reference to the mainCanvas
-const EDGE_MARGIN = 20; // Margin in pixels to consider as the "edge zone"
+const mainCanvas = document.getElementById('canvas');
+const EDGE_MARGIN = 20;
 //------------------------- while reloding -------------------------//
 window.onload = function () {
     if (localStorage.getItem("BinaryLogic_theme") === "dark") {
@@ -45,8 +45,6 @@ function updateAllWires() {
 
 
 //------------------------- Input-output logic -------------------------//
-
-// Listen for clicks inside the mainCanvas
 mainCanvas.addEventListener('click', (e) => {
   const rect = mainCanvas.getBoundingClientRect();
   const x = e.clientX - rect.left;
@@ -111,8 +109,6 @@ document.addEventListener('pointerup', (e) => {
     tempWire = null;
   }
 });
-
-// Update wire positions when gates move
 document.addEventListener('pointermove', updateAllWires);
 
 
@@ -135,7 +131,6 @@ document.getElementById('save-gate-btn').addEventListener('click', () => {
     refreshSidebar();
     localStorage.setItem('BinaryLogic_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
     localStorage.setItem('BinaryLogic_gateRelations', makeStorableGateDefinitions(gateRelations));
-    // Optional: log generated function code
     console.log(name, ':' ,gateDefinitions[name]);
     alert(`Gate "${name}" saved successfully!`);
   } catch (e) {
@@ -149,18 +144,16 @@ document.getElementById('save-gate-btn').addEventListener('click', () => {
 let deleteMode = false;
 
 document.getElementById('delete-mode-toggle').addEventListener('click', () => {
-  // Toggle the delete mode on the body by adding/removing the 'delete-mode' class
   deleteMode = !deleteMode;
   document.body.classList.toggle('delete-mode', deleteMode);
-
-  // Optionally change the text on the button
+  
   const button = document.getElementById('delete-mode-toggle');
   if (deleteMode) {
-    button.innerText = 'Exit Delete Mode 🛑';  // Change text when delete mode is active
-    button.classList.add('active');  // Add 'active' class to button
+    button.innerText = 'Exit Delete Mode 🛑';
+    button.classList.add('active');
   } else {
-    button.innerText = '🗑️ Delete Mode';  // Reset text when delete mode is inactive
-    button.classList.remove('active');  // Remove 'active' class from button
+    button.innerText = '🗑️ Delete Mode';
+    button.classList.remove('active');
   }
 });
 
@@ -181,7 +174,7 @@ document.getElementById('download-config-btn').addEventListener('click', () => {
     const url = URL.createObjectURL(new Blob([configString], { type: 'application/json' }));
     const a = document.createElement('a');
     a.href = url;
-    a.download = filename; // Use the filename specified by the user
+    a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
     document.getElementById('download-modal').style.display = 'none';
@@ -193,7 +186,7 @@ document.getElementById('download-config-btn').addEventListener('click', () => {
 
 //-------------------------Import Logic.txt-------------------------//
 const modal = document.getElementById('import-modal');
-document.getElementById('import-btn').addEventListener('click', () => modal.style.display = 'block');  // Display the modal
+document.getElementById('import-btn').addEventListener('click', () => modal.style.display = 'block');
 document.getElementById('import-modal-close').addEventListener('click', () => {
   document.getElementById('import-modal').style.display = 'none';
   back()

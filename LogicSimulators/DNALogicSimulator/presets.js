@@ -1,5 +1,3 @@
-// presets.js
-
 // Define reusable logic gate collections here.
 // Each preset is a named object with multiple gates inside.
 
@@ -75,5 +73,4 @@ const presetLibrary = {
   },
 };
 
-// Exported for use in other scripts
 window.presetLibrary = presetLibrary;

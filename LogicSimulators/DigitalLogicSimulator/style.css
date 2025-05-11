@@ -1,4 +1,3 @@
-/* style.css */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -25,12 +24,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 24px 16px 100px 16px; /* Generous padding including bottom */
+  padding: 24px 16px 100px 16px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
-  max-height: 100vh;         /* Full viewport height */
+  max-height: 100vh;
   position: relative;
-  max-height: calc(100vh - 20px); /* Give some room at bottom */
-  padding-bottom: 100px; /* Add bottom space for safety */
+  max-height: calc(100vh - 20px);
+  padding-bottom: 100px;
   overflow-y: auto;
 }
 
@@ -64,7 +63,7 @@ body {
   height: 100%;
   position: relative;
   padding: 20px;
-  overflow: hidden; /* ✅ Prevents scroll */
+  overflow: hidden;
 }
 
 .input-zone, .output-zone {
@@ -85,8 +84,8 @@ body {
   height: 90%;
   width: 100%;
   border: 4px solid #ccc;
-  border-left: 10px solid #90caf9; /* Left side for inputs */
-  border-right: 10px solid #a5d6a7; /* Right side for outputs */
+  border-left: 10px solid #90caf9;
+  border-right: 10px solid #a5d6a7;
   background-color: #ffffff;
 }
 
@@ -146,7 +145,7 @@ body {
   text-align: center;
   font-family: monospace;
   text-overflow: ellipsis;
-  max-width: 100%; /* relies on container's width */
+  max-width: 100%;
   font-family: monospace;
   text-align: center;
   pointer-events: none;
@@ -188,7 +187,7 @@ body {
   left: 0;
   pointer-events: none;
   overflow: visible;
-  z-index: 0; /* Make sure it's underneath the gates */
+  z-index: 0;
 }
 
 #wire-layer line {
@@ -231,7 +230,7 @@ body.dragging-wire .input-port:hover {
 
 /* Header Style */
 #top-bar {
-  background-color: #2c3e50; /* Dark background for the top bar */
+  background-color: #2c3e50;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -256,7 +255,7 @@ body.dragging-wire .input-port:hover {
 
 /* Delete Mode Button */
 #delete-mode-toggle {
-  background: #f44336; /* Red background */
+  background: #f44336;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -269,21 +268,21 @@ body.dragging-wire .input-port:hover {
 }
 
 #delete-mode-toggle:hover {
-  background: #d32f2f; /* Slightly darker red when hovered */
-  transform: scale(1.05); /* Slightly enlarge the button when hovered */
+  background: #d32f2f;
+  transform: scale(1.05);
 }
 
 #delete-mode-toggle.active {
-  background: #b71c1c; /* Darker red when active */
+  background: #b71c1c;
 }
 
 #delete-mode-toggle:active {
-  transform: scale(0.98); /* Slightly shrink when pressed */
+  transform: scale(0.98);
 }
 
 /* Save Gate Button */
 #save-gate-btn {
-  background: #4caf50; /* Green background */
+  background: #4caf50;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -296,22 +295,21 @@ body.dragging-wire .input-port:hover {
 }
 
 #save-gate-btn:hover {
-  background: #388e3c; /* Slightly darker green when hovered */
-  transform: scale(1.05); /* Slightly enlarge the button when hovered */
+  background: #388e3c;
+  transform: scale(1.05);
 }
 
 #save-gate-btn:active {
-  transform: scale(0.98); /* Slightly shrink when pressed */
+  transform: scale(0.98);
 }
 
 #save-gate-btn[disabled] {
-  background: #9e9e9e; /* Disabled button background */
+  background: #9e9e9e;
   cursor: not-allowed;
 }
 
-/* Optional: Add a background hover effect for the whole top bar */
 #top-bar:hover {
-  background-color: #34495e; /* Slightly lighter shade when hovering over the header */
+  background-color: #34495e;
 }
 
 /* Responsiveness for smaller screens */
@@ -333,7 +331,7 @@ body.dragging-wire .input-port:hover {
 }
 
 #download-config-btn {
-  background: #8e24aa; /* Purple */
+  background: #8e24aa;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -346,7 +344,7 @@ body.dragging-wire .input-port:hover {
 }
 
 #download-config-btn:hover {
-  background-color: #7b1fa2; /* Slightly darker purple on hover */
+  background-color: #7b1fa2;
   transform: scale(1.05);
 }
 
@@ -373,11 +371,11 @@ body.dragging-wire .input-port:hover {
 }
 
 #import-file-input {
-  display: none; /* still hides the input but it's accessible via the label */
+  display: none;
 }
 
 #hard-reset-btn {
-  background: #ff9800; /* Orange tone */
+  background: #ff9800;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -476,7 +474,7 @@ body.dragging-wire .input-port:hover {
   background-color: #c82333;
 }
 
-/* Close button (optional) */
+/* Close butto*/
 #download-modal .close-btn {
   position: absolute;
   top: 10px;
@@ -520,7 +518,7 @@ body.dragging-wire .input-port:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #f3f4f6; /* soft light gray */
+  background-color: #f3f4f6;
   border: 2px solid #444;
   border-radius: 8px;
   padding: 1.5em;
@@ -591,9 +589,9 @@ body.dragging-wire .input-port:hover {
   background-color: #666;
 }
 
-/* Dropdown for gates (this will now be visible in document flow) */
+/* Dropdown for gates*/
 .preset-gates-list {
-  display: none; /* Hidden by default */
+  display: none;
   background-color: #333;
   padding: 5px;
   border-radius: 6px;
@@ -667,7 +665,7 @@ body.dragging-wire .input-port:hover {
 }
 
 #breadcrumb a {
-  color: #6d28d9; /* Vibrant purple for idle state */
+  color: #6d28d9;
   text-decoration: none;
   position: relative;
   cursor: pointer;
@@ -683,14 +681,14 @@ body.dragging-wire .input-port:hover {
   height: 2px;
   bottom: -3px;
   left: 0;
-  background-color: #a78bfa; /* Softer lilac underline */
+  background-color: #a78bfa;
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s ease;
 }
 
 #breadcrumb a:hover {
-  color: #a855f7; /* Brighten on hover */
+  color: #a855f7;
   opacity: 1;
 }
 

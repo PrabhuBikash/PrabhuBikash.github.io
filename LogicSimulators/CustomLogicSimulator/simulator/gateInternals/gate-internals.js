@@ -1,4 +1,3 @@
-// gate-internals/gate-internals.js
 const canvas = document.getElementById('canvas');
 const svg_ = document.getElementById('wire-layer');
 let mainGate;

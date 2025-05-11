@@ -1,4 +1,3 @@
-/* style.css */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -27,11 +26,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 24px 16px 100px 16px; /* Generous padding including bottom */
-  max-height: 100vh;         /* Full viewport height */
+  padding: 24px 16px 100px 16px;
+  max-height: 100vh;
   position: relative;
-  max-height: calc(100vh - 20px); /* Give some room at bottom */
-  padding-bottom: 100px; /* Add bottom space for safety */
+  max-height: calc(100vh - 20px);
+  padding-bottom: 100px;
   overflow-y: auto;
 }
 
@@ -82,7 +81,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0; /* below gates if needed */
+  z-index: 0;
   pointer-events: none;
 }
 
@@ -90,7 +89,7 @@ body {
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
   transition: all 0.15s ease;
   z-index: 100;
-  pointer-events: all; /* clickable only on the stroke area */
+  pointer-events: all;
   cursor: crosshair;
 }
 
@@ -105,7 +104,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 12px 24px;
-  background-color: #222; /* dark top bar */
+  background-color: #222;
   color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
@@ -199,7 +198,7 @@ button {
 }
 
 .logic-gate {
-  background-color: #f3e5f5; /* soft lavender */
+  background-color: #f3e5f5;
   color: #333;
   font-weight: bold;
   min-width: 70px;
@@ -420,7 +419,7 @@ button {
 }
 
 #import-file-input {
-  display: none; /* still hides the input but it's accessible via the label */
+  display: none;
 }
 
 
@@ -430,7 +429,7 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1e1e2f; /* Deep Dark Blue */
+  background: #1e1e2f;
   border: 1px solid #3b3b57;
   border-radius: 16px;
   padding: 2.5em;
@@ -440,7 +439,7 @@ button {
   width: 100%;
   display: none;
   animation: fadeInOpacity 0.3s ease-in-out;
-  color: #f5f5f5; /* Light Text */
+  color: #f5f5f5;
 }
 
 /* Smooth Fade-In */
@@ -449,7 +448,7 @@ button {
   to { opacity: 1; }
 }
 
-/* Modal Buttons (Preset and Upload) */
+/* Modal Buttons*/
 #import-modal .modal-buttons {
   display: flex;
   gap: 16px;
@@ -457,7 +456,7 @@ button {
 }
 
 .import-modal-button {
-  background-color: #2b2b3b; /* Darker Grey-Blue */
+  background-color: #2b2b3b;
   color: #fff;
   border: 1px solid #444;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -471,7 +470,7 @@ button {
 }
 
 .import-modal-button:hover {
-  background-color: #575d72; /* Lighter Blue-Gray */
+  background-color: #575d72;
   transform: translateY(-2px);
 }
 
@@ -496,7 +495,7 @@ button {
 .preset-list button {
   width: 100%;
   padding: 15px;
-  background-color: #353545; /* Dark Grey */
+  background-color: #353545;
   color: #f5f5f5;
   border: none;
   border-radius: 10px;
@@ -507,7 +506,7 @@ button {
 }
 
 .preset-list button:hover {
-  background-color: #484851; /* Slightly lighter */
+  background-color: #484851;
   transform: translateX(5px);
 }
 
@@ -533,7 +532,7 @@ button {
 }
 
 .preset-gates-list button:hover {
-  background-color: #4a4a5a; /* Darker Grey for Hover */
+  background-color: #4a4a5a;
 }
 
 /* Gate Name Styling */
@@ -563,7 +562,7 @@ button {
 }
 
 #import-modal-close:hover {
-  color: #ff6b6b; /* Soft Red on hover */
+  color: #ff6b6b;
 }
 
 /* Back Button */
@@ -581,7 +580,7 @@ button {
 }
 
 #back-btn:hover {
-  color: #f39c12; /* Yellowish on hover */
+  color: #f39c12;
 }
 
 /* Custom Scrollbar for Modal */
@@ -612,7 +611,7 @@ button {
 }
 
 #breadcrumb a {
-  color: #6d28d9; /* Vibrant purple for idle state */
+  color: #6d28d9;
   text-decoration: none;
   position: relative;
   cursor: pointer;
@@ -628,14 +627,14 @@ button {
   height: 2px;
   bottom: -3px;
   left: 0;
-  background-color: #a78bfa; /* Softer lilac underline */
+  background-color: #a78bfa;
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s ease;
 }
 
 #breadcrumb a:hover {
-  color: #a855f7; /* Brighten on hover */
+  color: #a855f7;
   opacity: 1;
 }
 
@@ -661,7 +660,7 @@ button {
   font-family: 'Segoe UI', sans-serif;
   font-size: 14px;
   overflow: hidden;
-  z-index: 100; /* High enough to float above everything else */
+  z-index: 100;
   animation: fadeIn 0.2s ease-out;
 }
 
