@@ -7,7 +7,7 @@ function updateBaseFromSymbols() {
 }
 // -------------------------------- HCL to HEX -----------------------------------//
 function toHex(color) {
-  const ctx = document.createElement("canvas").getContext("2d");// we are creating a dom element for this! will not it bother the browser?
+  const ctx = document.createElement("canvas").getContext("2d");
   ctx.fillStyle = color;
   return ctx.fillStyle;
 }
@@ -17,7 +17,7 @@ function updateColorPickers() {
   colorPreview.innerHTML = ''; // Clear old pickers
   
   // Extend or preserve existing colors array
-  colors = colors.slice(0, symbols.length); // trim if needed
+  colors = colors.slice(0, symbols.length);
   while (colors.length < symbols.length) {
     const hue = Math.floor(360 * colors.length / symbols.length);
     colors.push(`hsl(${hue}, 100%, 50%)`);
@@ -64,105 +64,6 @@ function makeStorableGateDefinitions(defs) {
     ])), null, 2
   );
 }
-
-
-/*
-// -------------------------------- SetupCodeEditor -----------------------------------//
-function loadUserGateLogic(code) {
-  try {
-    const fn = new Function('symbols', `"use strict"; ${code}; return { AND };`); // returns named gates
-    const gates = fn(symbols);
-    console.log('Loaded gates:', gates);
-  } catch (err) {
-    console.error('Error in gate logic:', err);
-    // Show error to user in UI
-  }
-}
-
-// -------------------------------- Code Parser -----------------------------------//
-function extractGateFunctions(rawCode) {
-  const functionDefs = [];
-  const regex = /const\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*\(([^)]*)\)\s*=>\s*{/g;
-
-  let match;
-  while ((match = regex.exec(rawCode)) !== null) {
-    const name = match[1];      // Extract the gate name
-    const args = match[2];      // Extract the function arguments (inputs)
-    const bodyStart = match.index + match[0].length;
-    
-    // Find the closing brace for the function body
-    let braceCount = 1;
-    let i = bodyStart;
-    while (i < rawCode.length && braceCount > 0) {
-      if (rawCode[i] === '{') braceCount++;
-      if (rawCode[i] === '}') braceCount--;
-      i++;
-    }
-
-    const body = rawCode.slice(bodyStart, i - 1);
-    functionDefs.push({ name, args, body });
-  }
-
-  return functionDefs;
-}
-
-// -------------------------------- syntax error? -----------------------------------//
-function checkReturnConsistency(cases,simulate, gateName) {
-  let numberOfOutputs = -1;
-  let currentcase;
-  try {
-    cases.forEach((inputs, idx) => {// Validate the gate function by testing it on each input combination
-      currentcase = inputs;
-      const outputs = simulate(inputs);
-      if (!Array.isArray(outputs)) throw new Error(`Gate '${gateName}' must return an array.`);
-      if (numberOfOutputs == -1) numberOfOutputs = outputs.length;
-      else if (numberOfOutputs != outputs.length) throw new Error(`Gate '${gateName}' returns ${numberOfOutputs} outputs for ${JSON.stringify(cases[0])} but ${outputs.length} outputs for ${JSON.stringify(inputs)}`);
-      const percent = ((idx + 1) / cases.length) * 100;
-      progress.style.width = `${percent}%`;
-      progress.textContent = `${percent}%`
-    });
-  } catch (e) {
-    throw new Error(`Gate '${gateName}' failed for input ${JSON.stringify(currentcase)}: ${e.message}`);
-  }
-  return numberOfOutputs
-}
-
-
-// -------------------------------- Add to gate Definitions -----------------------------------//
-function compileGateFunctions(rawCode, symbols) {
-  const extracted = extractGateFunctions(rawCode);  // Extract gate functions from the code
-  let errorMessages = [];  // Array to store error messages
-
-  extracted.forEach(({ name, args, body }) => {
-    try {
-      acorn.parse(`const temp = (${args}) {\n${body}\n}`, { ecmaVersion: 2020 })
-      const simulate = new Function('symbols', `return (${args}) => {${body}};`)(symbols);
-      const numberOfInputs = args.split(',').length;
-
-      function generateInputs(depth = 0, current = []){
-        if (depth === numberOfInputs) return [current];
-        let all = [];// Recurse by adding the current symbol to the combination and increasing depth
-        for (const s of symbols) all = all.concat(generateInputs(depth + 1, [...current, s]));
-        return all;
-      };
-
-      const numberOfOutputs = checkReturnConsistency(generateInputs(),simulate, name);
-
-      // Save the gate's metadata in the gateDefinitions object
-      gateDefinitions[name] = {numberOfInputs,numberOfOutputs,simulate,};
-
-    } catch (e) {
-      // If an error occurs, collect the error message and add it to the errorMessages array
-      errorMessages.push(`❌ Error in gate '${name}': ${e.message}`);
-    }
-  });
-
-  return errorMessages;  // Return any error messages collected
-}*/
-
-
-
-
 
 // ---- Preview Core Functions ----
 
@@ -225,7 +126,7 @@ function createPreviewGate(type, {x, y}) {
     gate.appendChild(output);
   }
 
-  previewCanvas.appendChild(gate); // ✅ Append correctly into the preview canvas
+  previewCanvas.appendChild(gate);
   addLogic(gate);
   makeElementDraggable(gate, previewWires);
   return gate;
