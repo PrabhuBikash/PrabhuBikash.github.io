@@ -6,8 +6,8 @@ let Breadcrumb;
 let Wires_ = [];
 
 window.onload = () => {
-  const storedGateDefinitions = localStorage.getItem('gateDefinitions');
-  Breadcrumb = JSON.parse(sessionStorage.getItem('selectedGate')) || [];
+  const storedGateDefinitions = localStorage.getItem('DNA_gateDefinitions');
+  Breadcrumb = JSON.parse(sessionStorage.getItem('DNA_selectedGate')) || [];
   const gateName = Breadcrumb[Breadcrumb.length-1]
   if (storedGateDefinitions) {
     gateDefinitions = makeUsableGateDefinitions(storedGateDefinitions)
@@ -182,7 +182,7 @@ function showGateMenu_(x, y, gate) {
 //--------------------------View gate logic---------------------------------//
 function openGateInternals_(gateInstance) {
   Breadcrumb.push(gateInstance.dataset.type);
-  sessionStorage.setItem('selectedGate', JSON.stringify(Breadcrumb));
+  sessionStorage.setItem('DNA_selectedGate', JSON.stringify(Breadcrumb));
   location.replace(location.href);  // Replace the current page with the updated state
 }
 
@@ -199,7 +199,7 @@ function updateBreadcrumb() {
 
     link.addEventListener('click', () => {
       Breadcrumb = Breadcrumb.slice(0, index + 1);  // Trim the breadcrumb
-      sessionStorage.setItem('selectedGate', JSON.stringify(Breadcrumb));
+      sessionStorage.setItem('DNA_selectedGate', JSON.stringify(Breadcrumb));
       location.reload();  // Go back to that gate level
     });
 
