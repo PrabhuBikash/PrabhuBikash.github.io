@@ -2,8 +2,8 @@ const mainCanvas = document.getElementById('canvas'); // Get reference to the ma
 const svg = document.getElementById('wire-layer');
 //------------------------- while reloding -------------------------//
 window.onload = function () {
-  const storedGateDefinitions = localStorage.getItem('gateDefinitions');
-  const storedGateRelations = localStorage.getItem('gateRelations');
+  const storedGateDefinitions = localStorage.getItem('DNA_gateDefinitions');
+  const storedGateRelations = localStorage.getItem('DNA_gateRelations');
 
   if (storedGateDefinitions) {
     gateDefinitions = makeUsableGateDefinitions(storedGateDefinitions)
@@ -17,8 +17,8 @@ window.onload = function () {
   } else {
     console.log('No gate Relations found in localStorage.');
   }
-  localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-  localStorage.setItem('gateRelations', makeStorableGateDefinitions(gateRelations));
+  localStorage.setItem('DNA_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
+  localStorage.setItem('DNA_gateRelations', makeStorableGateDefinitions(gateRelations));
   refreshSidebar();
 };
 
@@ -42,8 +42,8 @@ document.getElementById('save-gate-btn').addEventListener('click', () => {
       gateRelations[gate.dataset.type].push(name)
     });
     refreshSidebar();
-    localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-    localStorage.setItem('gateRelations', makeStorableGateDefinitions(gateRelations));
+    localStorage.setItem('DNA_gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
+    localStorage.setItem('DNA_gateRelations', makeStorableGateDefinitions(gateRelations));
     // Optional: log generated function code
     console.log(name, ':' ,gateDefinitions[name]);
     alert(`Gate "${name}" saved successfully!`);
@@ -63,7 +63,7 @@ document.getElementById('delete-mode-toggle').addEventListener('click', () => {
 //--------------------------Reset All---------------------------------//
 document.getElementById('hard-reset-btn').addEventListener('click', () => {
   if (confirm('Are you sure you want to reset everything? This cannot be undone!')) {
-    localStorage.clear();
+    Object.keys(localStorage).forEach(key => {if (key.startsWith("DNA_")) localStorage.removeItem(key);});
     location.reload();
   }
 });
