@@ -5,6 +5,7 @@ let Wires = []
 let uniqueIDCounter = 0;
 let symbols = []
 let colors = []
+let metadata = JSON.stringify(symbols);
 
 //--------------------------The original gate creating function---------------------------------//
 function createGhostGate(type, startX, startY) { // We will treat Input and Output node as Gates as well
