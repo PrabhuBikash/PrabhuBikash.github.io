@@ -69,8 +69,8 @@ function handleGateFileUpload(file, onSuccess = () => {}, onError = () => {}) {
       // ✅ All good — save to localStorage
       gateDefinitions = { ...gateDefinitions, ...incomingDefs };
       gateRelations = { ...gateRelations, ...incomingDeps };
-      localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-      localStorage.setItem('gateRelations', makeStorableGateDefinitions(gateRelations));
+      localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(gateDefinitions));
+      localStorage.setItem(`${metadata}_gateRelations`, makeStorableGateDefinitions(gateRelations));
       onSuccess();
 
     } catch (err) {
@@ -150,14 +150,14 @@ function showPresetDropdown() {
 function handleGateSelect(presetName, gateName) {
   const selectedGate = presetLibrary[presetName][gateName];
   gateDefinitions[gateName] = selectedGate;
-  localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
+  localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(gateDefinitions));
   refreshSidebar();
   alert(`"${gateName}" have been added!`);// Optionally, update UI to reflect the added gates
 }
 
 function installAllGates(presetName) {
   gateDefinitions = { ...gateDefinitions, ...presetLibrary[presetName] };
-  localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
+  localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(gateDefinitions));
   refreshSidebar()
   alert(`All gates from preset "${presetName}" have been added!`);// Optionally, update UI to reflect the added gates
 }
@@ -165,10 +165,10 @@ function installAllGates(presetName) {
 function showGateDetails(presetName, gateName) {
   // 1. Store the selected gate in localStorage under gateDefinitions
   gateDefinitions[gateName] = presetLibrary[presetName][gateName];
-  localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
+  localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(gateDefinitions));
 
   // 2. Let the next page know which gate to show
-  sessionStorage.setItem('selectedGate', JSON.stringify([gateName]));
+  sessionStorage.setItem(`${metadata}_selectedGate`, JSON.stringify([gateName]));
 
   // 3. Open the internals viewer
   window.open('/gate-internals/gate-internals.html', '_blank');
@@ -176,7 +176,7 @@ function showGateDetails(presetName, gateName) {
   // 4. Remove it after a delay (if needed)
   setTimeout(() => {
     delete gateDefinitions[gateName];
-    localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
+    localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(gateDefinitions));
   }, 1000); // Give it 1 second before cleanup
 };
 
