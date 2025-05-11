@@ -106,9 +106,10 @@ nextBtn.onclick = () => confirmModal.style.display = 'flex';
 cancelBtn.onclick = () => confirmModal.style.display = 'none';
 confirmBtn.onclick = () => {
   try {
-    localStorage.setItem('gateDefinitions', makeStorableGateDefinitions(gateDefinitions));
-    localStorage.setItem('symbols', JSON.stringify(symbols));
-    localStorage.setItem('colors', JSON.stringify(colors));
+    const metadata = JSON.stringify(symbols);
+    localStorage.setItem('symbols', metadata);
+    localStorage.setItem(`${metadata}_colors`, JSON.stringify(colors));
+    localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(gateDefinitions));
     window.location.href = 'simulator';
   } catch (err) {
     console.error("Failed to save configuration:", err);
