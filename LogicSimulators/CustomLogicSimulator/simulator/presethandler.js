@@ -17,8 +17,7 @@ function handleGateFileUpload(file, onSuccess = () => {}, onError = () => {}) {
           return onError(new Error("Import cancelled by user due to missing metadata."));
         }
       } else {
-        const symbolsFromFile = JSON.parse(metadataMatch[1]);
-        if (symbols.length !== symbolsFromFile.length || symbols.some((s, i) => s !== symbolsFromFile[i])) {
+        if (!metadataMatch[1] || metadata !== metadataMatch[1]) {
           if (!confirm("The symbols in this file differ from your current configuration. Do you still want to import?")) {
             return onError(new Error("Import cancelled due to symbol mismatch."));
           }
