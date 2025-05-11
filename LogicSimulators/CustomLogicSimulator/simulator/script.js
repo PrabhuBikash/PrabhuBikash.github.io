@@ -26,7 +26,7 @@ window.onload = function () {
   // Initialize symbols and colors if found
   if (storedSymbols) {
     symbols = JSON.parse(storedSymbols);
-    metadata = symbols;
+    metadata = JSON.stringify(symbols);
     console.log('Symbols loaded:', symbols);
   } else {
     console.log('No symbols found in localStorage.');
@@ -110,8 +110,7 @@ document.getElementById('hard-reset-btn').addEventListener('click', () => {
 
 //-------------------------Download Logic.txt-------------------------//
 document.getElementById('download-config-btn').addEventListener('click', () => {
-  const metadata = `metadata: ${JSON.stringify(symbols)}\n\n`;
-  const configString = metadata + makeStorableGateDefinitions(gateDefinitions);
+  const configString = `metadata: ${metadata}\n\n` + makeStorableGateDefinitions(gateDefinitions);
   document.getElementById('download-file-content').textContent = configString.replaceAll('\\r\\n','\n');
   document.getElementById('download-modal').style.display = 'block';
 
