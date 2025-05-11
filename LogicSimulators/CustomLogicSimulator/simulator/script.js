@@ -51,7 +51,7 @@ window.onload = function () {
 
 
 //--------------------------delay Input handler---------------------------------//
-let userDelay = 0; // default value
+let userDelay = 0;
 document.getElementById("delay-input").addEventListener("input", e => userDelay = parseInt(e.target.value) || 0);
 
 //------------------------- Save gate button -------------------------//
@@ -72,7 +72,6 @@ document.getElementById('save-gate-btn').addEventListener('click', () => {
     refreshSidebar();
     localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(gateDefinitions));
     localStorage.setItem(`${metadata}_gateRelations`, makeStorableGateDefinitions(gateRelations));
-    // Optional: log generated function code
     console.log(name, ':' ,gateDefinitions[name]);
     alert(`Gate "${name}" saved successfully!`);
   } catch (e) {
@@ -82,7 +81,7 @@ document.getElementById('save-gate-btn').addEventListener('click', () => {
 });
 
 //--------------------------delete mode handler---------------------------------//
-let deleteMode = false; // You can toggle this with a button
+let deleteMode = false;
 document.getElementById('delete-mode-toggle').addEventListener('click', () => {
   deleteMode = !deleteMode;
   document.body.classList.toggle('delete-mode', deleteMode);
@@ -93,9 +92,9 @@ document.getElementById('reset-btn').addEventListener('click', () => document.ge
 document.getElementById('cancel-reset-btn').addEventListener('click', () => document.getElementById('reset-modal').style.display = 'none');
 document.getElementById('soft-reset-btn').addEventListener('click', () => {
   if (confirm('Are you sure you want to reset the world? Your custom gates and settings will be lost, but the preset world will remain intact.')) {
-    localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(presetLibrary["Basis Pack (Accidentally deleted? no worries!)"])); // we will have to fetch the basis pack preset and load that!
-    localStorage.setItem(`${metadata}_gateRelations`, makeStorableGateDefinitions({})); // Clear relations
-    location.reload(); // Reload to reflect changes
+    localStorage.setItem(`${metadata}_gateDefinitions`, makeStorableGateDefinitions(presetLibrary["Basis Pack (Accidentally deleted? no worries!)"]));
+    localStorage.setItem(`${metadata}_gateRelations`, makeStorableGateDefinitions({}));
+    location.reload();
   }
 });
 
@@ -103,7 +102,7 @@ document.getElementById('soft-reset-btn').addEventListener('click', () => {
 document.getElementById('hard-reset-btn').addEventListener('click', () => {
   if (confirm('Are you sure you want to reset everything? This cannot be undone!')) {
     Object.keys(localStorage).forEach(key => {if (key.startsWith(`${metadata}_`)) localStorage.removeItem(key);});
-    window.location.href = "../"; // Reload to reflect changes
+    window.location.href = "../";
   }
 });
 
@@ -126,7 +125,7 @@ document.getElementById('download-config-btn').addEventListener('click', () => {
     const url = URL.createObjectURL(new Blob([configString], { type: 'application/json' }));
     const a = document.createElement('a');
     a.href = url;
-    a.download = filename; // Use the filename specified by the user
+    a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
     document.getElementById('download-modal').style.display = 'none';
@@ -160,7 +159,7 @@ document.getElementById('load-preset-btn').addEventListener('click', showPresetD
 
 
 document.addEventListener('contextmenu', (e) => {
-  e.stopPropagation(); // optional: prevents other listeners if you're debugging
+  e.stopPropagation();
   console.log('Context menu triggered on:', e.target);
   console.log('Element stack under cursor:', document.elementsFromPoint(e.clientX, e.clientY));
 });
