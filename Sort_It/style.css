@@ -309,3 +309,22 @@ body {
   color:var(--color-accent);
   font-weight: bold;
 }
+
+
+/*----------------------------------------------Touchscreen compatibility----------------------------------------------*/
+@media (pointer: coarse) {
+  #controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 5vw;
+  }
+  
+  #controls button {
+    width: 25vw;
+    height: 15vh;
+    min-height: 50px;
+    max-width: 200px;
+    font-size: 1.25rem;
+  }
+}
