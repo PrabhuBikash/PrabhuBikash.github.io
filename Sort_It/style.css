@@ -326,5 +326,6 @@ body {
     min-height: 50px;
     max-width: 200px;
     font-size: 1.25rem;
+    touch-action: manipulation;
   }
 }
