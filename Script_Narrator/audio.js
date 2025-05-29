@@ -28,7 +28,8 @@ async function speakScript(errorBox, parsedScript, voices, settings, squareComma
 
           settingsStr.split(',').forEach(setting => {
             const [key, value] = setting.split('=').map(s => s.trim());
-            charSettings[toneName][key] = key === 'voice' ? voices.find(v => v.voiceURI.startsWith(value)) : isNaN(value) ? value : parseFloat(value);
+            charSettings[toneName][key] = key !== 'voice' ? (isNaN(value) ? value : parseFloat(value))
+            : (() => { const URI = value.replace(/\|/g, ':').replace(/</g, '(').replace(/>/g, ')'); return voices.find(v => v.voiceURI.startsWith(URI)); })()
           });
           tone = toneName;
           break;

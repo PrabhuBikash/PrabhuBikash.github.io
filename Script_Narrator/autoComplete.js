@@ -144,7 +144,7 @@ function suggestionHandler(inputBox, suggestBox) {
       return Object.fromEntries(toneSuggestions);
     })(),
 
-    voice: Object.fromEntries(voices.map((v,i) => [v.voiceURI.match(/^[^()[\]{}]*/)?.[0].trim() || '',`${i+1} - ${v.voiceURI}`])) 
+    voice: Object.fromEntries(voices.map((v,i) => [v.voiceURI.replace(/:/g, '|').replace(/\(/g, '<').replace(/\)/g, '>') || '',`${i+1} - ${v.voiceURI}`])) 
   };
 
   const beforeCursorLines = beforeCursor.split('\n');
