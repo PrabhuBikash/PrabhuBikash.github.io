@@ -75,7 +75,7 @@ function showSuggestions(prefix, editor, suggestBox, allSuggestions) {
   suggestBox.style.left = `${caret.left}px`;
   suggestBox.style.top = `${caret.top + 20}px`;
   suggestBox.innerHTML = filtered.map(({ label, desc }) =>
-    `<div class="suggestion" data-value="${label}">${label}<br><small>${desc || ""}</small></div>`
+    `<div class="suggestion" data-value="${label}">${escapeHTML(label)}<br><small>${desc || ""}</small></div>`
   ).join("");
   suggestBox.style.display = "block";
 
