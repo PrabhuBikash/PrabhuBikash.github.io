@@ -106,7 +106,7 @@ async function loadProject(project) {
     initialCode = code;
     document.querySelector("header h1").textContent = project.name;
     toggleMenu(false);
-    localStorage.setItem("currentProject",JSON.stringify(project))
+    sessionStorage.setItem("currentProject",JSON.stringify(project))
   } catch (error) {
     console.error("Failed to load project:", error);
     alert("Failed to load project file!\n" + error.message);
@@ -120,7 +120,7 @@ async function loadProject(project) {
 window.onload = async function (){
   loadProjects();
   globalThis.pyodide = await pyodideReadyPromise
-  currentProject = localStorage.getItem("currentProject");
+  currentProject = sessionStorage.getItem("currentProject");
   currentProject ? await loadProject(JSON.parse(currentProject)): await loadProject(projectListData[0]);
   codeFixes(pyodide)
 }
