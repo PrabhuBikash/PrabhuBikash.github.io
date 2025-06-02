@@ -104,8 +104,7 @@ body {
 /*----------------------------------------------general Modal Styles----------------------------------------------*/
 .modal {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  inset: 0;
   display: none; align-items: center; justify-content: center;
   background: rgba(0,0,0,0.6);
   z-index: 1000;
