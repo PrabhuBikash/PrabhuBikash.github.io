@@ -17,6 +17,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  min-width: fit-content;
 }
 
 #game {

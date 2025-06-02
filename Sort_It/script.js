@@ -2,6 +2,7 @@ const rootStyles = getComputedStyle(document.documentElement);
 const accentColor = rootStyles.getPropertyValue('--color-accent');
 const textColor = rootStyles.getPropertyValue('--color-text');
 const bgColor = rootStyles.getPropertyValue('--color-bg');
+const game = document.getElementById('game');
 
 //--------------------------------Render level--------------------------------//
 function render(merge = !gameModes.manualMerge, showControls = !(playerRange.start === undefined)) {
@@ -19,7 +20,6 @@ function render(merge = !gameModes.manualMerge, showControls = !(playerRange.sta
       if (gameModes.manualMerge) document.getElementById('move-count').textContent = `moves used: ${numberOfMoves}, merges used: ${numberOfMerges}`;
     } else if (gameModes.manualMerge) document.getElementById('feedback').textContent = 'nothing to merge!';
   }
-  const game = document.getElementById('game');
   game.innerHTML = '';
 
   for (let i = 0; i < levelList.length; i++) {
@@ -213,6 +213,7 @@ function loadLevel(url = location) {
     unpackLevelData(param)
     createLink();
     render();
+    game.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
   } catch (e) {
     alert("Failed to load level:\n" + e.message);
     location.replace(location.href.split('?')[0]);
