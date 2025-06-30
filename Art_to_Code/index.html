@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Image to HTML-CSS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+  <!-- Sidebar -->
+    <div id="sidebar">
+      <div class="preview-block">
+        <canvas id="originalCanvas"></canvas>
+        <div class="label-row">
+          <span class="label-text">Original Image</span>
+          <label class="action-button" title="Upload an Image"><input type="file" accept="image/*" id="imageInput" hidden/>⇪ Upload</label>
+        </div>
+      </div>
+
+      <div class="preview-block">
+        <div id="renderPreview"></div>
+        <div class="label-row">
+          <span class="label-text">Generated Image</span>
+          <button id="previewImage" class="action-button" title="Download as .html">🌐 Preview</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Code Display Area -->
+    <div id="codeArea">
+      <div class="label-row">
+          <h2 class="label-text" title="You can do much better!">Generated Code</h2>
+          <pre><span id="codeSize" title="size of the code in the textBox">0 B</span> | <span id="progressBar" title="progress Bar">Try Something!</span> | <span id="currentMode" title="Current Mode: Method of generation • Colors to use">Strip • Exact</span></pre>
+          <div>
+            <div class="dropdown">
+              <button id="moreBtn" class="action-button" title="more Options">⋯ More</button>
+              <div class="dropdown-content" id="dropdown-content">
+                <button id="methodToggle" class="action-button" title="Switch to Rectangle Covering Method">⚙️ Rectangle</button>
+                <button id="originalityToggle" class="action-button" title="Switch to named colors only (lossy but HTMl-theme)">🎨 Named</button>
+                <button id="reryButton" class="action-button" title="Switch to Edit Mode">↻ Retry</button>
+                <button id="editButton" class="action-button" title="Switch to Edit Mode">✏️ Edit</button>
+                <button id="downloadHtmlBtn" class="action-button" title="Download as HTML">↓ Download</button>
+              </div>
+            </div>
+            <button id="copyButton" class="action-button" title="Copy HTML Code">⧉ Copy</button>
+          </div>
+        </div>
+      <textarea id="codeBox" readonly></textarea>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
