@@ -274,14 +274,14 @@ function coverMatrixWithRectangles(matrix, height, width, bgClr) {
 function RectangleCoveringMethod(imageData, height, width, usingNamedColors) {
   const {matrix:pixelMatrix, colors:Clrs } = getPixelMatrix(imageData, height, width, usingNamedColors);
   self.postMessage({ progress: 'pixel Matrix generated', chunk: '' });
-  const maxClr = Clrs[0];
-  const sndMaxClr = Clrs[1];
+  const maxClr = Clrs?.[0]?.[0] ?? 'transparent';
+  const sndMaxClr = Clrs?.[1]?.[0] ?? null;
   const rectangles = coverMatrixWithRectangles(pixelMatrix,height,width,maxClr);
   
   const header = `<div id="art">
 \t<style>
-\t\t#art {margin:0;padding:0;height:${height}px;width:${width}px;display:block;background:${maxClr};position:relative}
-\t\t#art i{display:inline-block;background:var(--0,${sndMaxClr});width:calc(var(--1,1)*1px);height:calc(var(--2,1)*1px);position:absolute;top:calc(var(--3,0)*1px);left:calc(var(--4,0)*1px);}
+\t\t#art {margin:0;padding:0;height:${height}px;width:${width}px;display:block;background:${maxClr};position:relative}${!sndMaxClr ? '' : `
+\t\t#art i{display:inline-block;background:var(--0,${sndMaxClr});width:calc(var(--1,1)*1px);height:calc(var(--2,1)*1px);position:absolute;top:calc(var(--3,0)*1px);left:calc(var(--4,0)*1px);}`}
 \t</style>\n`;
   self.postMessage({ progress: 'Writting Code: 0%', chunk: header });
 
@@ -304,7 +304,7 @@ function RectangleCoveringMethod(imageData, height, width, usingNamedColors) {
 function StripWiseMethod(imageData, height, width, usingNamedColors){
   const {matrix:pixelMatrix, colors:Clrs } = getPixelMatrix(imageData, height, width, usingNamedColors);
   self.postMessage({ progress: 'pixel Matrix generated', chunk: '' });
-  const maxClr = Clrs[0];
+  const maxClr = Clrs?.[0]?.[0] ?? 'transparent';
   const strips = splitToStrips(pixelMatrix);
   
   const header = `<div id="art">
