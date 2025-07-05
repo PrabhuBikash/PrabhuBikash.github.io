@@ -106,15 +106,33 @@ copyButton.onclick = async () => {
   setTimeout(() => copyButton.textContent = '⧉ Copy', 500);
 };
 
-//------------------------------------------------- Download Generated Image -------------------------------------------------//
+//------------------------------------------------- Preview Image -------------------------------------------------//
 previewImage.onclick = () => {
   window.open(URL.createObjectURL(new Blob([`
-<script>
-  body {background: black}
-  #art { box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgba(0, 0, 0, 0.6); }
-</script>
+<style>
+  body {
+    background: black
+  }
+  #display {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgba(0, 0, 0, 0.6);
+    margin:10px;
+    height:fit-content;
+    width:fit-content;
+  }
+</style>
+<div id="display">
 ` + codeBox.textContent
-+ `<button></button>`], { type: 'text/html' })), '_blank');
++ `</div>
+<button id="downloadHtmlBtn"> Download the HTML</button>
+<script>
+  document.getElementById('downloadHtmlBtn').onclick = () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([document.getElementById('display').innerHTML], { type: 'text/html' }));
+    a.download = '${fileName ?? 'page'}.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+</script>`], { type: 'text/html' })), '_blank');
 }
 
 //------------------------------------------------- Retry -------------------------------------------------//
