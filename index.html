@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrabhuBikash-Home</title>
-    <link rel="stylesheet" href="styles.css">
+    <link id="theme-stylesheet" rel="stylesheet" href="default.css">
     <link rel="icon" href="PBlogo.png" type="image/png">
 </head>
 <body>
     <header>
-        <!--Will do it Later-->
+        <select id="themeSelector" style=" position: fixed;top: 0; right: 0; margin: 1%;border: none; color: gray;">
+            <option value="default">🌤 Default</option>
+            <option value="styles">🌙 Classic</option>
+        </select>
     </header>
     <main>
         <h1><em>Prabhu</em><strong>Bikash</strong></h1>
@@ -169,5 +172,19 @@
             </div>
         </section>
     </main>
+    <script>
+        const selector = document.getElementById('themeSelector');
+        const linkTag = document.getElementById('theme-stylesheet');
+        
+        const stored = localStorage.getItem('portfolio_theme') || 'default';
+        linkTag.href = `${stored}.css`;
+        selector.value = stored;
+
+        selector.onchange = () => {
+            const selected = selector.value;
+            linkTag.href = `${selected}.css`;
+            localStorage.setItem('portfolio_theme', selected);
+        };
+    </script>
 </body>
 </html>

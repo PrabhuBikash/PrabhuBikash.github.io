@@ -9,6 +9,10 @@ main{
     padding: 20px;
 }
 
+#themeSelector {
+  background-color: black;
+}
+
 h1{
     font-size: 40px;
     text-align: center;
