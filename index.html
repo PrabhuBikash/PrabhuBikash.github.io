@@ -6,12 +6,23 @@
     <title>PrabhuBikash-Home</title>
     <link id="theme-stylesheet" rel="stylesheet" href="default.css">
     <link rel="icon" href="PBlogo.png" type="image/png">
+    <style>
+        .dropdown {
+            margin: 1%;
+            border: none;
+            color: gray;
+            background-color: transparent;
+        }
+        #themeSelector {
+            position: fixed;
+            top: 0; right: 0;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <select id="themeSelector" style=" position: fixed;top: 0; right: 0; margin: 1%;border: none; color: gray;">
-            <option value="default">🌤 Default</option>
-            <option value="styles">🌙 Classic</option>
+        <select id="themeSelector" class="dropdown">
+            <option value="default" selected>🌤 Default</option>
         </select>
     </header>
     <main>
@@ -22,6 +33,10 @@
         </section>
         <section id="projects">
             <h2>Projects</h2>
+            <select id="sortOption" class="dropdown">
+                <option value="Newest"> Newest</option>
+                <option value="Oldest"> Oldest</option>
+            </select>
             <div class="project">
                 <h3>Academic Cumback</h3>
                 <p>
@@ -187,18 +202,27 @@
         </section>
     </main>
     <script>
-        const selector = document.getElementById('themeSelector');
+        const themeSelector = document.getElementById('themeSelector');
         const linkTag = document.getElementById('theme-stylesheet');
+        const sortOption = document.getElementById('sortOption');
+        const projects = document.getElementById('projects');
         
-        const stored = localStorage.getItem('portfolio_theme') || 'default';
+        const stored = new URLSearchParams(window.location.search).get("theme") || localStorage.getItem('portfolio_theme') || 'default';
         linkTag.href = `${stored}.css`;
-        selector.value = stored;
+        themeSelector.value = stored;
 
-        selector.onchange = () => {
-            const selected = selector.value;
+        themeSelector.onchange = () => {
+            const selected = themeSelector.value;
             linkTag.href = `${selected}.css`;
             localStorage.setItem('portfolio_theme', selected);
         };
+        function reverseProjectList() {
+            Array.from(projects.querySelectorAll('.project'))
+            .reverse()
+            .forEach(project => projects.appendChild(project));
+        } 
+        sortOption.onchange = reverseProjectList;
+        reverseProjectList()
     </script>
 </body>
 </html>
