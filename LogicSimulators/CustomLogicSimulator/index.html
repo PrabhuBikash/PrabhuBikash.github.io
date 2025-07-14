@@ -5,10 +5,6 @@
   <title>Universal Gate Setup</title>
   <link rel="stylesheet" href="simulator/style.css" />
   <link rel="stylesheet" href="Settings.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/theme/material-darker.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
   <script defer src="SettingsFunctions.js"></script>
   <script defer src="simulator/functions.js"></script>
   <script defer src="SettingsScript.js"></script>
@@ -36,13 +32,15 @@
 
         <!-- Gate Logic -->
         <h2>⚙️ Gate Logic Code</h2>
-<textarea readonly id="gateLogic"  name="gateLogic" rows="6"  placeholder="([a, b],gate) => [(a + 2*b) % 3]" spellcheck="false">const UniversalGate = ([a, b]) => {
-  // Hopefully Universal
-  const n = symbols.length;
-  if (a === b) return [(a + 1) % n];
-  if (a > b && a < n - 1) return [1];
-  return [0];
-};</textarea>
+<pre style="background:#212121;padding:1em;border-radius:6px;font-family:monospace;font-size:14px;line-height:0.8;overflow:auto;margin:0;"><ol style="margin:0;padding:0 0 0 2em;list-style:decimal;color:#545454">
+<li style="margin:0;padding:0;"><span style="color:#C792EA;">const</span> <span style="color:#82AAFF;">UniversalGate</span> <span style="color:#89DDFF;">=</span> <span style="color:#fff;">(</span><span style="color:#fff;">[<span style="color:#82AAFF;">a</span>, <span style="color:#82AAFF;">b</span>]</span><span style="color:#fff;">)</span> <span style="color:#89DDFF;">=></span> <span style="color:#fff;">{</span></li>
+<li style="margin:0;padding:0;">  <span>// Hopefully Universal</span></li>
+<li style="margin:0;padding:0;">  <span style="color:#C792EA;">const</span> <span style="color:#82AAFF;">n</span> <span style="color:#89DDFF;">=</span> <span style="color:#f07178">symbols</span><span style="color:#fff;">.</span><span style="color:#fff;">length;</span></li>
+<li style="margin:0;padding:0;">  <span style="color:#C792EA;">if</span> <span style="color:#fff;">(</span><span style="color:#fff;">a</span> <span style="color:#89DDFF;">===</span> <span style="color:#fff;">b</span><span style="color:#fff;">)</span> <span style="color:#C792EA;">return</span> <span style="color:#fff;">[</span><span style="color:#fff;">(</span><span style="color:#fff;">a</span> <span style="color:#89DDFF;">+</span> <span style="color:#ff5370">1</span><span style="color:#fff;">)</span> <span style="color:#89DDFF;">%</span> <span style="color:#fff;">n</span><span style="color:#fff;">];</span></li>
+<li style="margin:0;padding:0;">  <span style="color:#C792EA;">if</span> <span style="color:#fff;">(</span><span style="color:#fff;">a</span> <span style="color:#89DDFF;">&gt;</span> <span style="color:#fff;">b</span> <span style="color:#89DDFF;">&&</span> <span style="color:#fff;">a</span> <span style="color:#89DDFF;">&lt;</span> <span style="color:#fff;">n</span> <span style="color:#89DDFF;">-</span> <span style="color:#ff5370">1</span><span style="color:#fff;">)</span> <span style="color:#C792EA;">return</span> <span style="color:#fff;">[</span><span style="color:#ff5370">1</span><span style="color:#fff;">];</span></li>
+<li style="margin:0;padding:0;">  <span style="color:#C792EA;">return</span> <span style="color:#fff;">[</span><span style="color:#ff5370">0</span><span style="color:#fff;">];</span></li>
+<li style="margin:0;padding:0;"><span style="color:#fff;">};</span></li>
+</ol></pre>
 
         <button id="nextBtn" type="button">Next</button>
       </form>
