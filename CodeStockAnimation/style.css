@@ -1,0 +1,313 @@
+/* Reset */
+:root {
+  --bgClr: #0d0f17;
+  --textClr: white;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  padding: 1%;
+  background-color: #0f111a;
+  font-family: "Fira Code", monospace;
+  color:  white;
+  gap: 1%;
+}
+
+/* Main editor area */
+main {
+  flex: 7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1b1e2b;
+  border-radius: 6px;
+  border: 1px solid #333;
+  padding: 1%;
+  flex-direction: column;
+  gap: 1%;
+}
+main.deactivated header{
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+
+main.deactivated #highlight-layer {
+  pointer-events: auto;
+  user-select: text;
+  opacity: 1;
+  filter: grayscale(1);
+}
+
+header {
+  width: 100%;
+  min-height: 7%;
+  max-height: fit-content;
+  background-color: #0d0f17;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1%;
+  border: 1px solid gray;
+  justify-content: space-between;
+}
+
+/* Buttons */
+header *{
+  background-color: transparent;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  transition: 0.2s;
+  cursor: pointer;
+}
+header *:hover, #vfs-dialog menu li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+header input {
+  width: 5rem;
+  padding: 0.2rem;
+}
+header select *{
+  background-color: #0d0f17;
+}
+#fullscreen-toggle:hover {
+  font-size: larger;
+}
+
+#editor-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+/* Code editor */
+#code-editor, #highlight-layer, .slide {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: var(--bgClr);
+  color:  var(--textClr);
+  border: 1px solid #333;
+  resize: none;
+  font-size: 1vw;
+  line-height: 1.5;
+  outline: none;
+  overflow: auto;
+  scrollbar-width: none;
+  padding: 1%;
+}
+
+#code-editor, #highlight-layer {
+  position: absolute;
+}
+#code-editor {
+  background-color: transparent;
+  color: transparent;
+  caret-color: var(--textClr);
+}
+#highlight-layer code, .slide code {
+  box-sizing: border-box;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  background-color: transparent;
+  padding: 0;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Sidebar */
+aside {
+  flex: 3;
+  background-color: #161821;
+  overflow-y: auto;
+  border-radius: 6px;
+  padding: 1%;
+  border: 1px solid #333;
+  scrollbar-width: thin;
+  scrollbar-color: gray #161821;
+}
+
+
+/* Slides list container */
+.slides {
+  list-style: decimal;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  counter-reset: slide-count 1;
+}
+
+/* Each list item fills width */
+.slides li {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Slide*/
+.slide {
+  width: 90%;
+  align-self: center;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  counter-increment: slide-count;
+}
+li:has(.slide)::before {
+  content: counter(slide-count, decimal);
+  position: absolute;
+}
+
+/* Add button */
+.add-btn {
+  width: 90%;
+  border: 1px solid #4c566a;
+  cursor: pointer;
+  align-self: center;
+  transition: 0.2s;
+}
+
+.add-btn:hover {
+  border-color: #88c0d0;
+}
+
+.delete-btn {
+  position: absolute;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  align-self: flex-end;
+}
+
+.delete-btn:hover, #vfs-close:hover {
+  color: #f88;
+}
+
+.active-slide {
+  outline: 1px solid white;
+}
+
+
+/* Base dialog styling */
+::backdrop{
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(1px);
+}
+#vfs-dialog {
+  border: none;
+  border-radius: 8px;
+  background: #1b1e2b;
+  color: white;
+  width: 100%;
+  aspect-ratio: 16/9;
+  padding: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  align-self: center;
+  justify-self: center;
+  overflow-y: hidden;
+  max-width: 1000px;
+  max-height: 1000px;
+}
+#vfs-dialog form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em;
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+#vfs-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+#vfs-dialog menu {
+  list-style: none;
+  border-top: 1px solid gray;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: gray #161821;
+}
+#vfs-dialog menu li {
+  padding: 0.5em;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+}
+
+#project-contextmenu {
+  position: fixed;
+  display: none;
+  min-width: 180px;
+  background-color: #1e1e2f;
+  border: 1px solid #2e2e40;
+  border-radius: 6px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  padding: 10px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #e0e0e0;
+}
+
+#project-contextmenu h5 {
+  margin: 0 0 10px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 6px;
+}
+
+#project-contextmenu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: #ddd;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+#project-contextmenu button:hover {
+  background-color: #2a2a3c;
+  color: #ffffff;
+}
+
+#split-dropdown {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: #0d0f17;
+  border: 1px solid gray;
+  padding: 0.5rem;
+  z-index: 1;
+}
+
+#split-dropdown button {
+  text-align: left;
+  padding: 0.25rem 0.75rem;
+}

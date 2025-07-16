@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>download video</title>
+
+  <script src="PrismToCanvas.js"></script>
+  <style>
+    :root {
+      --bgClr: #0d0f17;
+      --textClr: white;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      line-height: 1.5;
+    }
+    pre, canvas, div {
+      height: 1080px;
+      aspect-ratio: 16/9;
+      background-color: var(--bgClr);
+      color:  var(--textClr);
+      border: 1px solid #333;
+      resize: none;
+      line-height: 1.5;
+      outline: none;
+      overflow: auto;
+      scrollbar-width: none;
+      padding: 1%;
+      overflow: hidden;
+    }
+    ::backdrop{
+      background-color: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(1px);
+    }
+    dialog {
+      width: 100%;
+      height: 100%;
+      margin: 1%;
+      background: transparent;
+      border: none;
+      outline: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    div { height: 360px; width: 640px; padding: 0%; }
+    progress { width: 640px; }
+    button {
+      background-color: #10b981;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+    button:hover { background-color: #059669; }
+    i {
+      color: white;
+      background-color: #0d0f17;
+      font-family: monospace;
+      font-size: large;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <main></main>
+  <canvas></canvas>
+  <dialog>
+    <div></div>
+    <progress></progress>
+    <button hidden>Download</button>
+    <i></i>
+  </dialog>
+</body>
+  <script>
+    window.onload = async() => {
+      const main = document.body.querySelector('main');
+      const dialog = document.body.querySelector('dialog');
+      const preview = dialog.querySelector('div');
+      const progress = dialog.querySelector('progress');
+      const DownloadBtn = dialog.querySelector('button');
+      const info = dialog.querySelector('i');
+      const { theme, slides, name } = JSON.parse(sessionStorage.getItem("CodeStockAnimation_VideoToDownload"));
+      dialog.showModal();
+      progress.max = slides.length;
+
+      document.head.innerHTML += theme.link;
+      document.documentElement.style.setProperty('--bgClr', theme.bg);
+      document.documentElement.style.setProperty('--textClr', theme.text);
+
+      const recordingCanvas = document.querySelector('canvas');
+      recordingCanvas.style.display = 'none';
+      const ctx = recordingCanvas.getContext('2d');
+
+      const recorder = new MediaRecorder(recordingCanvas.captureStream(30), { mimeType: 'video/webm' });
+      const recordedChunks = [];
+
+      recorder.ondataavailable = e => recordedChunks.push(e.data);
+
+      const stopRecording = new Promise(resolve => {
+        recorder.onstop = () => {
+          const blob = new Blob(recordedChunks, { type: 'video/webm'});
+          const bytes = blob.size;
+          
+          info.innerText = `"${name}.webm" (${
+            bytes >= 1e9 ? (bytes / 1e9).toFixed(2) + ' GB' :
+            bytes >= 1e6 ? (bytes / 1e6).toFixed(2) + ' MB' :
+            bytes >= 1e3 ? (bytes / 1e3).toFixed(2) + ' KB' :
+            bytes + ' B'
+          })`;
+
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${name}.webm`;
+          DownloadBtn.hidden = false;
+          DownloadBtn.onclick = () => a.click();
+          resolve();
+        };
+      });
+
+      recorder.start();
+
+      for (let i = 0; i < slides.length; i++) {
+        const t0 = performance.now();
+        preview.innerHTML = main.innerHTML = slides[i];
+        const slide = main.querySelector('pre');
+        while (!slide || slide.width || slide.height) await new Promise(requestAnimationFrame);
+
+        slide.style.fontSize = `${1920 * slide.dataset.fontsize/1000}px`;
+        const sourceCanvas = renderPrismToCanvas(slide, 4, undefined, 1);
+        recordingCanvas.width = sourceCanvas.width;
+        recordingCanvas.height = sourceCanvas.height;
+        ctx.drawImage(sourceCanvas, 0, 0);
+        
+        preview.style.fontSize = `${640 * slide.dataset.fontsize/1000}px`;
+        progress.value = i+1;
+
+        await new Promise(resolve => setTimeout(resolve, Math.max(0, +slide.dataset.persistence + t0 - performance.now())));
+      }
+
+      recorder.stop();
+      await stopRecording;
+    }
+  </script>
+</html>

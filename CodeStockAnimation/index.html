@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Slides Editor</title>
+  <link href="custom-theme.css" rel="stylesheet" id="theme-link">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="PrismToCanvas.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+<main>
+  <header>
+    <button id="file-menu">File ▾</button>
+    <button id="fullscreen-toggle">[⛶]</button>
+    <button id="play-slideshow">▶ Play</button>
+    <label for="persistence-input" title="how many miliseconds will this slide persist before next slide appears">persistence: <input type="number" id="persistence-input" min="100" step="100" value="500"></label>
+    <label for="fontsize-input" title="font size for this slide in (not a standard) unit">fontsize: <input type="number" id="fontsize-input" min="1" step="1" value="20"></label>
+    <select id="language-selector">
+      <optgroup title="(-_-)" label="languages">
+        <option value="text">Text</option>
+        <option value="markup">HTML/XML</option>
+        <option value="css">CSS</option>
+        <option value="javascript">JavaScript</option>
+        <option value="python" selected>Python</option>
+        <option value="java">Java</option>
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+        <option value="csharp">C#</option>
+        <option value="bash">Bash</option>
+        <option value="json">JSON</option>
+        <option value="go">Go</option>
+      </optgroup>
+    </select>
+    <div>
+      <button id="open-splitter">✂️ Split</button>
+      <div id="split-dropdown" style="display: none;">
+        <button onclick="splitActiveSlide('\n')">📄 Split by Line</button>
+        <button onclick="splitActiveSlide(/\b/)">🔤 Split by Word</button>
+    </div>
+  </div>
+  </header>
+  <div id="editor-container">
+    <pre id="highlight-layer"></pre>
+    <textarea id="code-editor" spellcheck="false"></textarea>
+  </div>
+</main>
+
+<aside>
+  <ol class="slides">
+    <!--Dynamically generated page thumbnails will go here!-->
+    <li>
+      <button class="add-btn"></button>
+      <pre class="slide active-slide"></pre>
+      <button class="delete-btn">✕</button>
+    </li>
+    <li>
+      <button class="add-btn"></button>
+    </li>
+  </ol>
+</aside>
+
+
+<dialog id="vfs-dialog">
+  <form method="dialog">
+    <h3>Project Manager</h3>
+    <button id="vfs-close" title="Close">&#x2715;</button>
+    <header>
+      <button id="save-project" type="button">💾 Save</button>
+      <button id="new-project" type="button">📝 New</button>
+      <label for="import-project">📥 Import<input type="file" id="import-project" accept=".csa" hidden></label>
+      <select id="theme-selector">
+        <optgroup title="(-v-)" label="themes">
+          <option value="prism">Light</option>
+          <option value="prism-dark">Dark</option>
+          <option value="prism-funky">Funky</option>
+          <option value="prism-okaidia">Okaidia</option>
+          <option value="prism-twilight">Twilight</option>
+          <option value="prism-coy">Coy</option>
+          <option value="prism-solarizedlight">Solarized Light</option>
+          <option value="prism-tomorrow">Tomorrow</option>
+          <option value="default" selected>default</option>
+        </optgroup>
+      </select>
+    </header>
+    
+    <menu id="projects-menu">
+      <!-- Example file entries -->
+      <li>project1.json</li>
+      <li>project2.json</li>
+    </menu>
+    <div id="project-contextmenu">
+      <h5 id="project-name"><!--Project Name--></h5>
+      <button id="open-project" type="button">📂 Open</button>
+      <button id="delete-project" type="button">🗑️ Delete</button>
+      <button id="export-project" type="button">📤 Export</button>
+      <button id="download-video" type="button">🎬 Download</button>
+    </div>
+  </form>
+</dialog>
+
+
+</body>
+</html>
+

@@ -1,0 +1,66 @@
+/* Prism Token Styles for Custom Theme */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #5c6773;
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: #c5c8c6;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #ff6b6b;
+}
+
+.token.boolean,
+.token.number {
+  color: #ffdd57;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #ffc28a;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.token.variable {
+  color: #00d2d3;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #00ff99;
+}
+
+.token.function,
+.token.class-name {
+  color: #b18aff;
+}
+
+.token.regex,
+.token.important {
+  color: #ff79c6;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
