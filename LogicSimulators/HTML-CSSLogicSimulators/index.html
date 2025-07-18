@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CSS Logic Gates & Latches</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Logic Gate Simulator (HTML-CSS only)</h1>
+  <div>
+    <select id="theme-selector">
+      <option value="system" selected>System</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+    <select id="mode-selector">
+      <option selected>default</option>
+      <option value="debug">inspect</option>
+    </select>
+    <label for="modal-toggle" class="open-modal">?</label>
+  </div>
+</header>
+<main>
+  <div>
+  <!-- AND gate -->
+  <div class="gate" title="AND gate">
+    <div class="gate-inputs">
+      <input type="checkbox" id="and-in1" /> <label for="and-in1">1</label>
+      <input type="checkbox" id="and-in2" /> <label for="and-in2">2</label>
+    </div>
+    <div class="gate-name">AND</div>
+    <div class="gate-outputs">
+      <div class="output-light and-output"></div>
+    </div>
+  </div>
+
+  <!-- OR gate -->
+  <div class="gate" title="OR gate">
+    <div class="gate-inputs">
+      <input type="checkbox" id="or-in1" /> <label for="or-in1">1</label>
+      <input type="checkbox" id="or-in2" /> <label for="or-in2">2</label>
+    </div>
+    <div class="gate-name">OR</div>
+    <div class="gate-outputs">
+      <div class="output-light or-output"></div>
+    </div>
+  </div>
+
+  <!-- NOT gate -->
+  <div class="gate" title="NOT gate">
+    <div class="gate-inputs">
+      <input type="checkbox" id="not-in" /> <label for="not-in">Input</label>
+    </div>
+    <div class="gate-name">NOT</div>
+    <div class="gate-outputs">
+      <div class="output-light not-output"></div>
+    </div>
+  </div>
+</div>
+<div>
+  <!-- XOR gate -->
+  <div class="gate" title="XOR gate">
+    <div class="gate-inputs">
+      <input type="checkbox" id="xor-in1" /> <label for="xor-in1">1</label>
+      <input type="checkbox" id="xor-in2" /> <label for="xor-in2">2</label>
+    </div>
+    <div class="gate-name">XOR</div>
+    <div class="gate-outputs">
+      <div class="output-light xor-output"></div>
+    </div>
+  </div>
+
+  <!-- NXOR (XNOR) gate -->
+  <div class="gate" title="NXOR (XNOR) gate">
+    <div class="gate-inputs">
+      <input type="checkbox" id="nxor-in1" /> <label for="nxor-in1">1</label>
+      <input type="checkbox" id="nxor-in2" /> <label for="nxor-in2">2</label>
+    </div>
+    <div class="gate-name">NXOR (XNOR)</div>
+    <div class="gate-outputs">
+      <div class="output-light nxor-output"></div>
+    </div>
+  </div>
+
+  <!-- NOR gate -->
+  <div class="gate" title="NOR gate">
+    <div class="gate-inputs">
+      <input type="checkbox" id="nor-in1" /> <label for="nor-in1">1</label>
+      <input type="checkbox" id="nor-in2" /> <label for="nor-in2">2</label>
+    </div>
+    <div class="gate-name">NOR</div>
+    <div class="gate-outputs">
+      <div class="output-light nor-output"></div>
+    </div>
+  </div>
+
+  <!-- NAND gate -->
+  <div class="gate" title="NAND gate">
+    <div class="gate-inputs">
+      <input type="checkbox" id="nand-in1" /> <label for="nand-in1">1</label>
+      <input type="checkbox" id="nand-in2" /> <label for="nand-in2">2</label>
+    </div>
+    <div class="gate-name">NAND</div>
+    <div class="gate-outputs">
+      <div class="output-light nand-output"></div>
+    </div>
+  </div>
+</div>
+<div>
+  <!-- T Latch -->
+  <div class="gate" title="T Latch">
+    <div class="gate-inputs">
+      <input type="checkbox" id="t-a" /> <label for="t-a" class="t-toggle">T</label>
+      <input type="checkbox" id="t-b" /> <label for="t-b" class="t-toggle">T</label>
+    </div>
+    <div class="gate-name">T Latch</div>
+    <div class="gate-outputs">
+      <div class="output-light t-output"></div>
+    </div>
+  </div>
+
+  <!-- SR Latch -->
+  <div class="gate" title="SR Latch">
+    <form class="gate-inputs">
+      <input type="checkbox" id="sr-t" checked/> <label for="sr-t" title="Set (S)">S</label>
+      <input type="checkbox" id="sr-s" /> <label for="sr-s" title="Set (S)">S</label>
+      <input type="checkbox" id="sr-r" /> <label for="sr-r" title="Reset (R)">R</label>
+      <button type="reset" class="reset-btn" title="Reset (R)">R</button>
+    </form>
+    <div class="gate-name">SR Latch</div>
+    <div class="gate-outputs">
+      <div class="output-light sr-output1"></div>
+      <div class="output-light sr-output2"></div>
+    </div>
+  </div>
+</div>
+</main>
+
+<input type="checkbox" id="modal-toggle" hidden/>
+<label for="modal-toggle" class="modal-backdrop"></label>
+<div class="modal">
+  <h2>🧠 CSS-Only Logic Gates & Latches</h2>
+  <p>This project demonstrates basic logic gates and latches using only <strong>HTML</strong> and <strong>CSS</strong>.</p>
+
+  <h3>🔌 Core Logic</h3>
+  <ul>
+    <li>Inputs can be made with:
+      <code><span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span><span class="punct">&gt;</span> <span class="punct">&lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"id"</span><span class="punct">&gt;</span><span class="punct">&lt;</span><span class="tag">label</span><span class="punct">&gt;</span></code>
+    </li>
+    <li>Logic is implemented using CSS selectors:
+      <br>"<code><span class="selector">:checked</span></code>"- way to check input value
+      <br>"<code><span class="selector">:not</span><span class="punct">()</span></code>" - acts as not gate
+      <br>"" - acts as and gate (write conditions joined without any space)
+      <br>"<code><span class="punct">,</span></code>" - acts as or gate (write conditions separated by comma)
+      <br>"<code><span class="attr">display</span><span class="punct">:</span><span class="value">none <span class="punct">|</span> block</span></code>" - can be used to toggle presence and absence of any element from the DOM
+    </li>
+    <li>The <strong>state</strong> of one element (like an output) can be changed based on other elements (like inputs).</li>
+  </ul>
+
+  <h3>🔧 Logic Gates</h3>
+<!-- AND gate -->
+  <h4>✅ AND Gate</h4>
+  <div class="tabs">
+    <input type="radio" name="tabs" id="tab-html" checked hidden>
+    <input type="radio" name="tabs" id="tab-css" hidden>
+
+    <div class="tab-labels">
+      <label for="tab-html">HTML</label>
+      <label for="tab-css">CSS</label>
+    </div>
+
+    <div class="tab-content">
+      <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"AND gate"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-inputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"and-in1"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"and-in1"</span><span class="punct">&gt;</span>1<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"and-in2"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"and-in2"</span><span class="punct">&gt;</span>2<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-name"</span><span class="punct">&gt;</span>AND<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-outputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"output-light and-output"</span><span class="punct">&gt;&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span></code></pre>
+
+      </div>
+      <div class="tab css">
+<pre><code class="snippet"><span class="selector">.gate:has<span class="punct">(</span></span><span class="tag">#and-in1</span><span class="selector">:checked<span class="punct">)</span><span class="selector">:has</span><span class="punct">(</span></span><span class="tag">#and-in2</span><span class="selector">:checked</span><span class="punct">)</span> <span class="selector">.and-output</span> <span class="punct">{</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">#4caf50</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">var</span><span class="punct">(</span>--glow<span class="punct">)</span></span><span class="punct">;</span>
+<span class="punct">}</span></code></pre>
+
+      </div>
+    </div>
+  </div>
+  <p>The AND gate turns green only when <code><span class="tag">#and-in1</span></code> and <code><span class="tag">#and-in2</span></code> are both checked.</p>
+<!-- OR gate -->
+  <h4>✅ OR Gate</h4>
+  <div class="tabs">
+  <input type="radio" name="tabs-or" id="tab-html-or" checked hidden>
+  <input type="radio" name="tabs-or" id="tab-css-or" hidden>
+
+  <div class="tab-labels">
+    <label for="tab-html-or">HTML</label>
+    <label for="tab-css-or">CSS</label>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"OR gate"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-inputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"or-in1"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"or-in1"</span><span class="punct">&gt;</span>1<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"or-in2"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"or-in2"</span><span class="punct">&gt;</span>2<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-name"</span><span class="punct">&gt;</span>OR<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-outputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"output-light or-output"</span><span class="punct">&gt;&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span></code></pre>
+    </div>
+    <div class="tab css">
+<pre><code class="snippet"><span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#or-in1</span><span class="selector">:checked</span><span class="punct">)</span> <span class="selector">.or-output</span><span class="punct">,</span>
+<span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#or-in2</span><span class="selector">:checked</span><span class="punct">)</span> <span class="selector">.or-output</span> <span class="punct">{</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">#4caf50</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">var</span><span class="punct">(</span>--glow<span class="punct">)</span><span class="punct">;</span>
+<span class="punct">}</span></code></pre>
+    </div>
+  </div>
+</div>
+
+  <p>The OR gate turns green when <code><span class="tag">#or-in1</span></code> is checked and when <code><span class="tag">#or-in2</span></code> is checked.</p>
+<!-- NOT gate -->
+  <h4>✅ NOT Gate</h4>
+  <div class="tabs">
+  <input type="radio" name="tabs-not" id="tab-html-not" checked hidden>
+  <input type="radio" name="tabs-not" id="tab-css-not" hidden>
+
+  <div class="tab-labels">
+    <label for="tab-html-not">HTML</label>
+    <label for="tab-css-not">CSS</label>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"NOT gate"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-inputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"not-in"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"not-in"</span><span class="punct">&gt;</span>Input<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-name"</span><span class="punct">&gt;</span>NOT<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-outputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"output-light not-output"</span><span class="punct">&gt;&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span></code></pre>
+    </div>
+
+    <div class="tab css">
+<pre><code class="snippet"><span class="selector">.gate:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#not-in</span><span class="selector">:checked</span><span class="punct">))</span> <span class="selector">.not-output</span> <span class="punct">{</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">#4caf50</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">var</span><span class="punct">(</span>--glow<span class="punct">)</span><span class="punct">;</span>
+<span class="punct">}</span></code></pre>
+    </div>
+  </div>
+</div>
+
+  <p>The NOT gate turns green only when <code><span class="tag">#not-in</span></code> is not checked.</p>
+
+<!-- XOR gate -->
+<h4>✅ XOR Gate</h4>
+<div class="tabs">
+  <input type="radio" name="tabs-xor" id="tab-html-xor" checked hidden>
+  <input type="radio" name="tabs-xor" id="tab-css-xor" hidden>
+
+  <div class="tab-labels">
+    <label for="tab-html-xor">HTML</label>
+    <label for="tab-css-xor">CSS</label>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"XOR gate"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-inputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"xor-in1"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"xor-in1"</span><span class="punct">&gt;</span>1<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"xor-in2"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"xor-in2"</span><span class="punct">&gt;</span>2<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-name"</span><span class="punct">&gt;</span>XOR<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-outputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"output-light xor-output"</span><span class="punct">&gt;&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span></code></pre>
+    </div>
+
+    <div class="tab css">
+<pre><code class="snippet"><span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#xor-in1</span><span class="selector">:checked</span><span class="punct">)</span><span class="selector">:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#xor-in2</span><span class="selector">:checked</span><span class="punct">))</span> <span class="selector">.xor-output</span><span class="punct">,</span>
+<span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#xor-in2</span><span class="selector">:checked</span><span class="punct">)</span><span class="selector">:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#xor-in1</span><span class="selector">:checked</span><span class="punct">))</span> <span class="selector">.xor-output</span> <span class="punct">{</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">#4caf50</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">var</span><span class="punct">(</span>--glow<span class="punct">);</span>
+<span class="punct">}</span></code></pre>
+    </div>
+  </div>
+</div>
+<p>The XOR gate turns green when only one of <code><span class="tag">#xor-in1</span></code> and <code><span class="tag">#xor-in2</span></code> is checked.</p>
+
+<!-- NXOR (XNOR) gate -->
+  <h4>✅ NXOR (XNOR)</h4>
+<div class="tabs">
+  <input type="radio" name="tabs-nxor" id="tab-html-nxor" checked hidden>
+  <input type="radio" name="tabs-nxor" id="tab-css-nxor" hidden>
+
+  <div class="tab-labels">
+    <label for="tab-html-nxor">HTML</label>
+    <label for="tab-css-nxor">CSS</label>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"NXOR (XNOR) gate"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-inputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"nxor-in1"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"nxor-in1"</span><span class="punct">&gt;</span>1<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"nxor-in2"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"nxor-in2"</span><span class="punct">&gt;</span>2<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-name"</span><span class="punct">&gt;</span>NXOR (XNOR)<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-outputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"output-light nxor-output"</span><span class="punct">&gt;&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span></code></pre>
+    </div>
+
+    <div class="tab css">
+<pre><code class="snippet"><span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#nxor-in1</span><span class="selector">:checked</span><span class="punct">)<span class="selector">:has</span>(</span><span class="tag">#nxor-in2</span><span class="selector">:checked</span><span class="punct">)</span> <span class="selector">.nxor-output</span><span class="punct">,</span>
+<span class="selector">.gate:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#nxor-in1</span><span class="selector">:checked</span><span class="punct">))</span><span class="selector">:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#nxor-in2</span><span class="selector">:checked</span><span class="punct">))</span> <span class="selector">.nxor-output</span> <span class="punct">{</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">#4caf50</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">var</span><span class="punct">(</span>--glow<span class="punct">);</span>
+<span class="punct">}</span></code></pre>
+    </div>
+  </div>
+</div>
+<p>The NXOR gate turns green when both of <code><span class="tag">#nxor-in1</span></code> and <code><span class="tag">#nxor-in2</span></code> have same value.</p>
+
+<!-- NOR gate -->
+  <h4>✅ NOR</h4>
+<div class="tabs">
+  <input type="radio" name="tabs-nor" id="tab-html-nor" checked hidden>
+  <input type="radio" name="tabs-nor" id="tab-css-nor" hidden>
+
+  <div class="tab-labels">
+    <label for="tab-html-nor">HTML</label>
+    <label for="tab-css-nor">CSS</label>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"NOR gate"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-inputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"nor-in1"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"nor-in1"</span><span class="punct">&gt;</span>1<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"nor-in2"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"nor-in2"</span><span class="punct">&gt;</span>2<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-name"</span><span class="punct">&gt;</span>NOR<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-outputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"output-light nor-output"</span><span class="punct">&gt;&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span></code></pre>
+    </div>
+
+    <div class="tab css">
+<pre><code class="snippet"><span class="selector">.gate:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#nor-in1</span><span class="selector">:checked</span><span class="punct">))</span><span class="selector">:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#nor-in2</span><span class="selector">:checked</span><span class="punct">))</span> <span class="selector">.nor-output</span> <span class="punct">{</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">#4caf50</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">var</span><span class="punct">(</span>--glow<span class="punct">);</span>
+<span class="punct">}</span></code></pre>
+    </div>
+  </div>
+</div>
+<p>NOR(a,b) = AND(NOT(a),NOT(b))</p>
+
+<!-- NAND gate -->
+  <h4>✅ NAND</h4>
+<div class="tabs">
+  <input type="radio" name="tabs-nand" id="tab-html-nand" checked hidden>
+  <input type="radio" name="tabs-nand" id="tab-css-nand" hidden>
+
+  <div class="tab-labels">
+    <label for="tab-html-nand">HTML</label>
+    <label for="tab-css-nand">CSS</label>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"NAND gate"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-inputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"nand-in1"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"nand-in1"</span><span class="punct">&gt;</span>1<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"nand-in2"</span> <span class="punct">/&gt; &lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"nand-in2"</span><span class="punct">&gt;</span>2<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-name"</span><span class="punct">&gt;</span>NAND<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-outputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"output-light nand-output"</span><span class="punct">&gt;&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span></code></pre>
+    </div>
+
+    <div class="tab css">
+<pre><code class="snippet"><span class="selector">.gate:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#nand-in1</span><span class="selector">:checked</span><span class="punct">):</span><span class="selector">has</span><span class="punct">(</span><span class="tag">#nand-in2</span><span class="selector">:checked</span><span class="punct">))</span> <span class="selector">.nand-output</span> <span class="punct">{</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">#4caf50</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">var</span><span class="punct">(</span>--glow<span class="punct">);</span>
+<span class="punct">}</span></code></pre>
+    </div>
+  </div>
+</div>
+<p>NAND(a,b) = NOT(AND(a,b))</p>
+
+<!-- T Latch gate -->
+  <h3>💾 T Latch</h3>
+<div class="tabs">
+  <input type="radio" name="tabs-t" id="tab-html-t" checked hidden>
+  <input type="radio" name="tabs-t" id="tab-css-t" hidden>
+
+  <div class="tab-labels">
+    <label for="tab-html-t">HTML</label>
+    <label for="tab-css-t">CSS</label>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"T Latch"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-inputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"t-a"</span> <span class="punct">/&gt;</span> 
+    <span class="punct">&lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"t-a"</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"t-toggle"</span><span class="punct">&gt;</span>T<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"t-b"</span> <span class="punct">/&gt;</span> 
+    <span class="punct">&lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"t-b"</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"t-toggle"</span><span class="punct">&gt;</span>T<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-name"</span><span class="punct">&gt;</span>T Latch<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-outputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"output-light t-output"</span><span class="punct">&gt;&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span></code></pre>
+    </div>
+
+    <div class="tab css">
+<pre><code class="snippet"><span class="comment">/*
+  T - Latch
+  ["0", gray] [0, _] -> 0
+  [1, _]      ["0", green] -> 1
+  ["1", gray] [1, _] -> 1
+  [0, _]      ["1", green] -> 0
+*/</span>
+<span class="selector">.gate:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#t-a</span><span class="selector">:checked</span><span class="punct">))</span><span class="selector">:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#t-b</span><span class="selector">:checked</span><span class="punct">))</span> <span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"t-b"</span><span class="punct">]</span><span class="punct">,</span>
+<span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#t-a</span><span class="selector">:checked<span class="punct">)</span>:not<span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#t-b</span><span class="selector">:checked</span><span class="punct">))</span> <span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"t-a"</span><span class="punct">]</span><span class="punct">,</span>
+<span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#t-a</span>:checked<span class="punct">)</span>:has<span class="punct">(</span><span class="tag">#t-b</span><span class="selector">:checked</span><span class="punct">)</span> <span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"t-b"</span><span class="punct">]</span><span class="punct">,</span>
+<span class="selector">.gate:not</span><span class="punct">(</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#t-a</span><span class="selector">:checked</span><span class="punct">))</span><span class="selector">:has</span><span class="punct">(</span><span class="tag">#t-b</span><span class="selector">:checked</span><span class="punct">)</span> <span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"t-a"</span><span class="punct">]</span> <span class="punct">{</span>
+  <span class="property">display</span><span class="punct">:</span> <span class="value">none</span><span class="punct">;</span>
+<span class="punct">}</span>
+
+<span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#t-a</span><span class="selector">:checked<span class="punct">)</span> .t-output</span> <span class="punct">{</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">#4caf50</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">var</span><span class="punct">(</span></span>--glow<span class="punct">);</span>
+<span class="punct">}</span>
+
+<span class="selector">input<span class="punct">[</span><span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span><span class="punct">]</span>:checked + label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"t-a"</span><span class="punct">] {</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">var</span><span class="punct">(</span>--labelBG<span class="punct">);</span>
+  <span class="property">color</span><span class="punct">:</span> <span class="value">gray</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">inset<span class="number"> 0 0 0 3px </span>#aaa</span><span class="punct">;</span>
+<span class="punct">}</span>
+
+<span class="selector">input<span class="punct">[</span><span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span><span class="punct">]</span>:checked + label<span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"t-a"</span><span class="punct">]</span>:hover</span> <span class="punct">{</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">#ccc</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">inset<span class="number"> 0 0 0 3px </span>#888</span><span class="punct">;</span>
+<span class="punct">}</span>
+
+<span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"t-b"</span><span class="punct">]</span> <span class="punct">{</span>
+  <span class="property">background</span><span class="punct">:</span> <span class="value">#4caf50 !important</span><span class="punct">;</span>
+  <span class="property">color</span><span class="punct">:</span> <span class="value">white</span><span class="punct">;</span>
+  <span class="property">box-shadow</span><span class="punct">:</span> <span class="value">inset<span class="number"> 0 0 0 3px </span>#388e3c</span><span class="punct">;</span>
+<span class="punct">}</span></code></pre>
+    </div>
+  </div>
+</div>
+
+<p>
+  A T latch toggles its state when you turn it <em>on</em>, but holds the state when it's <em>off</em>.<br>
+  But CSS can't store values… or can it? 🤔<br><br>
+
+  Here's the trick: since you're only allowed to toggle <strong>one button at a time</strong>, this setup creates a loop of four states:
+</p>
+
+<pre>[0 ⟶ 0] → [1 ⟶ 1]
+   ↑           ↓
+[1 ⟶ 0] ← [0 ⟶ 1]</pre>
+
+<p>
+  The switch happens every <em>second</em> click. But a checkbox normally toggles on <em>every</em> click, so how do we fix that?<br>
+  <br>
+  ▸ The solution is: every click swaps which button is visible.<br>
+  ▸ Only one of those buttons (the first one) actually changes the output.<br>
+  ▸ The other one is just a decoy to keep the toggle pattern going.<br>
+  <br>
+  To complete the trick visually:<br>
+  the button that controls the output is styled as if it's <em>off</em>,<br>
+  and the other one is styled as if it's <em>on</em>.<br>
+  <br>
+  Bonus insight: if you observe, the decoy (<code><span class="tag">#t-b</span></code>) acts as the the previous value of the output<br>
+  and that is exactly how T latches work!
+</p>
+
+
+<!-- SR gate -->
+  <h3>💾 SR Latch</h3>
+<div class="tabs">
+  <input type="radio" name="tabs-sr" id="tab-html-sr" checked hidden>
+  <input type="radio" name="tabs-sr" id="tab-css-sr" hidden>
+
+  <div class="tab-labels">
+    <label for="tab-html-sr">HTML</label>
+    <label for="tab-css-sr">CSS</label>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"SR Latch"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">form</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-inputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"sr-t"</span> <span class="attr">checked</span><span class="punct">/&gt;</span> <span class="punct">&lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"sr-t"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"Set (S)"</span><span class="punct">&gt;</span>S<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"sr-s"</span><span class="punct">/&gt;</span> <span class="punct">&lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"sr-s"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"Set (S)"</span><span class="punct">&gt;</span>S<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">input</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"sr-r"</span><span class="punct">/&gt;</span> <span class="punct">&lt;</span><span class="tag">label</span> <span class="attr">for</span><span class="punct">=</span><span class="value">"sr-r"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"Reset (R)"</span><span class="punct">&gt;</span>R<span class="punct">&lt;/</span><span class="tag">label</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">button</span> <span class="attr">type</span><span class="punct">=</span><span class="value">"reset"</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"reset-btn"</span> <span class="attr">title</span><span class="punct">=</span><span class="value">"Reset (R)"</span><span class="punct">&gt;</span>R<span class="punct">&lt;/</span><span class="tag">button</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">form</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-name"</span><span class="punct">&gt;</span>SR Latch<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"gate-outputs"</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"output-light sr-output1"</span><span class="punct">&gt;&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+    <span class="punct">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punct">=</span><span class="value">"output-light sr-output2"</span><span class="punct">&gt;&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">div</span><span class="punct">&gt;</span></code></pre>
+    </div>
+
+    <div class="tab css">
+<pre><code class="snippet"><span class="comment">/*
+  SR - Latch  
+                      [0, _] ["0", red] ["1", green] -> 0 (4th sate)
+                        t   -     s     -     r               ↨
+                    ↙ [1, _] ["0", gray] ["0", gray] -> 0 (0th sate)↰
+              (1st sate)                                            (3rd sate)
+  ["1", green] [1, _] ["0", red] -> 1         ["0", red] [1, _] ["1", green] -> 0
+       ↳⬑             (2nd sate) ["0", gray] [1, _] ["0", gray] -> 1    ⬏
+*/</span>
+<span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"sr-t"</span><span class="punct">]</span><span class="punct">,</span>
+<span class="selector">.reset-btn</span><span class="punct">,</span>
+<span class="tag">#sr-r</span><span class="selector">:checked</span> <span class="punct">+</span> <span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"sr-r"</span><span class="punct">]</span><span class="punct">,</span>
+<span class="tag">#sr-s</span><span class="selector">:checked</span> <span class="punct">+</span> <span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"sr-s"</span><span class="punct">]</span> <span class="punct">{</span>
+  <span class="attr">display</span><span class="punct">:</span> <span class="value">none</span><span class="punct">;</span>
+<span class="punct">}</span>
+
+<span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#sr-s</span><span class="selector">:checked</span><span class="punct">)</span> <span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"sr-t"</span><span class="punct">]</span> <span class="punct">{</span>
+  <span class="attr">display</span><span class="punct">:</span> <span class="value">block</span><span class="punct">;</span>
+<span class="punct">}</span>
+
+<span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#sr-t</span><span class="selector">:checked</span><span class="punct">)<span class="selector">:has</span>(</span><span class="tag">#sr-s</span><span class="selector">:checked</span><span class="punct">)</span> <span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"sr-r"</span><span class="punct">]</span><span class="punct">,</span>
+<span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#sr-r</span><span class="selector">:checked</span><span class="punct">)</span> <span class="selector">input</span><span class="punct">[</span><span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span><span class="punct">]</span><span class="selector">:not</span><span class="punct">(:</span><span class="selector">checked</span><span class="punct">)</span> <span class="punct">+</span> <span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"sr-s"</span><span class="punct">]</span><span class="punct">,</span>
+<span class="selector">.gate:has</span><span class="punct">(</span><span class="tag">#sr-r</span><span class="selector">:checked</span><span class="punct">)</span> <span class="selector">input</span><span class="punct">[</span><span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span><span class="punct">]</span><span class="selector">:not</span><span class="punct">(:</span><span class="selector">checked</span><span class="punct">)</span> <span class="punct">+</span> <span class="selector">label</span><span class="punct">[</span><span class="attr">for</span><span class="punct">=</span><span class="value">"sr-t"</span><span class="punct">]</span> <span class="punct">{</span>
+  <span class="attr">background</span><span class="punct">:</span> <span class="value">#f44336</span><span class="punct">;</span>
+  <span class="attr">color</span><span class="punct">:</span> <span class="value">white</span><span class="punct">;</span>
+  <span class="attr">box-shadow</span><span class="punct">:</span> <span class="value">inset<span class="number"> 0 0 0 3px </span>#c62828</span><span class="punct">;</span>
+  <span class="attr">pointer-events</span><span class="punct">:</span> <span class="value">none</span><span class="punct">;</span>
+  <span class="attr">opacity</span><span class="punct">:</span> <span class="number">0.7</span><span class="punct">;</span>
+  <span class="attr">cursor</span><span class="punct">:</span> <span class="value">not-allowed</span><span class="punct">;</span>
+<span class="punct">}</span>
+
+<span class="selector">.gate:has<span class="punct">(</span><span class="tag">#sr-r</span>:checked<span class="punct">)</span> .reset-btn</span> <span class="punct">{</span>
+  <span class="attr">all</span><span class="punct">:</span> <span class="value">unset</span><span class="punct">;</span>
+  <span class="attr">padding</span><span class="punct">:</span> <span class="number">12px 0</span><span class="punct">;</span>
+  <span class="attr">border-radius</span><span class="punct">:</span> <span class="number">6px</span><span class="punct">;</span>
+  <span class="attr">cursor</span><span class="punct">:</span> <span class="value">pointer</span><span class="punct">;</span>
+  <span class="attr">font-weight</span><span class="punct">:</span> <span class="number">600</span><span class="punct">;</span>
+  <span class="attr">width</span><span class="punct">:</span> <span class="number">48px</span><span class="punct">;</span>
+  <span class="attr">text-align</span><span class="punct">:</span> <span class="value">center</span><span class="punct">;</span>
+  <span class="attr">transition</span><span class="punct">:</span> <span class="value">all <span class="number">0.25s</span></span><span class="punct">;</span>
+  <span class="attr">background</span><span class="punct">:</span> <span class="value">#4caf50</span><span class="punct">;</span>
+  <span class="attr">color</span><span class="punct">:</span> <span class="value">white</span><span class="punct">;</span>
+  <span class="attr">box-shadow</span><span class="punct">:</span> <span class="value">inset<span class="number"> 0 0 0 3px </span>#388e3c</span><span class="punct">;</span>
+<span class="punct">}</span>
+
+<span class="selector">.gate:has<span class="punct">(</span><span class="tag">#sr-s</span>:checked<span class="punct">)</span>:not<span class="punct">(</span>:has<span class="punct">(</span><span class="tag">#sr-r</span>:checked<span class="punct">))</span> .sr-output1<span class="punct">,</span>
+.gate:not<span class="punct">(</span>:has<span class="punct">(</span><span class="tag">#sr-s</span>:checked<span class="punct">)</span>:not<span class="punct">(</span>:has<span class="punct">(</span><span class="tag">#sr-r</span>:checked<span class="punct">)))</span> .sr-output2 </span><span class="punct">{</span>
+  <span class="attr">background</span><span class="punct">:</span> <span class="value">#4caf50</span><span class="punct">;</span>
+  <span class="attr">box-shadow</span><span class="punct">:</span> <span class="value">var</span><span class="punct">(</span>--glow<span class="punct">)</span><span class="punct">;</span>
+<span class="punct">}</span></code></pre>
+    </div>
+  </div>
+</div>
+  <p>
+    The SR latch has two inputs: <strong>S</strong> (Set) and <strong>R</strong> (Reset).<br>
+    <strong>S</strong> stores the value, and can't take it back - only <strong>R</strong> can.<br>
+    <br>
+    Using a similar strategy to the T latch (with a decoy input<code><span class="tag">#sr-t</span></code>), we apply the trick again — but this time the decoy is active by default.<br>
+    Here's how the state transitions map out:
+<pre> "" ⇒ shown and clickable, '' ⇒ shown but not clickable
+ T  S   R
+[1 '0' "1" ⟶ 0]
+        ⇅
+[1 "0" "0" ⟶ 0] ← ['0' 1 "1" ⟶ 0]
+     ↓                     ↑
+["1" 1 '0' ⟶ 1] ⇄ ["0" 1 "0" ⟶ 1]</pre>
+<ul>
+<li>So the output is on if <code><span class="tag">#sr-s</span></code> is on but <code><span class="tag">#sr-r</span></code> is not.</li>
+<li>
+  when <code><span class="tag">#sr-r</span></code> goes from on to off it goes back to the start.<br>
+  To pull this off we hide the <code><span class="tag">#sr-r</span></code> and show the reset button and for this we need the inputs to be inside a form.<br>
+</li>
+<li>And to avoid the case where both buth inputs are on we use <code><span class="attr">pointer-events</span><span class="punct">: <span class="value">none</span>;</span></code></li>
+</ul>
+  </p>
+
+  <h3>🧪 Modes</h3>
+<div class="tabs">
+  <input type="radio" name="tabs-mode" id="tab-html-mode" checked hidden>
+  <input type="radio" name="tabs-mode" id="tab-css-mode" hidden>
+
+  <div class="tab-labels">
+    <label for="tab-html-mode">HTML</label>
+    <label for="tab-css-mode">CSS</label>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">select</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"mode-selector"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">option</span> <span class="attr">selected</span><span class="punct">&gt;</span>default<span class="punct">&lt;/</span><span class="tag">option</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">option</span> <span class="attr">value</span><span class="punct">=</span><span class="value">"debug"</span><span class="punct">&gt;</span>inspect<span class="punct">&lt;/</span><span class="tag">option</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">select</span><span class="punct">&gt;</span></code></pre>
+    </div>
+    <div class="tab css">
+<pre><code class="snippet"><span class="selector">body:has<span class="punct">(</span><span class="tag">#mode-selector</span> option<span class="punct">[</span><span class="attr">value</span><span class="punct">=</span><span class="value">"debug"</span><span class="punct">]</span>:checked<span class="punct">)</span> <span class="selector">input</span><span class="punct">[</span><span class="attr">type</span><span class="punct">=</span><span class="value">"checkbox"</span><span class="punct">]</span> <span class="punct">{</span>
+  <span class="property">display</span><span class="punct">:</span> <span class="value">inline-block</span><span class="punct">;</span>
+<span class="punct">}</span>
+
+<span class="selector">body:has<span class="punct">(</span><span class="tag">#mode-selector</span> option<span class="punct">[</span><span class="attr">value</span><span class="punct">=</span><span class="value">"debug"</span><span class="punct">]</span>:checked<span class="punct">)</span> <span class="selector">.reset-btn::after</span> <span class="punct">{</span>
+  <span class="property">content</span><span class="punct">:</span> <span class="value">"eset"</span><span class="punct">;</span>
+<span class="punct">}</span></code></pre>
+    </div>
+  </div>
+</div>
+
+  <p>A mode selector lets you choose between views (e.g. default vs inspect/debug):</p>
+
+  <h3>🌒 Themes</h3>
+<div class="tabs gate-tabs">
+  <input type="radio" name="tabs-theme" id="tab-html-theme" checked hidden>
+  <input type="radio" name="tabs-theme" id="tab-css-theme" hidden>
+
+  <div class="tab-labels">
+    <label for="tab-html-theme">HTML</label>
+    <label for="tab-css-theme">CSS</label>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab html">
+<pre><code class="snippet"><span class="punct">&lt;</span><span class="tag">select</span> <span class="attr">id</span><span class="punct">=</span><span class="value">"theme-selector"</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">option</span> <span class="attr">value</span><span class="punct">=</span><span class="value">"system"</span> <span class="attr">selected</span><span class="punct">&gt;</span>System<span class="punct">&lt;/</span><span class="tag">option</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">option</span> <span class="attr">value</span><span class="punct">=</span><span class="value">"light"</span><span class="punct">&gt;</span>Light<span class="punct">&lt;/</span><span class="tag">option</span><span class="punct">&gt;</span>
+  <span class="punct">&lt;</span><span class="tag">option</span> <span class="attr">value</span><span class="punct">=</span><span class="value">"dark"</span><span class="punct">&gt;</span>Dark<span class="punct">&lt;/</span><span class="tag">option</span><span class="punct">&gt;</span>
+<span class="punct">&lt;/</span><span class="tag">select</span><span class="punct">&gt;</span></code></pre>
+    </div>
+    <div class="tab css">
+<pre><code class="snippet"><span class="selector">:root:has<span class="punct">(</span><span class="tag">#theme-selector</span> option</span><span class="punct">[</span><span class="attr">value</span><span class="punct">=</span><span class="value">"dark"</span><span class="punct">]</span><span class="selector">:checked</span><span class="punct">)</span> <span class="punct">{</span>
+  <span class="property">--bodyBG</span><span class="punct">:</span> <span class="value">#121212</span><span class="punct">;</span>
+  <span class="property">--mainBG</span><span class="punct">:</span> <span class="value">#1e1e1e</span><span class="punct">;</span>
+  <span class="property">--labelBG</span><span class="punct">:</span> <span class="value">#333</span><span class="punct">;</span>
+  <span class="property">--modalText</span><span class="punct">:</span> <span class="value">#eee</span><span class="punct">;</span>
+<span class="punct">}</span>
+
+@media <span class="punct">(</span><span class="attr">prefers-color-scheme</span><span class="punct">:</span> <span class="value">dark</span><span class="punct">)</span> <span class="punct">{</span>
+  <span class="selector">:root:has<span class="punct">(</span><span class="tag">#theme-selector</span> option</span><span class="punct">[</span><span class="attr">value</span><span class="punct">=</span><span class="value">"system"</span><span class="punct">]</span><span class="selector">:checked</span><span class="punct">)</span> <span class="punct">{</span>
+    <span class="property">--bodyBG</span><span class="punct">:</span> <span class="value">#121212</span><span class="punct">;</span>
+    <span class="property">--mainBG</span><span class="punct">:</span> <span class="value">#1e1e1e</span><span class="punct">;</span>
+    <span class="property">--labelBG</span><span class="punct">:</span> <span class="value">#333</span><span class="punct">;</span>
+    <span class="property">--modalText</span><span class="punct">:</span> <span class="value">#eee</span><span class="punct">;</span>
+  <span class="punct">}</span>
+<span class="punct">}</span></code></pre>
+    </div>
+  </div>
+</div>
+
+  <p>Light/dark mode toggle with CSS:</p>
+
+  <h3>💬 Modal (This Box!)</h3>
+  <p>
+    Implemented using a hidden checkbox and radios: The rest is for you to discover!<br>
+    To know more you can just open your dev tools with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd> or <kbd>F12</kbd> or add <kbd title="select and copy this">view-source:</kbd> before the url to view the source code.
+  </p>
+
+  <label for="modal-toggle" class="close">Close</label>
+</div>
+
+
+
+
+</body>
+</html>

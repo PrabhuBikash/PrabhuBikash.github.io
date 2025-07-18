@@ -1,0 +1,409 @@
+:root {
+  --glow: 0 0 10px #4caf50, 0 0 20px #4caf50, 0 0 30px #4caf50;
+  --bodyBG: white;
+  --mainBG: #f7f9fb;
+  --labelBG: #ddd;
+  --modalText: black;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  color: gray;
+  background-color: var(--bodyBG);
+}
+
+header {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+header h1 {
+  flex: 1;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+select {
+  padding: 0.4em 1em;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+select:hover {
+  border-color: black;
+}
+
+main {
+  padding: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  justify-content: center;
+  min-height: calc(100vh - 100px);
+  background-color: var(--mainBG);
+}
+
+main div {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.gate {
+  background: white;
+  border: 2px solid #444;
+  border-radius: 8px;
+  padding: 20px;
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+  user-select: none;
+  height: fit-content;
+  background-color: var(--bodyBG);
+}
+
+.gate-inputs, .gate-outputs {
+  display: flex;
+  gap: 10px;
+}
+
+.gate-name {
+  font-weight: bold;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+label {
+  background: var(--labelBG);
+  padding: 12px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 48px;
+  text-align: center;
+  box-shadow: inset 0 0 0 2px #aaa;
+  transition: all 0.25s;
+}
+
+label:hover {
+  background: #ccc;
+  box-shadow: inset 0 0 0 3px #888;
+}
+
+input:checked + label {
+  background: #4caf50;
+  color: white;
+  box-shadow: inset 0 0 0 3px #388e3c;
+}
+
+.output-light {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #444;
+  box-shadow: 0 0 5px #222 inset;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+
+/* --- Gate Logic --- */
+
+/* AND */
+.gate:has(#and-in1:checked):has(#and-in2:checked) .and-output {
+  background: #4caf50;
+  box-shadow: var(--glow);
+}
+
+/* OR */
+.gate:has(#or-in1:checked) .or-output,
+.gate:has(#or-in2:checked) .or-output {
+  background: #4caf50;
+  box-shadow: var(--glow);
+}
+
+/* NOT */
+.gate:not(:has(#not-in:checked)) .not-output {
+  background: #4caf50;
+  box-shadow: var(--glow);
+}
+
+/* XOR */
+.gate:has(#xor-in1:checked):not(:has(#xor-in2:checked)) .xor-output,
+.gate:has(#xor-in2:checked):not(:has(#xor-in1:checked)) .xor-output {
+  background: #4caf50;
+  box-shadow: var(--glow);
+}
+
+/* NXOR (XNOR) */
+.gate:has(#nxor-in1:checked):has(#nxor-in2:checked) .nxor-output,
+.gate:not(:has(#nxor-in1:checked)):not(:has(#nxor-in2:checked)) .nxor-output {
+  background: #4caf50;
+  box-shadow: var(--glow);
+}
+
+/* NOR */
+.gate:not(:has(#nor-in1:checked)):not(:has(#nor-in2:checked)) .nor-output {
+  background: #4caf50;
+  box-shadow: var(--glow);
+}
+
+/* NAND */
+.gate:not(:has(#nand-in1:checked):has(#nand-in2:checked)) .nand-output {
+  background: #4caf50;
+  box-shadow: var(--glow);
+}
+
+
+/* --- Latches --- */
+/*
+  T - Latch
+  ["0", gray] [0, _] -> 0
+  [1, _]      ["0", green] -> 1
+  ["1", gray] [1, _] -> 1
+  [0, _]      ["1", green] -> 0
+*/
+.gate:not(:has(#t-a:checked)):not(:has(#t-b:checked)) label[for="t-b"], /*["0", gray] [0, _]*/
+.gate:has(#t-a:checked):not(:has(#t-b:checked)) label[for="t-a"],       /*[1, _]      ["0", green]*/
+.gate:has(#t-a:checked):has(#t-b:checked) label[for="t-b"],             /*["1", gray] [1, _]*/
+.gate:not(:has(#t-a:checked)):has(#t-b:checked) label[for="t-a"] {      /*[0, _]      ["1", green]*/
+  display: none;
+}
+.gate:has(#t-a:checked) .t-output {
+  background: #4caf50;
+  box-shadow: var(--glow);
+}
+input[type="checkbox"]:checked + label[for="t-a"] {
+  background: var(--labelBG);
+  color: gray;
+  box-shadow: inset 0 0 0 3px #aaa;
+}
+input[type="checkbox"]:checked + label[for="t-a"]:hover {
+  background: #ccc;
+  box-shadow: inset 0 0 0 3px #888;
+}
+label[for="t-b"] {
+  background: #4caf50 !important;
+  color: white;
+  box-shadow: inset 0 0 0 3px #388e3c;
+}
+
+/*
+  SR - Latch  
+                      [0, _] ["0", red] ["1", green] -> 0 (4th sate)
+                        t   -     s     -     r               ↨
+                    ↙ [1, _] ["0", gray] ["0", gray] -> 0 (0th sate)↰
+              (1st sate)                                            (3rd sate)
+  ["1", green] [1, _] ["0", red] -> 1         ["0", red] [1, _] ["1", green] -> 0
+       ↳⬑             (2nd sate) ["0", gray] [1, _] ["0", gray] -> 1    ⬏
+*/
+label[for="sr-t"],      /* by defult*/
+.reset-btn,             /* by defult*/
+#sr-r:checked + label[for="sr-r"],  /*when r is checked it is the reset button that takes it's space*/
+#sr-s:checked + label[for="sr-s"] { /*because it shouldn't let go back!*/
+  display: none;
+}
+.gate:has(#sr-s:checked) label[for="sr-t"] { /*when sr-s is not there sr-t shows up instead*/
+  display: block;
+}
+.gate:has(#sr-t:checked):has(#sr-s:checked) label[for="sr-r"], /*1st state*/ 
+.gate:has(#sr-r:checked) input[type="checkbox"]:not(:checked) + label[for="sr-s"],   /*4th state*/ 
+.gate:has(#sr-r:checked) input[type="checkbox"]:not(:checked) + label[for="sr-t"] {  /*3rd state*/ 
+  background: #f44336; /*^ mentioned in extra detail to increase Selector Specificity*/
+  color: white;
+  box-shadow: inset 0 0 0 3px #c62828;
+  pointer-events: none;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.gate:has(#sr-r:checked) .reset-btn { /*when r is checked then it's the reset button*/
+  all: unset;
+  padding: 12px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 48px;
+  text-align: center;
+  transition: all 0.25s;
+  background: #4caf50;
+  color: white;
+  box-shadow: inset 0 0 0 3px #388e3c;
+}
+.gate:has(#sr-s:checked):not(:has(#sr-r:checked)) .sr-output1,
+.gate:not(:has(#sr-s:checked):not(:has(#sr-r:checked))) .sr-output2 { /*1st and 2nd state*/
+  background: #4caf50;
+  box-shadow: var(--glow);
+}
+
+/*--------------------------------------DEBUG MODE--------------------------------------*/
+body:has(#mode-selector option[value="debug"]:checked) input[type="checkbox"] {
+  display: inline-block;
+}
+body:has(#mode-selector option[value="debug"]:checked) .reset-btn::after {
+  content: "eset";
+}
+/*--------------------------------------ABOUT MODAL--------------------------------------*/
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bodyBG);
+  color: var(--modalText);
+  padding: 1.5rem;
+  max-width: 900px;
+  width: calc(100% - 2rem);
+  border-radius: 6px;
+  z-index: 1000;
+  height: 90%;
+  overflow: auto;
+}
+.modal .close {
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  color: gray;
+  padding: 0.4em;
+  border-radius: 4px;
+}
+.modal .close:hover {
+  background: #f44336;
+  color: white;
+  box-shadow: inset 0 0 0 3px #c62828;
+  opacity: 0.7;
+}
+#modal-toggle:not(:checked) ~ .modal,
+#modal-toggle:not(:checked) ~ .modal-backdrop {
+  display: none;
+}
+#modal-toggle:checked ~ .modal-backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  transition: background 0.3s ease;
+  box-shadow: none;
+  border-radius: 0;
+}
+.open-modal {
+  width: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.open-modal:hover {
+  background-color: white;
+}
+/*--------------------------------------Syntax Highlighting--------------------------------------*/
+code {
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: large;
+}
+code.snippet {
+  font-family: monospace;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  display: block;
+  tab-size: 2;
+}
+code .tag       { color: #66d9ef; }
+code .attr      { color: #f78c6c; }
+code .value     { color: #a6e22e; }
+code .selector  { color: #fd971f; }
+code .property  { color: #a1efe4; }
+code .number    { color: #ae81ff; }
+code .punct     { color: #888; }
+code .comment   { color: #75715e;}
+kbd {
+  border: 1px solid gray;
+  padding: 2px 5px;
+  margin: 2px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+kbd:hover {
+  background-color: var(--modalText);
+  color: var(--bodyBG);
+}
+/*--------------------------------------TABS--------------------------------------*/
+.tabs {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: sans-serif;
+  overflow: hidden;
+  margin-bottom: 2em;
+}
+.tab-labels {
+  display: flex;
+  background: var(--labelBG);
+}
+.tab-labels label {
+  all: unset;
+  flex: 1;
+  text-align: center;
+  padding: 0.6em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.tab-labels label:hover {
+  background: #bbb;
+}
+input[id^="tab-html"]:checked ~ .tab-labels label[for^="tab-html"],
+input[id^="tab-css"]:checked ~ .tab-labels label[for^="tab-css"] {
+  background: #4caf50;
+  color: white;
+}
+.tab-content {
+  padding: 1em;
+}
+.tab {
+  display: none;
+}
+input[id^="tab-html"]:checked ~ .tab-content .html,
+input[id^="tab-css"]:checked ~ .tab-content .css {
+  display: block;
+}
+/*--------------------------------------DARK MODE--------------------------------------*/
+:root:has(#theme-selector option[value="dark"]:checked){
+  --bodyBG: #121212;
+  --mainBG: #1e1e1e;
+  --labelBG: #333;
+  --modalText: #eee;
+}
+@media (prefers-color-scheme: dark) {
+  :root:has(#theme-selector option[value="system"]:checked) {
+    --bodyBG: #121212;
+    --mainBG: #1e1e1e;
+    --labelBG: #333;
+    --modalText: #eee;
+  }
+}
