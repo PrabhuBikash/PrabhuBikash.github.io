@@ -93,15 +93,6 @@ shuffleColors.onclick = () => {
   preview()
 };
 
-const editor = CodeMirror.fromTextArea(gateLogic, {
-  lineNumbers: true,
-  mode: "javascript",
-  theme: "material-darker",
-  indentUnit: 2,
-  tabSize: 2,
-  readOnly: "true",
-});
-
 nextBtn.onclick = () => confirmModal.style.display = 'flex';
 cancelBtn.onclick = () => confirmModal.style.display = 'none';
 confirmBtn.onclick = () => {
