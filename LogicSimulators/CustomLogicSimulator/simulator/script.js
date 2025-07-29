@@ -1,6 +1,5 @@
 const mainCanvas = document.getElementById('canvas');
 const svg = document.getElementById('wire-layer');
-let metadata;
 //------------------------- while reloding -------------------------//
 window.onload = function () {
   const storedSymbols = localStorage.getItem(`symbols`);
