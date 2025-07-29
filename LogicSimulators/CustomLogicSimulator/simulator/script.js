@@ -1,10 +1,21 @@
 const mainCanvas = document.getElementById('canvas');
 const svg = document.getElementById('wire-layer');
+let metadata;
 //------------------------- while reloding -------------------------//
 window.onload = function () {
+  const storedSymbols = localStorage.getItem(`symbols`);
+
+  // Initialize symbols and colors if found
+  if (storedSymbols) {
+    symbols = JSON.parse(storedSymbols);
+    metadata = JSON.stringify(symbols);
+    console.log('Symbols loaded:', symbols);
+  } else {
+    console.log('No symbols found in localStorage.');
+  }
+
   const storedGateDefinitions = localStorage.getItem(`${metadata}_gateDefinitions`);
   const storedGateRelations = localStorage.getItem(`${metadata}_gateRelations`);
-  const storedSymbols = localStorage.getItem(`symbols`);
   const storedColors = localStorage.getItem(`${metadata}_colors`);
   
   // Initialize gate definitions if found
@@ -21,15 +32,6 @@ window.onload = function () {
     console.log('Gate Relations loaded:', gateRelations);
   } else {
     console.log('No gate Relations found in localStorage.');
-  }
-
-  // Initialize symbols and colors if found
-  if (storedSymbols) {
-    symbols = JSON.parse(storedSymbols);
-    metadata = JSON.stringify(symbols);
-    console.log('Symbols loaded:', symbols);
-  } else {
-    console.log('No symbols found in localStorage.');
   }
 
   if (storedColors) {

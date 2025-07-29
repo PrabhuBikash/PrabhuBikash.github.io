@@ -81,7 +81,7 @@ const gateDefinitions = {
 };
 
 baseInput.addEventListener("input", () => {
-  symbolInput.value = [...Array(+baseInput.value).keys()].map(String).join(",");; // ['0','1','2',...]
+  symbolInput.value = [...Array(+baseInput.value).keys()].map(String).join(","); // ['0','1','2',...]
   updateBaseFromSymbols()
 });
 
