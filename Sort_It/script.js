@@ -55,6 +55,7 @@ document.addEventListener('keydown', (e) => {
 
 function openModal(id) {document.getElementById(id).style.display = 'flex';}
 function closeModal(id) {document.getElementById(id).style.display = 'none';}
+function toggleControls() {document.getElementById('controls').style.display = (usingKeyboard = !usingKeyboard) ? 'none' : 'flex';}
 
 //--------------------------------Win Modal Handler--------------------------------//
 let win = false;
@@ -75,10 +76,10 @@ function showWinModal() {
 }
 
 function restartGame() {
-  loadLevel(link.value);
   document.getElementById('winModal').style.display = 'none';
   document.getElementById('move-count').textContent = ``;
   numberOfMoves = 0,numberOfMerges = 0;
+  loadLevel(link.value);
 }
 
 //--------------------------------Level designer--------------------------------//

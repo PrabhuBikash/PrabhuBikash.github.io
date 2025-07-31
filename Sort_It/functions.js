@@ -132,5 +132,5 @@ function unpackLevelData(packedData) {
   gameModes = {freeStart: bits[0],manualMerge: bits[1],memory: bits[2],chaos: bits[3]};
   displayTarget = bits[4];
   linting = bits[5];
-  playerRange = {start:player, end:player}
+  playerRange = gameModes.freeStart ? {start:undefined, end:undefined} : {start:player, end:player}
 }
