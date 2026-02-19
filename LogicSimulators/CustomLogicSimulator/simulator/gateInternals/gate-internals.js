@@ -5,24 +5,26 @@ let Breadcrumb;
 let Wires_ = [];
 
 window.onload = () => {
-  const storedGateDefinitions = localStorage.getItem('gateDefinitions');
-  const storedSymbols = localStorage.getItem('symbols');
-  const storedColors = localStorage.getItem('colors');
-  Breadcrumb = JSON.parse(sessionStorage.getItem('selectedGate')) || [];
-  const gateName = Breadcrumb[Breadcrumb.length-1]
-  if (storedGateDefinitions) {
-    gateDefinitions = makeUsableGateDefinitions(storedGateDefinitions)
-  } else {
-    console.log('No gate definitions found in localStorage.');
-  }
-  
+  const storedSymbols = localStorage.getItem(`symbols`);
 
-  // Initialize symbols and colors if found
+  // Initialize symbols if found
   if (storedSymbols) {
     symbols = JSON.parse(storedSymbols);
+    metadata = JSON.stringify(symbols);
     console.log('Symbols loaded:', symbols);
   } else {
     console.log('No symbols found in localStorage.');
+  }
+
+  const storedGateDefinitions = localStorage.getItem(`${metadata}_gateDefinitions`);
+  const storedColors = localStorage.getItem(`${metadata}_colors`);
+  
+  // Initialize gate definitions if found
+  if (storedGateDefinitions) {
+    gateDefinitions = makeUsableGateDefinitions(storedGateDefinitions);
+    console.log('Gate definitions loaded:', gateDefinitions);
+  } else {
+    console.log('No gate definitions found in localStorage.');
   }
 
   if (storedColors) {
@@ -32,8 +34,9 @@ window.onload = () => {
     console.log('No colors found in localStorage.');
   }
 
+  Breadcrumb = JSON.parse(sessionStorage.getItem('selectedGate')) || [];
+  const gateName = Breadcrumb[Breadcrumb.length-1]
   console.log('Selected gate from sessionStorage:', gateName);
-  console.log('gateDefinitions:', gateDefinitions);
 
   if (!gateName || !gateDefinitions[gateName]) {
     alert(`No gate selected or definition not found for: ${gateName}`);
