@@ -1,8 +1,5 @@
-// Define reusable logic gate collections here.
-// Each preset is a named object with multiple gates inside.
-
 const presetLibrary = {
-  "(suggest a cool name!) (warning: going to be messy)": {
+  "chaotic (warning: going to be messy)": {
     IS_Active:{
       numberOfInputs: 1,
       numberOfOutputs: 1,
@@ -82,3 +79,4 @@ const presetLibrary = {
 };
 
 window.presetLibrary = presetLibrary;
+
