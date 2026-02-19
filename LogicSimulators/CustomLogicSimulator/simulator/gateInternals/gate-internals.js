@@ -34,7 +34,7 @@ window.onload = () => {
     console.log('No colors found in localStorage.');
   }
 
-  Breadcrumb = JSON.parse(sessionStorage.getItem('selectedGate')) || [];
+  Breadcrumb = JSON.parse(sessionStorage.getItem(`${metadata}_selectedGate`)) || [];
   const gateName = Breadcrumb[Breadcrumb.length-1]
   console.log('Selected gate from sessionStorage:', gateName);
 
@@ -203,7 +203,7 @@ function showGateMenu_(x, y, gate) {
 //--------------------------View gate logic---------------------------------//
 function openGateInternals_(gateInstance) {
   Breadcrumb.push(gateInstance.dataset.type);
-  sessionStorage.setItem('selectedGate', JSON.stringify(Breadcrumb));
+  sessionStorage.setItem(`${metadata}_selectedGate`, JSON.stringify(Breadcrumb));
   location.replace(location.href);  // Replace the current page with the updated state
 }
 
@@ -220,7 +220,7 @@ function updateBreadcrumb() {
 
     link.addEventListener('click', () => {
       Breadcrumb = Breadcrumb.slice(0, index + 1);  // Trim the breadcrumb
-      sessionStorage.setItem('selectedGate', JSON.stringify(Breadcrumb));
+      sessionStorage.setItem(`${metadata}_selectedGate`, JSON.stringify(Breadcrumb));
       location.reload();  // Go back to that gate level
     });
 
