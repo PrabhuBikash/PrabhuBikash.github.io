@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+  font-family: 'Fira Code', monospace;
+  background: #1e1e28;
+  color: #eee;
+}
+
+main {
+  padding: 40px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+h1 {
+  font-family: sans-serif;
+  letter-spacing: -1px;
+  color: #fff;
+  text-align: center;
+}
+
+h1 em {
+  font-weight: 300;
+  color: #ccc;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  color: #9cdcfe;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin: 2px 0;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+a:hover {
+  background: rgba(156, 220, 254, .1);
+  transform: translateX(2px);
+  color: #eee;
+  border-left: 2px solid #9cdcfe;
+}
+
+nav a+a {
+  border-top: 1px solid rgba(156, 220, 254, 0.1);
+}
+
+span {
+  display: block;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+small {
+  display: block;
+  font-size: 0.75rem;
+  color: #888;
+}
