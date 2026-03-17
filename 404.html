@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>404</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="projects.js"></script>
+</head>
+
+<body>
+  <main>
+    <h1><em>404</em><strong>Error</strong></h1>
+    <h2 style="text-align: center;">Page not found</h2>
+    <nav>
+      <a href="/">
+        Home
+        <span>May be check some other projects?</span>
+      </a>
+      <a id="randomLink">
+        Random
+        <span>Open a random project!</span>
+      </a>
+    </nav>
+
+    <script>
+      const pathParts = location.pathname.split("/");
+      const normalize = (s) => s?.toLowerCase().replace(/[-_\s]/g,'');
+      const sanitizedRepoPart = normalize(pathParts[1]);
+
+      const project = projects.find(({ link }) => sanitizedRepoPart === normalize(link));
+      if (project) {
+        pathParts[1] = project.link;
+        const correctLink = pathParts.join("/") + location.search + location.hash;
+        document.querySelector('h2').innerHTML = `Redirecting to <a style="display:inline">${correctLink}</a>`
+        location.replace(correctLink);
+      }
+      document.getElementById('randomLink').onclick = () => location.href = projects[Math.floor(Math.random() * projects.length)].link;
+    </script>
+  </main>
+</body>
+
+</html>

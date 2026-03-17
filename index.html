@@ -7,54 +7,23 @@
   <title>PrabhuBikash-Home</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="PBlogo.png" type="image/png">
+  <script src="projects.js"></script>
 </head>
 
 <body>
-
-<main>
-  <h1><em>Prabhu</em><strong>Bikash</strong></h1>
-  <nav>
-    <a href="https://prabhubikash.github.io/detour/">
-      Detour
-      <span>A game that tests you stability</span>
-      <small>No Dependency</small>
-    </a>
-    <a href="https://prabhubikash.github.io/CodeStockAnimation/">
-      Code Stock Animation
-      <span>Just type your code in slides and get its stock animation</span>
-      <small>Dependency: Prism</small>
-    </a>
-    <a href="https://prabhubikash.github.io/ArtToHTML/">
-      Art to HTML
-      <span>Converts given image to HTML code</span>
-      <small>No Dependency</small>
-    </a>
-    <a href="https://prabhubikash.github.io/ScriptNarrator/">
-      Script Narrator
-      <span>Make your script speak</span>
-      <small>No Dependency</small>
-    </a>
-    <a href="https://prabhubikash.github.io/SortIt/">
-      Sort It!
-      <span>A purely 1D game</span>
-      <small>No Dependency</small>
-    </a>
-    <a href="https://prabhubikash.github.io/LogicSimulators/">
-      Logic Simulators
-      <span>Collection of Logic Simulators</span>
-      <small>No Dependency</small>
-    </a>
-    <a href="https://prabhubikash.github.io/SequencePredictor/">
-      Sequence Predictor
-      <span>Predicts next terms of given finite sequence</span>
-      <small>No Dependency</small>
-    </a>
-    <a href="https://prabhubikash.github.io/PatternFinder/">
-      pattern Finder
-      <span>Vaguely remeber your pattern? it may help you find it</span>
-      <small>No Dependency</small>
-    </a>
-  </nav>
-</main>
+  <main>
+    <h1><em>Prabhu</em><strong>Bikash</strong></h1>
+    <nav>
+      <!--Projects-->
+    </nav>
+  </main>
+  <script>
+    document.querySelector('nav').innerHTML = projects.map(({ name, link, desc }) => `
+      <a href="${link}">
+        ${name}
+        <span>${desc}</span>
+      </a>
+    `).join('')
+  </script>
 </body>
 </html>
