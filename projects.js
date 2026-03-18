@@ -1,18 +1,23 @@
 const projects = [
   {
+    "name": "Hue Hopper",
+    "link": "HueHopper",
+    "desc": "A game of jumps, colors, and quick decisions"
+  },
+  {
     "name": "Detour",
     "link": "detour",
-    "desc": "A game that tests you stability"
+    "desc": "A game that tests your stability"
   },
   {
     "name": "Code Stock Animation",
     "link": "CodeStockAnimation",
-    "desc": "Just type your code in slides and get its stock animation"
+    "desc": "Type your code into slides and get stock animations"
   },
   {
     "name": "Art to HTML",
     "link": "ArtToHTML",
-    "desc": "Converts given image to HTML code"
+    "desc": "Converts a given image to HTML code"
   },
   {
     "name": "Script Narrator",
@@ -37,6 +42,6 @@ const projects = [
   {
     "name": "Pattern Finder",
     "link": "PatternFinder",
-    "desc": "Vaguely remeber your pattern? it may help you find it"
+    "desc": "Vaguely remember your pattern? It may help you find it"
   }
 ]
