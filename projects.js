@@ -1,5 +1,10 @@
 const projects = [
   {
+    "name": "Purity Analysis",
+    "link": "PurityAnalysis",
+    "desc": "Analyze functions from a different perspective"
+  },
+  {
     "name": "Hue Hopper",
     "link": "HueHopper",
     "desc": "A game of jumps, colors, and quick decisions"
